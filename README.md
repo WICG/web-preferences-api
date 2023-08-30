@@ -53,7 +53,7 @@ With the **Web Preference API**, this library could be updated to remove the "ha
 
 ### Syncing preferences across devices
 
-Like with the previous use case, if a site wanted to sync a user's animation preference across devices, they'd currently have to remove any usages of media queries and swap to using a class.
+Like with the previous use case, if a site wanted to sync a user's animation preference across devices, they'd currently have to remove any usages of media queries and swap to using the DOM and a CSS selector (e.g. class, or attribute).
 
 With the **Web Preference API**, this would no longer be the case and sites could use a simple sync function on page load to ensure the server and client preference matches.
 
