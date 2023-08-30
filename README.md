@@ -8,42 +8,42 @@ This document is intended as a starting point to engage standards bodies in deve
 
 ## Introduction
 
-Currently, website authors have a choice when wishing to honour a user's preference for a given setting.
+Currently, website authors have a choice when wishing to honour a user's preference for a given setting:
 
-They can choose to "use the platform" where the user must indicate their preference via their OS or if lucky they can override in the browser. This comes with a number of issues:
-- Relies on the user's OS or browser offering the ability to change the setting.
-- Relies on the user knowing how to change the setting in their OS or browser.
-- No ability to override the setting for a specific site.
-- No ability to sync preferences for a site across devices.
+They can choose to "use the platform" where the user must indicate their preference via their OS or, if lucky, they can override in the browser. This comes with a number of issues:
+- Relies on the user's OS or browser offering the ability to change the setting
+- Relies on the user knowing how to change the setting in their OS or browser
+- No ability to override the setting for a specific site
+- No ability to sync preferences for a site across devices
 
-Alternatively, sites can and do offer site level settings, but this currently comes with a number of issues:
+Alternatively, sites can and do offer site-level settings, but this currently comes with a number of issues:
 - No integration with CSS preference media queries
 - No integration with conditional resource loading (e.g. using `<source media="(prefers-contrast: more)">`)
 - No integration with JS APIs for retrieval of these preferences (e.g. `matchMedia`)
 - No integration with [User Preference Client Hints](https://web.dev/user-preference-media-features-headers/)
 - No integration with the `color-scheme` CSS property
-- The various client storage mechanisms that could store these preferences, can be cleared in a number of scenarios
+- The various client storage mechanisms that could store these preferences can be cleared in a number of scenarios
 
 The **Web Preference API** aims to solve this by providing a way for sites to indicate a user preference for a given pre-defined setting.
 
 ### Goals
 
-- Provide a way for sites to override a given user preference in a way that fully integrates with existing browser APIs.
-- Provide a way for sites to determine the user's preference for a given setting, without having to resort to `matchMedia`.
-- Increase usage of these preference, leading to a more accessible web.
+- Provide a way for sites to override a given user preference in a way that fully integrates with existing browser APIs
+- Provide a way for sites to determine the user's preference for a given setting, without having to resort to `matchMedia`
+- Increase usage of these preferences, leading to a more accessible web
 
 ### Non-Goals
 
-- Provide a way for sites to store arbitrary user preferences. Local storage or other storage APIs should be used instead.
-- Provide a way for sites to determine the origin of a user preference, beyond User Agent VS site. (e.g. a site won't be able to determinate of a setting comes from the OS or browser)
-- Force browsers to provide a UI for overriding OS level user preferences (although this would be nice).
-- Force browsers to provide a UI for overriding user preferences per site (although this would be nice).
+- Provide a way for sites to store arbitrary site-specific preferences -- local storage or other storage APIs should be used instead
+- Provide a way for sites to determine the origin of a user preference, beyond User Agent VS site (e.g. a site won't be able to determinate if a setting comes from the OS or browser)
+- Force browsers to provide a UI for overriding OS level user preferences (although this would be nice)
+- Force browsers to provide a UI for overriding user preferences per site (although this would be nice)
 
 ## Use Cases
 
 ### Color scheme toggle switch
 
-Currently sites can use a variety of UI components to implement a per site configuration of color scheme preference.
+Currently, sites can use a variety of UI components to implement a per site configuration of color scheme preference.
 An example of a custom element library for this is [dark-mode-toggle](https://www.webcomponents.org/element/dark-mode-toggle).
 
 This library currently requires users to use a class to indicate the dark mode preference, rather than being able to use the preference media query.
@@ -61,7 +61,7 @@ This would have the added effect of the site benefiting from any potential UA st
 
 ### Fully Themed Browser UI
 
-Currently, if a site decides not to use prefers-color-scheme they're likely also not using the `color-scheme` property to declare support for dark mode.
+Currently, if a site decides not to use `prefers-color-scheme`, they're likely also not using the `color-scheme` property to declare support for dark mode.
 
 This likely results in having to manually theme all browser provided UI (e.g. form controls, scrollbars) for dark mode. This is a lot of work and is likely to be missed in some places.
 
