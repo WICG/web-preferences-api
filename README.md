@@ -119,7 +119,7 @@ This method allows a site to clear an override for a given user preference. This
   - `OperationError`: If the operation failed for any other reason.
 
 ```js
-await navigator.preference.clearOverride('prefers-contrast', 'more');
+await navigator.preference.clearOverride('prefers-contrast');
 ```
 
 ### The `navigator.preference.get` method
