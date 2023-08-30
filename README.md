@@ -35,7 +35,7 @@ The **Web Preference API** aims to solve this by providing a way for sites to in
 ### Non-Goals
 
 - Provide a way for sites to store arbitrary site-specific preferences -- local storage or other storage APIs should be used instead
-- Provide a way for sites to determine the origin of a user preference, beyond User Agent VS site (e.g. a site won't be able to determinate of a setting comes from the OS or browser)
+- Provide a way for sites to determine the origin of a user preference, beyond User Agent VS site (e.g. a site won't be able to determinate if a setting comes from the OS or browser)
 - Force browsers to provide a UI for overriding OS level user preferences (although this would be nice)
 - Force browsers to provide a UI for overriding user preferences per site (although this would be nice)
 
