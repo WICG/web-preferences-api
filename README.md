@@ -26,6 +26,8 @@ Alternatively, sites can and do offer site-level settings, but this currently co
 
 The **Web Preference API** aims to solve this by providing a way for sites to indicate a user preference for a given pre-defined setting.
 
+It is intended for this override to apply permanently and be scoped per origin. (This explainer refers to "site" but it should be read to mean origin).
+
 ### Goals
 
 - Provide a way for sites to override a given user preference in a way that fully integrates with existing browser APIs
@@ -178,6 +180,11 @@ This also doesn't fix the (relatively minor) issue of preference syncing across 
 - Do we need a clearAllOverrides method?
 - Do we need a way to get the preference value or is using `matchMedia` sufficient? (I think we need at least a getOverride method)
 - Do we need an API method to indicate the accepted values for a given preference?
+- Do we need a user activation requirement for set and clear? (e.g. clicking a button)
+  - This would remove the ability to automatically sync preferences.
+- Do we need a permission grant? Or at least integrate with permissions policy?
+- Do we need configuration for the scope of these overrides?
+- Do we need configuration for choosing session vs permanent override?
 
 ## Acknowledgements
 
