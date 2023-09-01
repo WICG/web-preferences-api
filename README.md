@@ -1,4 +1,4 @@
-# Web Preferences API (name TBD)
+# Web Preferences API
 
 Authors: [Luke Warlow](https://github.com/lukewarlow)
 
@@ -26,7 +26,8 @@ Alternatively, sites can and do offer site-level settings, but this currently co
 
 The **Web Preferences API** aims to solve this by providing a way for sites to indicate a user preference for a given pre-defined setting.
 
-It is intended for this override to apply permanently and be scoped per origin. (This explainer refers to "site" but it should be read to mean origin).
+It is intended for this override to apply permanently and be scoped per origin. 
+The override should be passed down to sub-resource where possible, see privacy section for details. This explainer refers to "site" but it should be read to mean origin.
 
 ### Goals
 
@@ -73,6 +74,39 @@ With the **Web Preferences API**, sites could simply use the `color-scheme` prop
 ### The `navigator.preferences` object
 
 A new `navigator.preferences` object will be added to the platform. This object will be the entry point to this API.
+
+#### WebIDL
+
+```webidl
+partial interface Navigator {
+  readonly attribute PreferenceManager preferences;
+}
+
+interface PreferenceManager {
+  // null means the preference is not overridden
+  attribute ColorSchemePref?  colorScheme;
+  attribute ContrastPref?  contrast;
+  attribute ReducedMotionPref?  reducedMotion;
+  attribute ReducedTransparencyPref?  reducedTransparency;
+  attribute ReducedDataPref? reducedData;
+  // Future preferences can be added here, the exact properties will be down to the browser support.
+
+  Promise<sequence<PreferenceSupportData>> getSupported();
+}
+
+enum ColorSchemePref { "light", "dark" };
+enum ContrastPref { "no-preference", "more", "less" };
+enum ReducedMotionPref { "no-preference", "reduce" };
+enum ReducedTransparencyPref { "no-preference", "reduce" };
+enum ReducedDataPref { "no-preference", "reduce" };
+
+interface PreferenceSupportData {
+  readonly attribute DOMString name;
+  readonly attribute FrozenArray<DOMString> values;
+}
+```
+
+#### TypeScript
 
 ```ts
 interface Navigator {
@@ -143,15 +177,27 @@ console.log(preferenceSupportData); // [ { name: 'contrast', values: ['more', 'l
 
 This API exposes no new fingerprinting surfaces beyond that which already exist in the platform.
 
-### Iframes
 
-TODO: Need to work out the exact specifics with regards to iframes both same-origin and cross-origin.
+### Permissions & User Activation
 
-Same-origin iframes should probably be updated with the parent frame's preference overrides but in an opaque manner.
+This API does not require any permissions or user activation. It exposes no new capabilities to a site beyond that which already exists in the platform.
+
+A site can already store a value in local storage and read into the DOM to override a preference. This API simply makes the ergonomics of this better.
+
+### Iframes etc
+
+See [#8](https://github.com/lukewarlow/web-preferences-api/issues/8) for discussion regarding this.
+
+For the spec we can probably find an existing definition to reference, but for the purposes of this explainer:
+
+- Any same-origin subresource (e.g. iframes) should get the overridden value.
+- Any cross-origin subresource that already has communication with the parent (e.g. `postMessage`) should get the override value.
+- Any cross-origin subresource with no external communication (e.g. an SVG loaded as an image) should get the override value.
+- Any cross-origin subresource that has no communication with parent but can communicate externally should **NOT** get the override value.
+
+Wherever the override value is passed down it should be done so in an opaque manner.
 
 e.g. if the parent frame sets `colorScheme` to `dark` then the iframe should see `prefers-color-scheme` as dark but shouldn't read `navigator.preferences.colorScheme` as `dark`.
-
-Whereas, cross-origin iframes should probably not be updated with the parent frame's preference overrides. This is an unfortunate limitation but is probably necessary to prevent new forms of data exfiltration.
 
 ## Alternative Solutions
 
@@ -170,14 +216,6 @@ This also doesn't solve the key issue of third party libraries being aware of th
 While this would be a nice solution, the lack of any such UI in any browser makes it unlikely that this will happen any time soon.
 
 This also doesn't fix the (relatively minor) issue of preference syncing across devices.
-
-## Open Questions
-
-- Do we need a way to get the "computed" preference value or is using `matchMedia` sufficient?
-  - The ergonomics of `matchMedia` particularly aren't great when you want to listen to updates.
-- Do we need a user activation requirement for setting the values? (e.g. clicking a button)
-- Do we need configuration for the scope of these overrides? (I think this is out of scope)
-- Do we need configuration for choosing session vs permanent override? (I think this is out of scope)
 
 ## Acknowledgements
 
