@@ -1,0 +1,17 @@
+<pre class='metadata'>
+Title: Web Preferences API
+Shortname: web-preferences-api
+Level: 1
+Status: CG-DRAFT
+Group: WICG
+Repository: WICG/web-preferences-api
+URL: http://example.com/url-this-spec-will-live-at
+Editor: Luke Warlow, affiliation affiliationURL, luke@warlow.dev
+!Tests: <a href=https://github.com/w3c/web-platform-tests/tree/master/web-preferences-api>web-platform-tests web-preferences-api/</a> (<a href=https://github.com/w3c/web-platform-tests/labels/web-preferences-api>ongoing work</a>)
+Abstract: A short description of your spec, one or two sentences.
+</pre>
+
+Introduction {#intro}
+=====================
+
+See https://github.com/tabatkins/bikeshed to get started.
