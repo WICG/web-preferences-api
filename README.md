@@ -154,8 +154,7 @@ navigator.preferences.colorScheme = null;
 ```
 
 To set a preference override, the property can be set to a valid value for the preference.
-If an invalid value is set then a [`DOMException`](https://developer.mozilla.org/en-US/docs/Web/API/DOMException) will be thrown with a `ValidationError` code.
-
+If an invalid value is set then this will be a no-op.
 ```js
 navigator.preferences.colorScheme = 'dark';
 ```
