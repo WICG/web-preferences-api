@@ -80,8 +80,9 @@ A new `navigator.preferences` object will be added to the platform. This object 
 ```webidl
 partial interface Navigator {
   readonly attribute PreferenceManager preferences;
-}
+};
 
+[Exposed=Window]
 interface PreferenceManager {
   // null means the preference is not overridden
   attribute ColorSchemePref?  colorScheme;
@@ -92,7 +93,7 @@ interface PreferenceManager {
   // Future preferences can be added here, the exact properties will be down to the browser support.
 
   Promise<sequence<PreferenceSupportData>> getSupported();
-}
+};
 
 enum ColorSchemePref { "light", "dark" };
 enum ContrastPref { "no-preference", "more", "less" };
@@ -100,10 +101,11 @@ enum ReducedMotionPref { "no-preference", "reduce" };
 enum ReducedTransparencyPref { "no-preference", "reduce" };
 enum ReducedDataPref { "no-preference", "reduce" };
 
+[Exposed=Window]
 interface PreferenceSupportData {
   readonly attribute DOMString name;
   readonly attribute FrozenArray<DOMString> values;
-}
+};
 ```
 
 #### TypeScript
