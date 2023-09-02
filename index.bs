@@ -12,6 +12,10 @@ Editor: Luke Warlow, unaffiliated, luke@warlow.dev
 Abstract: The Web Preference API aims to provide a way for sites to override the value for a given user preference (e.g. color-scheme preference) in a way that fully integrates with existing Web APIs.
 </pre>
 
+<pre class="link-defaults">
+spec:html; type:dfn; text:origin
+</pre>
+
 Issue: This spec requires large amounts of work to section it and word it in ways that are normative. It is currently a very rough draft.
 
 # Introduction # {#sec-intro}
@@ -27,18 +31,19 @@ They can choose to "use the platform" where the user must indicate their prefere
 - No ability to sync preferences for a site across devices
 
 Alternatively, sites can and do offer site-level settings, but this currently comes with a number of issues:
-- No integration with CSS preference media queries
+- No integration with [[mediaqueries-5#mf-user-preferences]]
 - No integration with conditional resource loading (e.g. using `<source media="(prefers-contrast: more)">`)
-- No integration with JS APIs for retrieval of these preferences (e.g. `matchMedia`)
-- No integration with [[!USER-PREFERENCE-MEDIA-FEATURES-HEADERS]]
-- No integration with the `color-scheme` CSS property
+- No integration with JS APIs for retrieval of these preferences (e.g. `matchMedia` in [[cssom-view#extensions-to-the-window-interface]]
+- No integration with [[USER-PREFERENCE-MEDIA-FEATURES-HEADERS]]
+- No integration with the [[css-color-adjust-1#preferred]] concept
 - The various client storage mechanisms that could store these preferences can be cleared in a number of scenarios
 
+Issue: Unsure how to link to html spec for the <source media=""> example.
+
 The **Web Preferences API** aims to solve this by providing a way for sites to override the value for a given a user preference.
-The user preferences are defined by [[!mediaqueries-5]].
 
 It is intended for this override to apply permanently and be scoped per origin.
-The override should be passed down to sub-resource where possible, see privacy section for details. This explainer refers to "site" but it should be read to mean origin.
+The override should be passed down to sub-resource where possible, see privacy section for details. This explainer refers to "site" but it should be read to mean [=origin=].
 
 # Extensions to the {{Navigator}} interface # {#extensions-to-the-navigator-interface}
 
@@ -239,7 +244,7 @@ Note: See <a href="https://github.com/lukewarlow/web-preferences-api/issues/8">#
 
 For the spec we can probably find an existing definition to reference, but for the purposes of this explainer:
 
-- Any same-origin subresource (e.g. iframes) should get the overridden value.
+- Any [=same origin=] subresource (e.g. iframes) should get the overridden value.
 - Any cross-origin subresource that already has communication with the parent (e.g. `postMessage`) should get the override value.
 - Any cross-origin subresource with no external communication (e.g. an SVG loaded as an image) should get the override value.
 - Any cross-origin subresource that has no communication with parent but can communicate externally should **NOT** get the override value.
