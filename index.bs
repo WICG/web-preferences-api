@@ -40,32 +40,53 @@ The user preferences are defined by [[!mediaqueries-5]].
 It is intended for this override to apply permanently and be scoped per origin.
 The override should be passed down to sub-resource where possible, see privacy section for details. This explainer refers to "site" but it should be read to mean origin.
 
-# API Description # {#sec-api}
+# Extensions to the {{Navigator}} interface # {#extensions-to-the-navigator-interface}
 
 <script type=idl>
+[Exposed=Window]
 partial interface Navigator {
   readonly attribute PreferenceManager preferences;
 };
+</script>
 
+## {{preferences}} attribute ## {#preferences-attribute}
+
+When getting the {{preferences}} attribute always return the same instance of the {{PreferenceManager}} object.
+
+# {{PreferenceManager}} interface # {#preference-manager}
+
+<script type=idl>
 [Exposed=Window]
 interface PreferenceManager {
-  // null means the preference is not overridden
   attribute ColorSchemePref? colorScheme;
   attribute ContrastPref? contrast;
   attribute ReducedMotionPref? reducedMotion;
   attribute ReducedTransparencyPref? reducedTransparency;
   attribute ReducedDataPref? reducedData;
-  // Future preferences can be added here, the exact properties will be down to the browser support.
 
   Promise<sequence<PreferenceSupportData>> getSupported();
 };
+</script>
 
-enum ColorSchemePref { "light", "dark" };
-enum ContrastPref { "no-preference", "more", "less" };
-enum ReducedMotionPref { "no-preference", "reduce" };
-enum ReducedTransparencyPref { "no-preference", "reduce" };
-enum ReducedDataPref { "no-preference", "reduce" };
+Note: The exact set of preferences is down to the browser vendor, but it is expected that the set of preferences will be the same as those defined in [[!mediaqueries-5]].
 
+## {{getSupported}} method ## {#get-supported-method}
+
+<div algorithm>
+    The <dfn method for=PreferenceManager>getSupported()</dfn> method, when invoked, must run these steps:
+
+    1. Let |result| be [=a new promise=].
+    1. Let |supportedPreferences| be a new empty sequence.
+    1. For each preference that the browser supports, add a new {{PreferenceSupportData}} object to |supportedPreferences| with the following properties:
+        - `name` set to the name of the preference
+        - `values` set to a sequence of strings representing the valid values for the preference
+    1. Resolve |result| with |supportedPreferences|.
+    1. Return |result|.
+</div>
+
+### {{PreferenceSupportData}} interface ### {#preferencesupportdata-interface}
+
+<script type=idl>
 [Exposed=Window]
 interface PreferenceSupportData {
   readonly attribute DOMString name;
@@ -73,7 +94,83 @@ interface PreferenceSupportData {
 };
 </script>
 
-## Usage Examples ## {#usage-examples}
+## Preference attributes ## {#preference-attributes}
+
+### Setting a preference attribute ### {#setting-a-preference-attribute}
+
+<div algorithm='setting preference override'>
+    The preference attributes, when set, must run these steps:
+
+    1. Let |preference| be the preference attribute's name.
+    1. Let |validValues| be the preference attribute's valid values.
+    1. If |value| is not in |validValues|, return.
+    1. If |value| is the same as the preference override for |preference|, return.
+    1. Set the preference override for |preference| to |value|.
+</div>
+
+Issue: This algorithm needs more detail on where the overrides are stored. Also need to define what happens when a preference is overridden, with specific regard to sub-resources.
+
+### Getting a preference attribute ### {#getting-a-preference-attribute}
+
+<div algorithm='getting-preference-override'>
+    The preference attributes, when accessed, must run these steps:
+
+    1. Let |preference| be the preference attribute's name.
+    1. If no overrides have been set for the preference, return `null`.
+    1. Let |result| be the preference override for |preference|.
+    1. Return |result|.
+</div>
+
+Issue: This algorithm needs more detail on where the overrides are stored.
+
+### {{colorScheme}} preference ### {#colorscheme-preference}
+
+The {{colorScheme}} preference represents the user's preference for the color scheme of the site.
+This is modeled after the `prefers-color-scheme` user preference media feature as defined in [[mediaqueries-5#prefers-color-scheme]].
+
+<script type=idl>
+enum ColorSchemePref { "light", "dark" };
+</script>
+
+### {{contrast}} preference ### {#contrast-preference}
+
+The {{contrast}} preference represents the user's preference for the contrast of the site.
+This is modeled after the `prefers-contrast` user preference media feature as defined in [[mediaqueries-5#prefers-contrast]].
+
+Unlike the media feature this preference is not able to be set to `custom` this is tightly coupled to the `forced-colors` media feature.
+
+<script type=idl>
+enum ContrastPref { "no-preference", "more", "less" };
+</script>
+
+### {{reducedMotion}} preference ### {#reducedmotion-preference}
+
+The {{reducedMotion}} preference represents the user's preference for reduced motion on the site.
+This is modeled after the `prefers-reduced-motion` user preference media feature as defined in [[mediaqueries-5#prefers-reduced-motion]].
+
+<script type=idl>
+enum ReducedMotionPref { "no-preference", "reduce" };
+</script>
+
+### {{reducedTransparency}} preference ### {#reducedtransparency-preference}
+
+The {{reducedTransparency}} preference represents the user's preference for reduced transparency on the site.
+This is modeled after the `prefers-reduced-transparency` user preference media feature as defined in [[mediaqueries-5#prefers-reduced-transparency]].
+
+<script type=idl>
+enum ReducedTransparencyPref { "no-preference", "reduce" };
+</script>
+
+### {{reducedData}} preference ### {#reduceddata-preference}
+
+The {{reducedData}} preference represents the user's preference for reduced data usage on the site.
+This is modeled after the `prefers-reduced-data` user preference media feature as defined in [[mediaqueries-5#prefers-reduced-data]].
+
+<script type=idl>
+enum ReducedDataPref { "no-preference", "reduce" };
+</script>
+
+# Usage Examples # {#usage-examples}
 
 *This section is non-normative.*
 
@@ -85,7 +182,7 @@ Feature detection for a given preference is as simple as:
 const colorSchemeSupported = 'colorScheme' in navigator.preferences;
 ```
 
-### Setting a preference override ### {#setting-a-preference-override}
+## Setting a preference override ## {#setting-a-preference-override}
 
 To set a preference override, the property can be set to a valid value for the preference.
 If an invalid value is set then this will be a no-op.
@@ -94,7 +191,7 @@ If an invalid value is set then this will be a no-op.
 navigator.preferences.colorScheme = 'dark';
 ```
 
-#### Setting a preference override to `null` #### {#clearing-overrides}
+## Clearing a preference override ## {#clearing-overrides}
 
 To clear an override and return the preference to the browser default, the property can be set to null.
 
@@ -102,7 +199,7 @@ To clear an override and return the preference to the browser default, the prope
 navigator.preferences.colorScheme = null;
 ```
 
-### Getting a preference override ### {#getting-a-preference-override}
+## Getting a preference override ## {#getting-a-preference-override}
 
 To get the value of a preference override, the property can be read.
 Each property will return the string value indicating the preference, or null if no override is set.
@@ -111,7 +208,7 @@ Each property will return the string value indicating the preference, or null if
 const colorScheme = navigator.preferences.colorScheme; // "light" | "dark" | null
 ```
 
-### The `navigator.preferences.getSupported` method ### {#get-supported}
+## The `navigator.preferences.getSupported` method ## {#get-supported}
 
 This method allows a site to get the preferences supported by the browser. This is useful for sites that want to dynamically generate UI for overriding preferences.
 

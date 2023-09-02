@@ -6,7 +6,7 @@
   <link href="https://www.w3.org/StyleSheets/TR/2021/W3C-UD" rel="stylesheet">
   <meta content="Bikeshed version 5edf5e459, updated Thu Jun 22 11:28:01 2023 -0700" name="generator">
   <link href="https://specs.lukewarlow.dev/web-preferences-api/" rel="canonical">
-  <meta content="c8adea497c984db6edadf728859ebc9b4e971ecf" name="document-revision">
+  <meta content="b070ea63997af1c72d80033751ea0521ff7fac0e" name="document-revision">
 <style>/* Boilerplate: style-autolinks */
 .css.css, .property.property, .descriptor.descriptor {
     color: var(--a-normal-text);
@@ -643,6 +643,27 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
     c-[il] { color: #657b83 } /* Literal.Number.Integer.Long */
 }
 </style>
+<style>/* Boilerplate: style-var-click-highlighting */
+/*
+Colors were chosen in Lab using https://nixsensor.com/free-color-converter/
+D50 2deg illuminant, L in [0,100], a and b in [-128, 128]
+0 = lab(85,0,85)
+1 = lab(85,80,30)
+2 = lab(85,-40,40)
+3 = lab(85,-50,0)
+4 = lab(85,5,15)
+5 = lab(85,-10,-50)
+6 = lab(85,35,-15)
+*/
+var { cursor: pointer; }
+var.selected0 { background-color: #F4D200; box-shadow: 0 0 0 2px #F4D200; }
+var.selected1 { background-color: #FF87A2; box-shadow: 0 0 0 2px #FF87A2; }
+var.selected2 { background-color: #96E885; box-shadow: 0 0 0 2px #96E885; }
+var.selected3 { background-color: #3EEED2; box-shadow: 0 0 0 2px #3EEED2; }
+var.selected4 { background-color: #EACFB6; box-shadow: 0 0 0 2px #EACFB6; }
+var.selected5 { background-color: #82DDFF; box-shadow: 0 0 0 2px #82DDFF; }
+var.selected6 { background-color: #FFBCF2; box-shadow: 0 0 0 2px #FFBCF2; }
+</style>
  <body class="h-entry">
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2021/logos/W3C" width="72"> </a> </p>
@@ -687,28 +708,46 @@ A human-readable <a href="http://www.w3.org/community/about/agreements/cla-deed/
    <ol class="toc" role="directory">
     <li><a href="#sec-intro"><span class="secno">1</span> <span class="content">Introduction</span></a>
     <li>
-     <a href="#sec-api"><span class="secno">2</span> <span class="content">API Description</span></a>
+     <a href="#extensions-to-the-navigator-interface"><span class="secno">2</span> <span class="content">Extensions to the <code class="idl"><span>Navigator</span></code> interface</span></a>
+     <ol class="toc">
+      <li><a href="#preferences-attribute"><span class="secno">2.1</span> <span class="content"><code class="idl"><span>preferences</span></code> attribute</span></a>
+     </ol>
+    <li>
+     <a href="#preference-manager"><span class="secno">3</span> <span class="content"><code class="idl"><span>PreferenceManager</span></code> interface</span></a>
      <ol class="toc">
       <li>
-       <a href="#usage-examples"><span class="secno">2.1</span> <span class="content">Usage Examples</span></a>
+       <a href="#get-supported-method"><span class="secno">3.1</span> <span class="content"><code class="idl"><span>getSupported</span></code> method</span></a>
        <ol class="toc">
-        <li>
-         <a href="#setting-a-preference-override"><span class="secno">2.1.1</span> <span class="content">Setting a preference override</span></a>
-         <ol class="toc">
-          <li><a href="#clearing-overrides"><span class="secno">2.1.1.1</span> <span class="content">Setting a preference override to <code>null</code></span></a>
-         </ol>
-        <li><a href="#getting-a-preference-override"><span class="secno">2.1.2</span> <span class="content">Getting a preference override</span></a>
-        <li><a href="#get-supported"><span class="secno">2.1.3</span> <span class="content">The <code>navigator.preferences.getSupported</code> method</span></a>
+        <li><a href="#preferencesupportdata-interface"><span class="secno">3.1.1</span> <span class="content"><code class="idl"><span>PreferenceSupportData</span></code> interface</span></a>
+       </ol>
+      <li>
+       <a href="#preference-attributes"><span class="secno">3.2</span> <span class="content">Preference attributes</span></a>
+       <ol class="toc">
+        <li><a href="#setting-a-preference-attribute"><span class="secno">3.2.1</span> <span class="content">Setting a preference attribute</span></a>
+        <li><a href="#getting-a-preference-attribute"><span class="secno">3.2.2</span> <span class="content">Getting a preference attribute</span></a>
+        <li><a href="#colorscheme-preference"><span class="secno">3.2.3</span> <span class="content"><code class="idl"><span>colorScheme</span></code> preference</span></a>
+        <li><a href="#contrast-preference"><span class="secno">3.2.4</span> <span class="content"><code class="idl"><span>contrast</span></code> preference</span></a>
+        <li><a href="#reducedmotion-preference"><span class="secno">3.2.5</span> <span class="content"><code class="idl"><span>reducedMotion</span></code> preference</span></a>
+        <li><a href="#reducedtransparency-preference"><span class="secno">3.2.6</span> <span class="content"><code class="idl"><span>reducedTransparency</span></code> preference</span></a>
+        <li><a href="#reduceddata-preference"><span class="secno">3.2.7</span> <span class="content"><code class="idl"><span>reducedData</span></code> preference</span></a>
        </ol>
      </ol>
     <li>
-     <a href="#sec-security"><span class="secno">3</span> <span class="content">Security and Privacy Considerations</span></a>
+     <a href="#usage-examples"><span class="secno">4</span> <span class="content">Usage Examples</span></a>
      <ol class="toc">
-      <li><a href="#fingerprinting"><span class="secno">3.1</span> <span class="content">Avoiding fingerprinting</span></a>
-      <li><a href="#permissions"><span class="secno">3.2</span> <span class="content">Permissions &amp; User Activation</span></a>
-      <li><a href="#sub-resources"><span class="secno">3.3</span> <span class="content">Sub-resources</span></a>
+      <li><a href="#setting-a-preference-override"><span class="secno">4.1</span> <span class="content">Setting a preference override</span></a>
+      <li><a href="#clearing-overrides"><span class="secno">4.2</span> <span class="content">Clearing a preference override</span></a>
+      <li><a href="#getting-a-preference-override"><span class="secno">4.3</span> <span class="content">Getting a preference override</span></a>
+      <li><a href="#get-supported"><span class="secno">4.4</span> <span class="content">The <code>navigator.preferences.getSupported</code> method</span></a>
      </ol>
-    <li><a href="#sec-acknowledgements"><span class="secno">4</span> <span class="content">Acknowledgements</span></a>
+    <li>
+     <a href="#sec-security"><span class="secno">5</span> <span class="content">Security and Privacy Considerations</span></a>
+     <ol class="toc">
+      <li><a href="#fingerprinting"><span class="secno">5.1</span> <span class="content">Avoiding fingerprinting</span></a>
+      <li><a href="#permissions"><span class="secno">5.2</span> <span class="content">Permissions &amp; User Activation</span></a>
+      <li><a href="#sub-resources"><span class="secno">5.3</span> <span class="content">Sub-resources</span></a>
+     </ol>
+    <li><a href="#sec-acknowledgements"><span class="secno">6</span> <span class="content">Acknowledgements</span></a>
     <li>
      <a href="#w3c-conformance"><span class="secno"></span> <span class="content">Conformance</span></a>
      <ol class="toc">
@@ -764,70 +803,149 @@ A human-readable <a href="http://www.w3.org/community/about/agreements/cla-deed/
 The user preferences are defined by <a data-link-type="biblio" href="#biblio-mediaqueries-5" title="Media Queries Level 5">[mediaqueries-5]</a>.</p>
    <p>It is intended for this override to apply permanently and be scoped per origin.
 The override should be passed down to sub-resource where possible, see privacy section for details. This explainer refers to "site" but it should be read to mean origin.</p>
-   <h2 class="heading settled" data-level="2" id="sec-api"><span class="secno">2. </span><span class="content">API Description</span><a class="self-link" href="#sec-api"></a></h2>
-<pre class="idl highlight def"><c- b>partial</c-> <c- b>interface</c-> <a class="idl-code" data-link-type="interface" href="https://html.spec.whatwg.org/multipage/system-state.html#navigator" id="ref-for-navigator"><c- g>Navigator</c-></a> {
-  <c- b>readonly</c-> <c- b>attribute</c-> <a data-link-type="idl-name" href="#preferencemanager" id="ref-for-preferencemanager"><c- n>PreferenceManager</c-></a> <dfn class="idl-code" data-dfn-for="Navigator" data-dfn-type="attribute" data-export data-readonly data-type="PreferenceManager" id="dom-navigator-preferences"><code><c- g>preferences</c-></code><a class="self-link" href="#dom-navigator-preferences"></a></dfn>;
+   <h2 class="heading settled" data-level="2" id="extensions-to-the-navigator-interface"><span class="secno">2. </span><span class="content">Extensions to the <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/system-state.html#navigator" id="ref-for-navigator">Navigator</a></code> interface</span><a class="self-link" href="#extensions-to-the-navigator-interface"></a></h2>
+<pre class="idl highlight def">[<a class="idl-code" data-link-type="extended-attribute" href="https://webidl.spec.whatwg.org/#Exposed" id="ref-for-Exposed"><c- g>Exposed</c-></a>=<c- n>Window</c->]
+<c- b>partial</c-> <c- b>interface</c-> <a class="idl-code" data-link-type="interface" href="https://html.spec.whatwg.org/multipage/system-state.html#navigator" id="ref-for-navigator①"><c- g>Navigator</c-></a> {
+  <c- b>readonly</c-> <c- b>attribute</c-> <a data-link-type="idl-name" href="#preferencemanager" id="ref-for-preferencemanager"><c- n>PreferenceManager</c-></a> <dfn class="dfn-paneled idl-code" data-dfn-for="Navigator" data-dfn-type="attribute" data-export data-readonly data-type="PreferenceManager" id="dom-navigator-preferences"><code><c- g>preferences</c-></code></dfn>;
 };
-
-[<a class="idl-code" data-link-type="extended-attribute" href="https://webidl.spec.whatwg.org/#Exposed" id="ref-for-Exposed"><c- g>Exposed</c-></a>=<c- n>Window</c->]
+</pre>
+   <h3 class="heading settled" data-level="2.1" id="preferences-attribute"><span class="secno">2.1. </span><span class="content"><code class="idl"><a data-link-type="idl" href="#dom-navigator-preferences" id="ref-for-dom-navigator-preferences">preferences</a></code> attribute</span><a class="self-link" href="#preferences-attribute"></a></h3>
+   <p>When getting the <code class="idl"><a data-link-type="idl" href="#dom-navigator-preferences" id="ref-for-dom-navigator-preferences①">preferences</a></code> attribute always return the same instance of the <code class="idl"><a data-link-type="idl" href="#preferencemanager" id="ref-for-preferencemanager①">PreferenceManager</a></code> object.</p>
+   <h2 class="heading settled" data-level="3" id="preference-manager"><span class="secno">3. </span><span class="content"><code class="idl"><a data-link-type="idl" href="#preferencemanager" id="ref-for-preferencemanager②">PreferenceManager</a></code> interface</span><a class="self-link" href="#preference-manager"></a></h2>
+<pre class="idl highlight def">[<a class="idl-code" data-link-type="extended-attribute" href="https://webidl.spec.whatwg.org/#Exposed" id="ref-for-Exposed①"><c- g>Exposed</c-></a>=<c- n>Window</c->]
 <c- b>interface</c-> <dfn class="dfn-paneled idl-code" data-dfn-type="interface" data-export id="preferencemanager"><code><c- g>PreferenceManager</c-></code></dfn> {
-  // null means the preference is not overridden
-  <c- b>attribute</c-> <a data-link-type="idl-name" href="#enumdef-colorschemepref" id="ref-for-enumdef-colorschemepref"><c- n>ColorSchemePref</c-></a>? <dfn class="idl-code" data-dfn-for="PreferenceManager" data-dfn-type="attribute" data-export data-type="ColorSchemePref?" id="dom-preferencemanager-colorscheme"><code><c- g>colorScheme</c-></code><a class="self-link" href="#dom-preferencemanager-colorscheme"></a></dfn>;
-  <c- b>attribute</c-> <a data-link-type="idl-name" href="#enumdef-contrastpref" id="ref-for-enumdef-contrastpref"><c- n>ContrastPref</c-></a>? <dfn class="idl-code" data-dfn-for="PreferenceManager" data-dfn-type="attribute" data-export data-type="ContrastPref?" id="dom-preferencemanager-contrast"><code><c- g>contrast</c-></code><a class="self-link" href="#dom-preferencemanager-contrast"></a></dfn>;
-  <c- b>attribute</c-> <a data-link-type="idl-name" href="#enumdef-reducedmotionpref" id="ref-for-enumdef-reducedmotionpref"><c- n>ReducedMotionPref</c-></a>? <dfn class="idl-code" data-dfn-for="PreferenceManager" data-dfn-type="attribute" data-export data-type="ReducedMotionPref?" id="dom-preferencemanager-reducedmotion"><code><c- g>reducedMotion</c-></code><a class="self-link" href="#dom-preferencemanager-reducedmotion"></a></dfn>;
-  <c- b>attribute</c-> <a data-link-type="idl-name" href="#enumdef-reducedtransparencypref" id="ref-for-enumdef-reducedtransparencypref"><c- n>ReducedTransparencyPref</c-></a>? <dfn class="idl-code" data-dfn-for="PreferenceManager" data-dfn-type="attribute" data-export data-type="ReducedTransparencyPref?" id="dom-preferencemanager-reducedtransparency"><code><c- g>reducedTransparency</c-></code><a class="self-link" href="#dom-preferencemanager-reducedtransparency"></a></dfn>;
-  <c- b>attribute</c-> <a data-link-type="idl-name" href="#enumdef-reduceddatapref" id="ref-for-enumdef-reduceddatapref"><c- n>ReducedDataPref</c-></a>? <dfn class="idl-code" data-dfn-for="PreferenceManager" data-dfn-type="attribute" data-export data-type="ReducedDataPref?" id="dom-preferencemanager-reduceddata"><code><c- g>reducedData</c-></code><a class="self-link" href="#dom-preferencemanager-reduceddata"></a></dfn>;
-  // Future preferences can be added here, the exact properties will be down to the browser support.
+  <c- b>attribute</c-> <a data-link-type="idl-name" href="#enumdef-colorschemepref" id="ref-for-enumdef-colorschemepref"><c- n>ColorSchemePref</c-></a>? <dfn class="dfn-paneled idl-code" data-dfn-for="PreferenceManager" data-dfn-type="attribute" data-export data-type="ColorSchemePref?" id="dom-preferencemanager-colorscheme"><code><c- g>colorScheme</c-></code></dfn>;
+  <c- b>attribute</c-> <a data-link-type="idl-name" href="#enumdef-contrastpref" id="ref-for-enumdef-contrastpref"><c- n>ContrastPref</c-></a>? <dfn class="dfn-paneled idl-code" data-dfn-for="PreferenceManager" data-dfn-type="attribute" data-export data-type="ContrastPref?" id="dom-preferencemanager-contrast"><code><c- g>contrast</c-></code></dfn>;
+  <c- b>attribute</c-> <a data-link-type="idl-name" href="#enumdef-reducedmotionpref" id="ref-for-enumdef-reducedmotionpref"><c- n>ReducedMotionPref</c-></a>? <dfn class="dfn-paneled idl-code" data-dfn-for="PreferenceManager" data-dfn-type="attribute" data-export data-type="ReducedMotionPref?" id="dom-preferencemanager-reducedmotion"><code><c- g>reducedMotion</c-></code></dfn>;
+  <c- b>attribute</c-> <a data-link-type="idl-name" href="#enumdef-reducedtransparencypref" id="ref-for-enumdef-reducedtransparencypref"><c- n>ReducedTransparencyPref</c-></a>? <dfn class="dfn-paneled idl-code" data-dfn-for="PreferenceManager" data-dfn-type="attribute" data-export data-type="ReducedTransparencyPref?" id="dom-preferencemanager-reducedtransparency"><code><c- g>reducedTransparency</c-></code></dfn>;
+  <c- b>attribute</c-> <a data-link-type="idl-name" href="#enumdef-reduceddatapref" id="ref-for-enumdef-reduceddatapref"><c- n>ReducedDataPref</c-></a>? <dfn class="dfn-paneled idl-code" data-dfn-for="PreferenceManager" data-dfn-type="attribute" data-export data-type="ReducedDataPref?" id="dom-preferencemanager-reduceddata"><code><c- g>reducedData</c-></code></dfn>;
 
-  <a class="idl-code" data-link-type="interface" href="https://webidl.spec.whatwg.org/#idl-promise" id="ref-for-idl-promise"><c- b>Promise</c-></a>&lt;<a data-link-type="dfn" href="https://webidl.spec.whatwg.org/#idl-sequence" id="ref-for-idl-sequence"><c- b>sequence</c-></a>&lt;<a data-link-type="idl-name" href="#preferencesupportdata" id="ref-for-preferencesupportdata"><c- n>PreferenceSupportData</c-></a>>> <dfn class="idl-code" data-dfn-for="PreferenceManager" data-dfn-type="method" data-export data-lt="getSupported()" id="dom-preferencemanager-getsupported"><code><c- g>getSupported</c-></code><a class="self-link" href="#dom-preferencemanager-getsupported"></a></dfn>();
+  <a class="idl-code" data-link-type="interface" href="https://webidl.spec.whatwg.org/#idl-promise" id="ref-for-idl-promise"><c- b>Promise</c-></a>&lt;<a data-link-type="dfn" href="https://webidl.spec.whatwg.org/#idl-sequence" id="ref-for-idl-sequence"><c- b>sequence</c-></a>&lt;<a data-link-type="idl-name" href="#preferencesupportdata" id="ref-for-preferencesupportdata"><c- n>PreferenceSupportData</c-></a>>> <a class="idl-code" data-link-type="method" href="#dom-preferencemanager-getsupported" id="ref-for-dom-preferencemanager-getsupported"><c- g>getSupported</c-></a>();
 };
-
-<c- b>enum</c-> <dfn class="dfn-paneled idl-code" data-dfn-type="enum" data-export id="enumdef-colorschemepref"><code><c- g>ColorSchemePref</c-></code></dfn> { <dfn class="idl-code" data-dfn-for="ColorSchemePref" data-dfn-type="enum-value" data-export id="dom-colorschemepref-light"><code><c- s>"light"</c-></code><a class="self-link" href="#dom-colorschemepref-light"></a></dfn>, <dfn class="idl-code" data-dfn-for="ColorSchemePref" data-dfn-type="enum-value" data-export id="dom-colorschemepref-dark"><code><c- s>"dark"</c-></code><a class="self-link" href="#dom-colorschemepref-dark"></a></dfn> };
-<c- b>enum</c-> <dfn class="dfn-paneled idl-code" data-dfn-type="enum" data-export id="enumdef-contrastpref"><code><c- g>ContrastPref</c-></code></dfn> { <dfn class="idl-code" data-dfn-for="ContrastPref" data-dfn-type="enum-value" data-export id="dom-contrastpref-no-preference"><code><c- s>"no-preference"</c-></code><a class="self-link" href="#dom-contrastpref-no-preference"></a></dfn>, <dfn class="idl-code" data-dfn-for="ContrastPref" data-dfn-type="enum-value" data-export id="dom-contrastpref-more"><code><c- s>"more"</c-></code><a class="self-link" href="#dom-contrastpref-more"></a></dfn>, <dfn class="idl-code" data-dfn-for="ContrastPref" data-dfn-type="enum-value" data-export id="dom-contrastpref-less"><code><c- s>"less"</c-></code><a class="self-link" href="#dom-contrastpref-less"></a></dfn> };
-<c- b>enum</c-> <dfn class="dfn-paneled idl-code" data-dfn-type="enum" data-export id="enumdef-reducedmotionpref"><code><c- g>ReducedMotionPref</c-></code></dfn> { <dfn class="idl-code" data-dfn-for="ReducedMotionPref" data-dfn-type="enum-value" data-export id="dom-reducedmotionpref-no-preference"><code><c- s>"no-preference"</c-></code><a class="self-link" href="#dom-reducedmotionpref-no-preference"></a></dfn>, <dfn class="idl-code" data-dfn-for="ReducedMotionPref" data-dfn-type="enum-value" data-export id="dom-reducedmotionpref-reduce"><code><c- s>"reduce"</c-></code><a class="self-link" href="#dom-reducedmotionpref-reduce"></a></dfn> };
-<c- b>enum</c-> <dfn class="dfn-paneled idl-code" data-dfn-type="enum" data-export id="enumdef-reducedtransparencypref"><code><c- g>ReducedTransparencyPref</c-></code></dfn> { <dfn class="idl-code" data-dfn-for="ReducedTransparencyPref" data-dfn-type="enum-value" data-export id="dom-reducedtransparencypref-no-preference"><code><c- s>"no-preference"</c-></code><a class="self-link" href="#dom-reducedtransparencypref-no-preference"></a></dfn>, <dfn class="idl-code" data-dfn-for="ReducedTransparencyPref" data-dfn-type="enum-value" data-export id="dom-reducedtransparencypref-reduce"><code><c- s>"reduce"</c-></code><a class="self-link" href="#dom-reducedtransparencypref-reduce"></a></dfn> };
-<c- b>enum</c-> <dfn class="dfn-paneled idl-code" data-dfn-type="enum" data-export id="enumdef-reduceddatapref"><code><c- g>ReducedDataPref</c-></code></dfn> { <dfn class="idl-code" data-dfn-for="ReducedDataPref" data-dfn-type="enum-value" data-export id="dom-reduceddatapref-no-preference"><code><c- s>"no-preference"</c-></code><a class="self-link" href="#dom-reduceddatapref-no-preference"></a></dfn>, <dfn class="idl-code" data-dfn-for="ReducedDataPref" data-dfn-type="enum-value" data-export id="dom-reduceddatapref-reduce"><code><c- s>"reduce"</c-></code><a class="self-link" href="#dom-reduceddatapref-reduce"></a></dfn> };
-
-[<a class="idl-code" data-link-type="extended-attribute" href="https://webidl.spec.whatwg.org/#Exposed" id="ref-for-Exposed①"><c- g>Exposed</c-></a>=<c- n>Window</c->]
+</pre>
+   <p class="note" role="note"><span class="marker">Note:</span> The exact set of preferences is down to the browser vendor, but it is expected that the set of preferences will be the same as those defined in <a data-link-type="biblio" href="#biblio-mediaqueries-5" title="Media Queries Level 5">[mediaqueries-5]</a>.</p>
+   <h3 class="heading settled" data-level="3.1" id="get-supported-method"><span class="secno">3.1. </span><span class="content"><code class="idl"><a data-link-type="idl" href="#dom-preferencemanager-getsupported" id="ref-for-dom-preferencemanager-getsupported①">getSupported</a></code> method</span><a class="self-link" href="#get-supported-method"></a></h3>
+   <div class="algorithm" data-algorithm="getSupported()" data-algorithm-for="PreferenceManager">
+     The <dfn class="dfn-paneled idl-code" data-dfn-for="PreferenceManager" data-dfn-type="method" data-export id="dom-preferencemanager-getsupported"><code>getSupported()</code></dfn> method, when invoked, must run these steps: 
+    <ol>
+     <li data-md>
+      <p>Let <var>result</var> be <a data-link-type="dfn" href="https://webidl.spec.whatwg.org/#a-new-promise" id="ref-for-a-new-promise">a new promise</a>.</p>
+     <li data-md>
+      <p>Let <var>supportedPreferences</var> be a new empty sequence.</p>
+     <li data-md>
+      <p>For each preference that the browser supports, add a new <code class="idl"><a data-link-type="idl" href="#preferencesupportdata" id="ref-for-preferencesupportdata①">PreferenceSupportData</a></code> object to <var>supportedPreferences</var> with the following properties:</p>
+      <ul>
+       <li data-md>
+        <p><code>name</code> set to the name of the preference</p>
+       <li data-md>
+        <p><code>values</code> set to a sequence of strings representing the valid values for the preference</p>
+      </ul>
+     <li data-md>
+      <p>Resolve <var>result</var> with <var>supportedPreferences</var>.</p>
+     <li data-md>
+      <p>Return <var>result</var>.</p>
+    </ol>
+   </div>
+   <h4 class="heading settled" data-level="3.1.1" id="preferencesupportdata-interface"><span class="secno">3.1.1. </span><span class="content"><code class="idl"><a data-link-type="idl" href="#preferencesupportdata" id="ref-for-preferencesupportdata②">PreferenceSupportData</a></code> interface</span><a class="self-link" href="#preferencesupportdata-interface"></a></h4>
+<pre class="idl highlight def">[<a class="idl-code" data-link-type="extended-attribute" href="https://webidl.spec.whatwg.org/#Exposed" id="ref-for-Exposed②"><c- g>Exposed</c-></a>=<c- n>Window</c->]
 <c- b>interface</c-> <dfn class="dfn-paneled idl-code" data-dfn-type="interface" data-export id="preferencesupportdata"><code><c- g>PreferenceSupportData</c-></code></dfn> {
   <c- b>readonly</c-> <c- b>attribute</c-> <a class="idl-code" data-link-type="interface" href="https://webidl.spec.whatwg.org/#idl-DOMString" id="ref-for-idl-DOMString"><c- b>DOMString</c-></a> <dfn class="idl-code" data-dfn-for="PreferenceSupportData" data-dfn-type="attribute" data-export data-readonly data-type="DOMString" id="dom-preferencesupportdata-name"><code><c- g>name</c-></code><a class="self-link" href="#dom-preferencesupportdata-name"></a></dfn>;
   <c- b>readonly</c-> <c- b>attribute</c-> <a class="idl-code" data-link-type="interface" href="https://webidl.spec.whatwg.org/#idl-frozen-array" id="ref-for-idl-frozen-array"><c- b>FrozenArray</c-></a>&lt;<a class="idl-code" data-link-type="interface" href="https://webidl.spec.whatwg.org/#idl-DOMString" id="ref-for-idl-DOMString①"><c- b>DOMString</c-></a>> <dfn class="idl-code" data-dfn-for="PreferenceSupportData" data-dfn-type="attribute" data-export data-readonly data-type="FrozenArray<DOMString>" id="dom-preferencesupportdata-values"><code><c- g>values</c-></code><a class="self-link" href="#dom-preferencesupportdata-values"></a></dfn>;
 };
 </pre>
-   <h3 class="heading settled" data-level="2.1" id="usage-examples"><span class="secno">2.1. </span><span class="content">Usage Examples</span><a class="self-link" href="#usage-examples"></a></h3>
+   <h3 class="heading settled" data-level="3.2" id="preference-attributes"><span class="secno">3.2. </span><span class="content">Preference attributes</span><a class="self-link" href="#preference-attributes"></a></h3>
+   <h4 class="heading settled" data-level="3.2.1" id="setting-a-preference-attribute"><span class="secno">3.2.1. </span><span class="content">Setting a preference attribute</span><a class="self-link" href="#setting-a-preference-attribute"></a></h4>
+   <div class="algorithm" data-algorithm="setting preference override">
+     The preference attributes, when set, must run these steps: 
+    <ol>
+     <li data-md>
+      <p>Let <var>preference</var> be the preference attribute’s name.</p>
+     <li data-md>
+      <p>Let <var>validValues</var> be the preference attribute’s valid values.</p>
+     <li data-md>
+      <p>If <var>value</var> is not in <var>validValues</var>, return.</p>
+     <li data-md>
+      <p>If <var>value</var> is the same as the preference override for <var>preference</var>, return.</p>
+     <li data-md>
+      <p>Set the preference override for <var>preference</var> to <var>value</var>.</p>
+    </ol>
+   </div>
+   <p class="issue" id="issue-86abb4ed"><a class="self-link" href="#issue-86abb4ed"></a> This algorithm needs more detail on where the overrides are stored. Also need to define what happens when a preference is overridden, with specific regard to sub-resources.</p>
+   <h4 class="heading settled" data-level="3.2.2" id="getting-a-preference-attribute"><span class="secno">3.2.2. </span><span class="content">Getting a preference attribute</span><a class="self-link" href="#getting-a-preference-attribute"></a></h4>
+   <div class="algorithm" data-algorithm="getting-preference-override">
+     The preference attributes, when accessed, must run these steps: 
+    <ol>
+     <li data-md>
+      <p>Let <var>preference</var> be the preference attribute’s name.</p>
+     <li data-md>
+      <p>If no overrides have been set for the preference, return <code>null</code>.</p>
+     <li data-md>
+      <p>Let <var>result</var> be the preference override for <var>preference</var>.</p>
+     <li data-md>
+      <p>Return <var>result</var>.</p>
+    </ol>
+   </div>
+   <p class="issue" id="issue-482fa236"><a class="self-link" href="#issue-482fa236"></a> This algorithm needs more detail on where the overrides are stored.</p>
+   <h4 class="heading settled" data-level="3.2.3" id="colorscheme-preference"><span class="secno">3.2.3. </span><span class="content"><code class="idl"><a data-link-type="idl" href="#dom-preferencemanager-colorscheme" id="ref-for-dom-preferencemanager-colorscheme">colorScheme</a></code> preference</span><a class="self-link" href="#colorscheme-preference"></a></h4>
+   <p>The <code class="idl"><a data-link-type="idl" href="#dom-preferencemanager-colorscheme" id="ref-for-dom-preferencemanager-colorscheme①">colorScheme</a></code> preference represents the user’s preference for the color scheme of the site.
+This is modeled after the <code>prefers-color-scheme</code> user preference media feature as defined in <a href="https://drafts.csswg.org/mediaqueries-5/#prefers-color-scheme"><cite>Media Queries 5</cite> § 11.5 Detecting the desire for light or dark color schemes: the prefers-color-scheme feature</a>.</p>
+<pre class="idl highlight def"><c- b>enum</c-> <dfn class="dfn-paneled idl-code" data-dfn-type="enum" data-export id="enumdef-colorschemepref"><code><c- g>ColorSchemePref</c-></code></dfn> { <dfn class="idl-code" data-dfn-for="ColorSchemePref" data-dfn-type="enum-value" data-export id="dom-colorschemepref-light"><code><c- s>"light"</c-></code><a class="self-link" href="#dom-colorschemepref-light"></a></dfn>, <dfn class="idl-code" data-dfn-for="ColorSchemePref" data-dfn-type="enum-value" data-export id="dom-colorschemepref-dark"><code><c- s>"dark"</c-></code><a class="self-link" href="#dom-colorschemepref-dark"></a></dfn> };
+</pre>
+   <h4 class="heading settled" data-level="3.2.4" id="contrast-preference"><span class="secno">3.2.4. </span><span class="content"><code class="idl"><a data-link-type="idl" href="#dom-preferencemanager-contrast" id="ref-for-dom-preferencemanager-contrast">contrast</a></code> preference</span><a class="self-link" href="#contrast-preference"></a></h4>
+   <p>The <code class="idl"><a data-link-type="idl" href="#dom-preferencemanager-contrast" id="ref-for-dom-preferencemanager-contrast①">contrast</a></code> preference represents the user’s preference for the contrast of the site.
+This is modeled after the <code>prefers-contrast</code> user preference media feature as defined in <a href="https://drafts.csswg.org/mediaqueries-5/#prefers-contrast"><cite>Media Queries 5</cite> § 11.3 Detecting the desire for increased or decreased color contrast from elements on the page: the prefers-contrast feature</a>.</p>
+   <p>Unlike the media feature this preference is not able to be set to <code>custom</code> this is tightly coupled to the <code>forced-colors</code> media feature.</p>
+<pre class="idl highlight def"><c- b>enum</c-> <dfn class="dfn-paneled idl-code" data-dfn-type="enum" data-export id="enumdef-contrastpref"><code><c- g>ContrastPref</c-></code></dfn> { <dfn class="idl-code" data-dfn-for="ContrastPref" data-dfn-type="enum-value" data-export id="dom-contrastpref-no-preference"><code><c- s>"no-preference"</c-></code><a class="self-link" href="#dom-contrastpref-no-preference"></a></dfn>, <dfn class="idl-code" data-dfn-for="ContrastPref" data-dfn-type="enum-value" data-export id="dom-contrastpref-more"><code><c- s>"more"</c-></code><a class="self-link" href="#dom-contrastpref-more"></a></dfn>, <dfn class="idl-code" data-dfn-for="ContrastPref" data-dfn-type="enum-value" data-export id="dom-contrastpref-less"><code><c- s>"less"</c-></code><a class="self-link" href="#dom-contrastpref-less"></a></dfn> };
+</pre>
+   <h4 class="heading settled" data-level="3.2.5" id="reducedmotion-preference"><span class="secno">3.2.5. </span><span class="content"><code class="idl"><a data-link-type="idl" href="#dom-preferencemanager-reducedmotion" id="ref-for-dom-preferencemanager-reducedmotion">reducedMotion</a></code> preference</span><a class="self-link" href="#reducedmotion-preference"></a></h4>
+   <p>The <code class="idl"><a data-link-type="idl" href="#dom-preferencemanager-reducedmotion" id="ref-for-dom-preferencemanager-reducedmotion①">reducedMotion</a></code> preference represents the user’s preference for reduced motion on the site.
+This is modeled after the <code>prefers-reduced-motion</code> user preference media feature as defined in <a href="https://drafts.csswg.org/mediaqueries-5/#prefers-reduced-motion"><cite>Media Queries 5</cite> § 11.1 Detecting the desire for less motion on the page: the prefers-reduced-motion feature</a>.</p>
+<pre class="idl highlight def"><c- b>enum</c-> <dfn class="dfn-paneled idl-code" data-dfn-type="enum" data-export id="enumdef-reducedmotionpref"><code><c- g>ReducedMotionPref</c-></code></dfn> { <dfn class="idl-code" data-dfn-for="ReducedMotionPref" data-dfn-type="enum-value" data-export id="dom-reducedmotionpref-no-preference"><code><c- s>"no-preference"</c-></code><a class="self-link" href="#dom-reducedmotionpref-no-preference"></a></dfn>, <dfn class="idl-code" data-dfn-for="ReducedMotionPref" data-dfn-type="enum-value" data-export id="dom-reducedmotionpref-reduce"><code><c- s>"reduce"</c-></code><a class="self-link" href="#dom-reducedmotionpref-reduce"></a></dfn> };
+</pre>
+   <h4 class="heading settled" data-level="3.2.6" id="reducedtransparency-preference"><span class="secno">3.2.6. </span><span class="content"><code class="idl"><a data-link-type="idl" href="#dom-preferencemanager-reducedtransparency" id="ref-for-dom-preferencemanager-reducedtransparency">reducedTransparency</a></code> preference</span><a class="self-link" href="#reducedtransparency-preference"></a></h4>
+   <p>The <code class="idl"><a data-link-type="idl" href="#dom-preferencemanager-reducedtransparency" id="ref-for-dom-preferencemanager-reducedtransparency①">reducedTransparency</a></code> preference represents the user’s preference for reduced transparency on the site.
+This is modeled after the <code>prefers-reduced-transparency</code> user preference media feature as defined in <a href="https://drafts.csswg.org/mediaqueries-5/#prefers-reduced-transparency"><cite>Media Queries 5</cite> § 11.2 Detecting the desire for reduced transparency on the page: the prefers-reduced-transparency feature</a>.</p>
+<pre class="idl highlight def"><c- b>enum</c-> <dfn class="dfn-paneled idl-code" data-dfn-type="enum" data-export id="enumdef-reducedtransparencypref"><code><c- g>ReducedTransparencyPref</c-></code></dfn> { <dfn class="idl-code" data-dfn-for="ReducedTransparencyPref" data-dfn-type="enum-value" data-export id="dom-reducedtransparencypref-no-preference"><code><c- s>"no-preference"</c-></code><a class="self-link" href="#dom-reducedtransparencypref-no-preference"></a></dfn>, <dfn class="idl-code" data-dfn-for="ReducedTransparencyPref" data-dfn-type="enum-value" data-export id="dom-reducedtransparencypref-reduce"><code><c- s>"reduce"</c-></code><a class="self-link" href="#dom-reducedtransparencypref-reduce"></a></dfn> };
+</pre>
+   <h4 class="heading settled" data-level="3.2.7" id="reduceddata-preference"><span class="secno">3.2.7. </span><span class="content"><code class="idl"><a data-link-type="idl" href="#dom-preferencemanager-reduceddata" id="ref-for-dom-preferencemanager-reduceddata">reducedData</a></code> preference</span><a class="self-link" href="#reduceddata-preference"></a></h4>
+   <p>The <code class="idl"><a data-link-type="idl" href="#dom-preferencemanager-reduceddata" id="ref-for-dom-preferencemanager-reduceddata①">reducedData</a></code> preference represents the user’s preference for reduced data usage on the site.
+This is modeled after the <code>prefers-reduced-data</code> user preference media feature as defined in <a href="https://drafts.csswg.org/mediaqueries-5/#prefers-reduced-data"><cite>Media Queries 5</cite> § 11.6 Detecting the desire for reduced data usage when loading a page: the prefers-reduced-data feature</a>.</p>
+<pre class="idl highlight def"><c- b>enum</c-> <dfn class="dfn-paneled idl-code" data-dfn-type="enum" data-export id="enumdef-reduceddatapref"><code><c- g>ReducedDataPref</c-></code></dfn> { <dfn class="idl-code" data-dfn-for="ReducedDataPref" data-dfn-type="enum-value" data-export id="dom-reduceddatapref-no-preference"><code><c- s>"no-preference"</c-></code><a class="self-link" href="#dom-reduceddatapref-no-preference"></a></dfn>, <dfn class="idl-code" data-dfn-for="ReducedDataPref" data-dfn-type="enum-value" data-export id="dom-reduceddatapref-reduce"><code><c- s>"reduce"</c-></code><a class="self-link" href="#dom-reduceddatapref-reduce"></a></dfn> };
+</pre>
+   <h2 class="heading settled" data-level="4" id="usage-examples"><span class="secno">4. </span><span class="content">Usage Examples</span><a class="self-link" href="#usage-examples"></a></h2>
    <p><em>This section is non-normative.</em></p>
    <p>Each preference the browser supports will be exposed as a property on the <code>navigator.preferences</code> object.</p>
    <p>Feature detection for a given preference is as simple as:</p>
 <pre class="language-js highlight"><c- a>const</c-> colorSchemeSupported <c- o>=</c-> <c- t>'colorScheme'</c-> <c- ow>in</c-> navigator<c- p>.</c->preferences<c- p>;</c->
 </pre>
-   <h4 class="heading settled" data-level="2.1.1" id="setting-a-preference-override"><span class="secno">2.1.1. </span><span class="content">Setting a preference override</span><a class="self-link" href="#setting-a-preference-override"></a></h4>
+   <h3 class="heading settled" data-level="4.1" id="setting-a-preference-override"><span class="secno">4.1. </span><span class="content">Setting a preference override</span><a class="self-link" href="#setting-a-preference-override"></a></h3>
    <p>To set a preference override, the property can be set to a valid value for the preference.
 If an invalid value is set then this will be a no-op.</p>
 <pre class="language-js highlight">navigator<c- p>.</c->preferences<c- p>.</c->colorScheme <c- o>=</c-> <c- t>'dark'</c-><c- p>;</c->
 </pre>
-   <h5 class="heading settled" data-level="2.1.1.1" id="clearing-overrides"><span class="secno">2.1.1.1. </span><span class="content">Setting a preference override to <code>null</code></span><a class="self-link" href="#clearing-overrides"></a></h5>
+   <h3 class="heading settled" data-level="4.2" id="clearing-overrides"><span class="secno">4.2. </span><span class="content">Clearing a preference override</span><a class="self-link" href="#clearing-overrides"></a></h3>
    <p>To clear an override and return the preference to the browser default, the property can be set to null.</p>
 <pre class="language-js highlight">navigator<c- p>.</c->preferences<c- p>.</c->colorScheme <c- o>=</c-> <c- kc>null</c-><c- p>;</c->
 </pre>
-   <h4 class="heading settled" data-level="2.1.2" id="getting-a-preference-override"><span class="secno">2.1.2. </span><span class="content">Getting a preference override</span><a class="self-link" href="#getting-a-preference-override"></a></h4>
+   <h3 class="heading settled" data-level="4.3" id="getting-a-preference-override"><span class="secno">4.3. </span><span class="content">Getting a preference override</span><a class="self-link" href="#getting-a-preference-override"></a></h3>
    <p>To get the value of a preference override, the property can be read.
 Each property will return the string value indicating the preference, or null if no override is set.</p>
 <pre class="language-js highlight"><c- a>const</c-> colorScheme <c- o>=</c-> navigator<c- p>.</c->preferences<c- p>.</c->colorScheme<c- p>;</c-> <c- c1>// "light" | "dark" | null</c->
 </pre>
-   <h4 class="heading settled" data-level="2.1.3" id="get-supported"><span class="secno">2.1.3. </span><span class="content">The <code>navigator.preferences.getSupported</code> method</span><a class="self-link" href="#get-supported"></a></h4>
+   <h3 class="heading settled" data-level="4.4" id="get-supported"><span class="secno">4.4. </span><span class="content">The <code>navigator.preferences.getSupported</code> method</span><a class="self-link" href="#get-supported"></a></h3>
    <p>This method allows a site to get the preferences supported by the browser. This is useful for sites that want to dynamically generate UI for overriding preferences.</p>
    <p>It also allows sites to determine if a preference value is supported before attempting to set it.</p>
 <pre class="language-js highlight"><c- a>const</c-> preferenceSupportData <c- o>=</c-> <c- k>await</c-> navigator<c- p>.</c->preferences<c- p>.</c->getSupported<c- p>();</c->
 console<c- p>.</c->log<c- p>(</c->preferenceSupportData<c- p>);</c-> <c- c1>// [ { name: 'contrast', values: ['more', 'less', 'no-preference'] }, ... ]</c->
 </pre>
-   <h2 class="heading settled" data-level="3" id="sec-security"><span class="secno">3. </span><span class="content">Security and Privacy Considerations</span><a class="self-link" href="#sec-security"></a></h2>
+   <h2 class="heading settled" data-level="5" id="sec-security"><span class="secno">5. </span><span class="content">Security and Privacy Considerations</span><a class="self-link" href="#sec-security"></a></h2>
    <p><em>This section is non-normative.</em></p>
-   <h3 class="heading settled" data-level="3.1" id="fingerprinting"><span class="secno">3.1. </span><span class="content">Avoiding fingerprinting</span><a class="self-link" href="#fingerprinting"></a></h3>
+   <h3 class="heading settled" data-level="5.1" id="fingerprinting"><span class="secno">5.1. </span><span class="content">Avoiding fingerprinting</span><a class="self-link" href="#fingerprinting"></a></h3>
    <p>This API exposes no new fingerprinting surfaces beyond that which already exist in the platform.</p>
-   <h3 class="heading settled" data-level="3.2" id="permissions"><span class="secno">3.2. </span><span class="content">Permissions &amp; User Activation</span><a class="self-link" href="#permissions"></a></h3>
+   <h3 class="heading settled" data-level="5.2" id="permissions"><span class="secno">5.2. </span><span class="content">Permissions &amp; User Activation</span><a class="self-link" href="#permissions"></a></h3>
    <p>This API does not require any permissions or user activation. It exposes no new capabilities to a site beyond that which already exists in the platform.</p>
    <p>A site can already store a value in local storage and read into the DOM to override a preference. This API simply makes the ergonomics of this better.</p>
-   <h3 class="heading settled" data-level="3.3" id="sub-resources"><span class="secno">3.3. </span><span class="content">Sub-resources</span><a class="self-link" href="#sub-resources"></a></h3>
+   <h3 class="heading settled" data-level="5.3" id="sub-resources"><span class="secno">5.3. </span><span class="content">Sub-resources</span><a class="self-link" href="#sub-resources"></a></h3>
    <p class="note" role="note"><span class="marker">Note:</span> See <a href="https://github.com/lukewarlow/web-preferences-api/issues/8">#8</a> for discussion regarding this.</p>
    <p>For the spec we can probably find an existing definition to reference, but for the purposes of this explainer:</p>
    <ul>
@@ -842,7 +960,7 @@ console<c- p>.</c->log<c- p>(</c->preferenceSupportData<c- p>);</c-> <c- c1>// [
    </ul>
    <p>Wherever the override value is passed down it should be done so in an opaque manner.</p>
    <div class="example" id="example-c7663e92"><a class="self-link" href="#example-c7663e92"></a> If the parent frame sets <code>colorScheme</code> to <code>dark</code> then the iframe should see <code>prefers-color-scheme</code> as dark but shouldn’t read <code>navigator.preferences.colorScheme</code> as <code>dark</code>. </div>
-   <h2 class="heading settled" data-level="4" id="sec-acknowledgements"><span class="secno">4. </span><span class="content">Acknowledgements</span><a class="self-link" href="#sec-acknowledgements"></a></h2>
+   <h2 class="heading settled" data-level="6" id="sec-acknowledgements"><span class="secno">6. </span><span class="content">Acknowledgements</span><a class="self-link" href="#sec-acknowledgements"></a></h2>
    <p><em>This section is non-normative.</em></p>
    <p class="issue" id="issue-bfd5fd46"><a class="self-link" href="#issue-bfd5fd46"></a> TODO fill in acknowledgements section</p>
   </main>
@@ -877,41 +995,41 @@ console<c- p>.</c->log<c- p>(</c->preferenceSupportData<c- p>);</c-> <c- c1>// [
   <h2 class="no-num no-ref heading settled" id="index"><span class="content">Index</span><a class="self-link" href="#index"></a></h2>
   <h3 class="no-num no-ref heading settled" id="index-defined-here"><span class="content">Terms defined by this specification</span><a class="self-link" href="#index-defined-here"></a></h3>
   <ul class="index">
-   <li><a href="#dom-preferencemanager-colorscheme">colorScheme</a><span>, in § 2</span>
-   <li><a href="#enumdef-colorschemepref">ColorSchemePref</a><span>, in § 2</span>
-   <li><a href="#dom-preferencemanager-contrast">contrast</a><span>, in § 2</span>
-   <li><a href="#enumdef-contrastpref">ContrastPref</a><span>, in § 2</span>
-   <li><a href="#dom-colorschemepref-dark">"dark"</a><span>, in § 2</span>
-   <li><a href="#dom-preferencemanager-getsupported">getSupported()</a><span>, in § 2</span>
-   <li><a href="#dom-contrastpref-less">"less"</a><span>, in § 2</span>
-   <li><a href="#dom-colorschemepref-light">"light"</a><span>, in § 2</span>
-   <li><a href="#dom-contrastpref-more">"more"</a><span>, in § 2</span>
-   <li><a href="#dom-preferencesupportdata-name">name</a><span>, in § 2</span>
+   <li><a href="#dom-preferencemanager-colorscheme">colorScheme</a><span>, in § 3</span>
+   <li><a href="#enumdef-colorschemepref">ColorSchemePref</a><span>, in § 3.2.3</span>
+   <li><a href="#dom-preferencemanager-contrast">contrast</a><span>, in § 3</span>
+   <li><a href="#enumdef-contrastpref">ContrastPref</a><span>, in § 3.2.4</span>
+   <li><a href="#dom-colorschemepref-dark">"dark"</a><span>, in § 3.2.3</span>
+   <li><a href="#dom-preferencemanager-getsupported">getSupported()</a><span>, in § 3.1</span>
+   <li><a href="#dom-contrastpref-less">"less"</a><span>, in § 3.2.4</span>
+   <li><a href="#dom-colorschemepref-light">"light"</a><span>, in § 3.2.3</span>
+   <li><a href="#dom-contrastpref-more">"more"</a><span>, in § 3.2.4</span>
+   <li><a href="#dom-preferencesupportdata-name">name</a><span>, in § 3.1.1</span>
    <li>
     "no-preference"
     <ul>
-     <li><a href="#dom-contrastpref-no-preference">enum-value for ContrastPref</a><span>, in § 2</span>
-     <li><a href="#dom-reduceddatapref-no-preference">enum-value for ReducedDataPref</a><span>, in § 2</span>
-     <li><a href="#dom-reducedmotionpref-no-preference">enum-value for ReducedMotionPref</a><span>, in § 2</span>
-     <li><a href="#dom-reducedtransparencypref-no-preference">enum-value for ReducedTransparencyPref</a><span>, in § 2</span>
+     <li><a href="#dom-contrastpref-no-preference">enum-value for ContrastPref</a><span>, in § 3.2.4</span>
+     <li><a href="#dom-reduceddatapref-no-preference">enum-value for ReducedDataPref</a><span>, in § 3.2.7</span>
+     <li><a href="#dom-reducedmotionpref-no-preference">enum-value for ReducedMotionPref</a><span>, in § 3.2.5</span>
+     <li><a href="#dom-reducedtransparencypref-no-preference">enum-value for ReducedTransparencyPref</a><span>, in § 3.2.6</span>
     </ul>
-   <li><a href="#preferencemanager">PreferenceManager</a><span>, in § 2</span>
+   <li><a href="#preferencemanager">PreferenceManager</a><span>, in § 3</span>
    <li><a href="#dom-navigator-preferences">preferences</a><span>, in § 2</span>
-   <li><a href="#preferencesupportdata">PreferenceSupportData</a><span>, in § 2</span>
+   <li><a href="#preferencesupportdata">PreferenceSupportData</a><span>, in § 3.1.1</span>
    <li>
     "reduce"
     <ul>
-     <li><a href="#dom-reduceddatapref-reduce">enum-value for ReducedDataPref</a><span>, in § 2</span>
-     <li><a href="#dom-reducedmotionpref-reduce">enum-value for ReducedMotionPref</a><span>, in § 2</span>
-     <li><a href="#dom-reducedtransparencypref-reduce">enum-value for ReducedTransparencyPref</a><span>, in § 2</span>
+     <li><a href="#dom-reduceddatapref-reduce">enum-value for ReducedDataPref</a><span>, in § 3.2.7</span>
+     <li><a href="#dom-reducedmotionpref-reduce">enum-value for ReducedMotionPref</a><span>, in § 3.2.5</span>
+     <li><a href="#dom-reducedtransparencypref-reduce">enum-value for ReducedTransparencyPref</a><span>, in § 3.2.6</span>
     </ul>
-   <li><a href="#dom-preferencemanager-reduceddata">reducedData</a><span>, in § 2</span>
-   <li><a href="#enumdef-reduceddatapref">ReducedDataPref</a><span>, in § 2</span>
-   <li><a href="#dom-preferencemanager-reducedmotion">reducedMotion</a><span>, in § 2</span>
-   <li><a href="#enumdef-reducedmotionpref">ReducedMotionPref</a><span>, in § 2</span>
-   <li><a href="#dom-preferencemanager-reducedtransparency">reducedTransparency</a><span>, in § 2</span>
-   <li><a href="#enumdef-reducedtransparencypref">ReducedTransparencyPref</a><span>, in § 2</span>
-   <li><a href="#dom-preferencesupportdata-values">values</a><span>, in § 2</span>
+   <li><a href="#dom-preferencemanager-reduceddata">reducedData</a><span>, in § 3</span>
+   <li><a href="#enumdef-reduceddatapref">ReducedDataPref</a><span>, in § 3.2.7</span>
+   <li><a href="#dom-preferencemanager-reducedmotion">reducedMotion</a><span>, in § 3</span>
+   <li><a href="#enumdef-reducedmotionpref">ReducedMotionPref</a><span>, in § 3.2.5</span>
+   <li><a href="#dom-preferencemanager-reducedtransparency">reducedTransparency</a><span>, in § 3</span>
+   <li><a href="#enumdef-reducedtransparencypref">ReducedTransparencyPref</a><span>, in § 3.2.6</span>
+   <li><a href="#dom-preferencesupportdata-values">values</a><span>, in § 3.1.1</span>
   </ul>
   <h3 class="no-num no-ref heading settled" id="index-defined-elsewhere"><span class="content">Terms defined by reference</span><a class="self-link" href="#index-defined-elsewhere"></a></h3>
   <ul class="index">
@@ -927,6 +1045,7 @@ console<c- p>.</c->log<c- p>(</c->preferenceSupportData<c- p>);</c-> <c- c1>// [
      <li><span class="dfn-paneled" id="889e932f">Exposed</span>
      <li><span class="dfn-paneled" id="dcf5fafa">FrozenArray</span>
      <li><span class="dfn-paneled" id="bdbd19d1">Promise</span>
+     <li><span class="dfn-paneled" id="dacde8b5">a new promise</span>
      <li><span class="dfn-paneled" id="9cce47fd">sequence</span>
     </ul>
   </ul>
@@ -945,28 +1064,21 @@ console<c- p>.</c->log<c- p>(</c->preferenceSupportData<c- p>);</c-> <c- c1>// [
    <dd>Edgar Chen; Timothy Gu. <a href="https://webidl.spec.whatwg.org/"><cite>Web IDL Standard</cite></a>. Living Standard. URL: <a href="https://webidl.spec.whatwg.org/">https://webidl.spec.whatwg.org/</a>
   </dl>
   <h2 class="no-num no-ref heading settled" id="idl-index"><span class="content">IDL Index</span><a class="self-link" href="#idl-index"></a></h2>
-<pre class="idl highlight def"><c- b>partial</c-> <c- b>interface</c-> <a class="idl-code" data-link-type="interface" href="https://html.spec.whatwg.org/multipage/system-state.html#navigator"><c- g>Navigator</c-></a> {
+<pre class="idl highlight def">[<a class="idl-code" data-link-type="extended-attribute" href="https://webidl.spec.whatwg.org/#Exposed"><c- g>Exposed</c-></a>=<c- n>Window</c->]
+<c- b>partial</c-> <c- b>interface</c-> <a class="idl-code" data-link-type="interface" href="https://html.spec.whatwg.org/multipage/system-state.html#navigator"><c- g>Navigator</c-></a> {
   <c- b>readonly</c-> <c- b>attribute</c-> <a data-link-type="idl-name" href="#preferencemanager"><c- n>PreferenceManager</c-></a> <a data-readonly data-type="PreferenceManager" href="#dom-navigator-preferences"><code><c- g>preferences</c-></code></a>;
 };
 
 [<a class="idl-code" data-link-type="extended-attribute" href="https://webidl.spec.whatwg.org/#Exposed"><c- g>Exposed</c-></a>=<c- n>Window</c->]
 <c- b>interface</c-> <a href="#preferencemanager"><code><c- g>PreferenceManager</c-></code></a> {
-  // null means the preference is not overridden
   <c- b>attribute</c-> <a data-link-type="idl-name" href="#enumdef-colorschemepref"><c- n>ColorSchemePref</c-></a>? <a data-type="ColorSchemePref?" href="#dom-preferencemanager-colorscheme"><code><c- g>colorScheme</c-></code></a>;
   <c- b>attribute</c-> <a data-link-type="idl-name" href="#enumdef-contrastpref"><c- n>ContrastPref</c-></a>? <a data-type="ContrastPref?" href="#dom-preferencemanager-contrast"><code><c- g>contrast</c-></code></a>;
   <c- b>attribute</c-> <a data-link-type="idl-name" href="#enumdef-reducedmotionpref"><c- n>ReducedMotionPref</c-></a>? <a data-type="ReducedMotionPref?" href="#dom-preferencemanager-reducedmotion"><code><c- g>reducedMotion</c-></code></a>;
   <c- b>attribute</c-> <a data-link-type="idl-name" href="#enumdef-reducedtransparencypref"><c- n>ReducedTransparencyPref</c-></a>? <a data-type="ReducedTransparencyPref?" href="#dom-preferencemanager-reducedtransparency"><code><c- g>reducedTransparency</c-></code></a>;
   <c- b>attribute</c-> <a data-link-type="idl-name" href="#enumdef-reduceddatapref"><c- n>ReducedDataPref</c-></a>? <a data-type="ReducedDataPref?" href="#dom-preferencemanager-reduceddata"><code><c- g>reducedData</c-></code></a>;
-  // Future preferences can be added here, the exact properties will be down to the browser support.
 
-  <a class="idl-code" data-link-type="interface" href="https://webidl.spec.whatwg.org/#idl-promise"><c- b>Promise</c-></a>&lt;<a data-link-type="dfn" href="https://webidl.spec.whatwg.org/#idl-sequence"><c- b>sequence</c-></a>&lt;<a data-link-type="idl-name" href="#preferencesupportdata"><c- n>PreferenceSupportData</c-></a>>> <a href="#dom-preferencemanager-getsupported"><code><c- g>getSupported</c-></code></a>();
+  <a class="idl-code" data-link-type="interface" href="https://webidl.spec.whatwg.org/#idl-promise"><c- b>Promise</c-></a>&lt;<a data-link-type="dfn" href="https://webidl.spec.whatwg.org/#idl-sequence"><c- b>sequence</c-></a>&lt;<a data-link-type="idl-name" href="#preferencesupportdata"><c- n>PreferenceSupportData</c-></a>>> <a class="idl-code" data-link-type="method" href="#dom-preferencemanager-getsupported"><c- g>getSupported</c-></a>();
 };
-
-<c- b>enum</c-> <a href="#enumdef-colorschemepref"><code><c- g>ColorSchemePref</c-></code></a> { <a href="#dom-colorschemepref-light"><code><c- s>"light"</c-></code></a>, <a href="#dom-colorschemepref-dark"><code><c- s>"dark"</c-></code></a> };
-<c- b>enum</c-> <a href="#enumdef-contrastpref"><code><c- g>ContrastPref</c-></code></a> { <a href="#dom-contrastpref-no-preference"><code><c- s>"no-preference"</c-></code></a>, <a href="#dom-contrastpref-more"><code><c- s>"more"</c-></code></a>, <a href="#dom-contrastpref-less"><code><c- s>"less"</c-></code></a> };
-<c- b>enum</c-> <a href="#enumdef-reducedmotionpref"><code><c- g>ReducedMotionPref</c-></code></a> { <a href="#dom-reducedmotionpref-no-preference"><code><c- s>"no-preference"</c-></code></a>, <a href="#dom-reducedmotionpref-reduce"><code><c- s>"reduce"</c-></code></a> };
-<c- b>enum</c-> <a href="#enumdef-reducedtransparencypref"><code><c- g>ReducedTransparencyPref</c-></code></a> { <a href="#dom-reducedtransparencypref-no-preference"><code><c- s>"no-preference"</c-></code></a>, <a href="#dom-reducedtransparencypref-reduce"><code><c- s>"reduce"</c-></code></a> };
-<c- b>enum</c-> <a href="#enumdef-reduceddatapref"><code><c- g>ReducedDataPref</c-></code></a> { <a href="#dom-reduceddatapref-no-preference"><code><c- s>"no-preference"</c-></code></a>, <a href="#dom-reduceddatapref-reduce"><code><c- s>"reduce"</c-></code></a> };
 
 [<a class="idl-code" data-link-type="extended-attribute" href="https://webidl.spec.whatwg.org/#Exposed"><c- g>Exposed</c-></a>=<c- n>Window</c->]
 <c- b>interface</c-> <a href="#preferencesupportdata"><code><c- g>PreferenceSupportData</c-></code></a> {
@@ -974,10 +1086,22 @@ console<c- p>.</c->log<c- p>(</c->preferenceSupportData<c- p>);</c-> <c- c1>// [
   <c- b>readonly</c-> <c- b>attribute</c-> <a class="idl-code" data-link-type="interface" href="https://webidl.spec.whatwg.org/#idl-frozen-array"><c- b>FrozenArray</c-></a>&lt;<a class="idl-code" data-link-type="interface" href="https://webidl.spec.whatwg.org/#idl-DOMString"><c- b>DOMString</c-></a>> <a data-readonly data-type="FrozenArray<DOMString>" href="#dom-preferencesupportdata-values"><code><c- g>values</c-></code></a>;
 };
 
+<c- b>enum</c-> <a href="#enumdef-colorschemepref"><code><c- g>ColorSchemePref</c-></code></a> { <a href="#dom-colorschemepref-light"><code><c- s>"light"</c-></code></a>, <a href="#dom-colorschemepref-dark"><code><c- s>"dark"</c-></code></a> };
+
+<c- b>enum</c-> <a href="#enumdef-contrastpref"><code><c- g>ContrastPref</c-></code></a> { <a href="#dom-contrastpref-no-preference"><code><c- s>"no-preference"</c-></code></a>, <a href="#dom-contrastpref-more"><code><c- s>"more"</c-></code></a>, <a href="#dom-contrastpref-less"><code><c- s>"less"</c-></code></a> };
+
+<c- b>enum</c-> <a href="#enumdef-reducedmotionpref"><code><c- g>ReducedMotionPref</c-></code></a> { <a href="#dom-reducedmotionpref-no-preference"><code><c- s>"no-preference"</c-></code></a>, <a href="#dom-reducedmotionpref-reduce"><code><c- s>"reduce"</c-></code></a> };
+
+<c- b>enum</c-> <a href="#enumdef-reducedtransparencypref"><code><c- g>ReducedTransparencyPref</c-></code></a> { <a href="#dom-reducedtransparencypref-no-preference"><code><c- s>"no-preference"</c-></code></a>, <a href="#dom-reducedtransparencypref-reduce"><code><c- s>"reduce"</c-></code></a> };
+
+<c- b>enum</c-> <a href="#enumdef-reduceddatapref"><code><c- g>ReducedDataPref</c-></code></a> { <a href="#dom-reduceddatapref-no-preference"><code><c- s>"no-preference"</c-></code></a>, <a href="#dom-reduceddatapref-reduce"><code><c- s>"reduce"</c-></code></a> };
+
 </pre>
   <h2 class="no-num no-ref heading settled" id="issues-index"><span class="content">Issues Index</span><a class="self-link" href="#issues-index"></a></h2>
   <div style="counter-reset:issue">
    <div class="issue"> This spec requires large amounts of work to section it and word it in ways that are normative. It is currently a very rough draft. <a class="issue-return" href="#issue-04eeaa1b" title="Jump to section">↵</a></div>
+   <div class="issue"> This algorithm needs more detail on where the overrides are stored. Also need to define what happens when a preference is overridden, with specific regard to sub-resources. <a class="issue-return" href="#issue-86abb4ed" title="Jump to section">↵</a></div>
+   <div class="issue"> This algorithm needs more detail on where the overrides are stored. <a class="issue-return" href="#issue-482fa236" title="Jump to section">↵</a></div>
    <div class="issue"> TODO fill in acknowledgements section <a class="issue-return" href="#issue-bfd5fd46" title="Jump to section">↵</a></div>
   </div>
 <script>/* Boilerplate: script-dfn-panel */
@@ -1288,19 +1412,27 @@ console<c- p>.</c->log<c- p>(</c->preferenceSupportData<c- p>);</c-> <c- c1>// [
 </script>
 <script>/* Boilerplate: script-dfn-panel-json */
 window.dfnpanelData = {};
-window.dfnpanelData['be0c27b2'] = {"dfnID": "be0c27b2", "url": "https://html.spec.whatwg.org/multipage/system-state.html#navigator", "dfnText": "Navigator", "refSections": [{"refs": [{"id": "ref-for-navigator"}], "title": "2. API Description"}], "external": true};
-window.dfnpanelData['8855a9aa'] = {"dfnID": "8855a9aa", "url": "https://webidl.spec.whatwg.org/#idl-DOMString", "dfnText": "DOMString", "refSections": [{"refs": [{"id": "ref-for-idl-DOMString"}, {"id": "ref-for-idl-DOMString\u2460"}], "title": "2. API Description"}], "external": true};
-window.dfnpanelData['889e932f'] = {"dfnID": "889e932f", "url": "https://webidl.spec.whatwg.org/#Exposed", "dfnText": "Exposed", "refSections": [{"refs": [{"id": "ref-for-Exposed"}, {"id": "ref-for-Exposed\u2460"}], "title": "2. API Description"}], "external": true};
-window.dfnpanelData['dcf5fafa'] = {"dfnID": "dcf5fafa", "url": "https://webidl.spec.whatwg.org/#idl-frozen-array", "dfnText": "FrozenArray", "refSections": [{"refs": [{"id": "ref-for-idl-frozen-array"}], "title": "2. API Description"}], "external": true};
-window.dfnpanelData['bdbd19d1'] = {"dfnID": "bdbd19d1", "url": "https://webidl.spec.whatwg.org/#idl-promise", "dfnText": "Promise", "refSections": [{"refs": [{"id": "ref-for-idl-promise"}], "title": "2. API Description"}], "external": true};
-window.dfnpanelData['9cce47fd'] = {"dfnID": "9cce47fd", "url": "https://webidl.spec.whatwg.org/#idl-sequence", "dfnText": "sequence", "refSections": [{"refs": [{"id": "ref-for-idl-sequence"}], "title": "2. API Description"}], "external": true};
-window.dfnpanelData['preferencemanager'] = {"dfnID": "preferencemanager", "url": "#preferencemanager", "dfnText": "PreferenceManager", "refSections": [{"refs": [{"id": "ref-for-preferencemanager"}], "title": "2. API Description"}], "external": false};
-window.dfnpanelData['enumdef-colorschemepref'] = {"dfnID": "enumdef-colorschemepref", "url": "#enumdef-colorschemepref", "dfnText": "ColorSchemePref", "refSections": [{"refs": [{"id": "ref-for-enumdef-colorschemepref"}], "title": "2. API Description"}], "external": false};
-window.dfnpanelData['enumdef-contrastpref'] = {"dfnID": "enumdef-contrastpref", "url": "#enumdef-contrastpref", "dfnText": "ContrastPref", "refSections": [{"refs": [{"id": "ref-for-enumdef-contrastpref"}], "title": "2. API Description"}], "external": false};
-window.dfnpanelData['enumdef-reducedmotionpref'] = {"dfnID": "enumdef-reducedmotionpref", "url": "#enumdef-reducedmotionpref", "dfnText": "ReducedMotionPref", "refSections": [{"refs": [{"id": "ref-for-enumdef-reducedmotionpref"}], "title": "2. API Description"}], "external": false};
-window.dfnpanelData['enumdef-reducedtransparencypref'] = {"dfnID": "enumdef-reducedtransparencypref", "url": "#enumdef-reducedtransparencypref", "dfnText": "ReducedTransparencyPref", "refSections": [{"refs": [{"id": "ref-for-enumdef-reducedtransparencypref"}], "title": "2. API Description"}], "external": false};
-window.dfnpanelData['enumdef-reduceddatapref'] = {"dfnID": "enumdef-reduceddatapref", "url": "#enumdef-reduceddatapref", "dfnText": "ReducedDataPref", "refSections": [{"refs": [{"id": "ref-for-enumdef-reduceddatapref"}], "title": "2. API Description"}], "external": false};
-window.dfnpanelData['preferencesupportdata'] = {"dfnID": "preferencesupportdata", "url": "#preferencesupportdata", "dfnText": "PreferenceSupportData", "refSections": [{"refs": [{"id": "ref-for-preferencesupportdata"}], "title": "2. API Description"}], "external": false};
+window.dfnpanelData['be0c27b2'] = {"dfnID": "be0c27b2", "url": "https://html.spec.whatwg.org/multipage/system-state.html#navigator", "dfnText": "Navigator", "refSections": [{"refs": [{"id": "ref-for-navigator"}, {"id": "ref-for-navigator\u2460"}], "title": "2. Extensions to the Navigator interface"}], "external": true};
+window.dfnpanelData['8855a9aa'] = {"dfnID": "8855a9aa", "url": "https://webidl.spec.whatwg.org/#idl-DOMString", "dfnText": "DOMString", "refSections": [{"refs": [{"id": "ref-for-idl-DOMString"}, {"id": "ref-for-idl-DOMString\u2460"}], "title": "3.1.1. PreferenceSupportData interface"}], "external": true};
+window.dfnpanelData['889e932f'] = {"dfnID": "889e932f", "url": "https://webidl.spec.whatwg.org/#Exposed", "dfnText": "Exposed", "refSections": [{"refs": [{"id": "ref-for-Exposed"}], "title": "2. Extensions to the Navigator interface"}, {"refs": [{"id": "ref-for-Exposed\u2460"}], "title": "3. PreferenceManager interface"}, {"refs": [{"id": "ref-for-Exposed\u2461"}], "title": "3.1.1. PreferenceSupportData interface"}], "external": true};
+window.dfnpanelData['dcf5fafa'] = {"dfnID": "dcf5fafa", "url": "https://webidl.spec.whatwg.org/#idl-frozen-array", "dfnText": "FrozenArray", "refSections": [{"refs": [{"id": "ref-for-idl-frozen-array"}], "title": "3.1.1. PreferenceSupportData interface"}], "external": true};
+window.dfnpanelData['bdbd19d1'] = {"dfnID": "bdbd19d1", "url": "https://webidl.spec.whatwg.org/#idl-promise", "dfnText": "Promise", "refSections": [{"refs": [{"id": "ref-for-idl-promise"}], "title": "3. PreferenceManager interface"}], "external": true};
+window.dfnpanelData['dacde8b5'] = {"dfnID": "dacde8b5", "url": "https://webidl.spec.whatwg.org/#a-new-promise", "dfnText": "a new promise", "refSections": [{"refs": [{"id": "ref-for-a-new-promise"}], "title": "3.1. getSupported method"}], "external": true};
+window.dfnpanelData['9cce47fd'] = {"dfnID": "9cce47fd", "url": "https://webidl.spec.whatwg.org/#idl-sequence", "dfnText": "sequence", "refSections": [{"refs": [{"id": "ref-for-idl-sequence"}], "title": "3. PreferenceManager interface"}], "external": true};
+window.dfnpanelData['dom-navigator-preferences'] = {"dfnID": "dom-navigator-preferences", "url": "#dom-navigator-preferences", "dfnText": "preferences", "refSections": [{"refs": [{"id": "ref-for-dom-navigator-preferences"}, {"id": "ref-for-dom-navigator-preferences\u2460"}], "title": "2.1. preferences attribute"}], "external": false};
+window.dfnpanelData['preferencemanager'] = {"dfnID": "preferencemanager", "url": "#preferencemanager", "dfnText": "PreferenceManager", "refSections": [{"refs": [{"id": "ref-for-preferencemanager"}], "title": "2. Extensions to the Navigator interface"}, {"refs": [{"id": "ref-for-preferencemanager\u2460"}], "title": "2.1. preferences attribute"}, {"refs": [{"id": "ref-for-preferencemanager\u2461"}], "title": "3. PreferenceManager interface"}], "external": false};
+window.dfnpanelData['dom-preferencemanager-colorscheme'] = {"dfnID": "dom-preferencemanager-colorscheme", "url": "#dom-preferencemanager-colorscheme", "dfnText": "colorScheme", "refSections": [{"refs": [{"id": "ref-for-dom-preferencemanager-colorscheme"}, {"id": "ref-for-dom-preferencemanager-colorscheme\u2460"}], "title": "3.2.3. colorScheme preference"}], "external": false};
+window.dfnpanelData['dom-preferencemanager-contrast'] = {"dfnID": "dom-preferencemanager-contrast", "url": "#dom-preferencemanager-contrast", "dfnText": "contrast", "refSections": [{"refs": [{"id": "ref-for-dom-preferencemanager-contrast"}, {"id": "ref-for-dom-preferencemanager-contrast\u2460"}], "title": "3.2.4. contrast preference"}], "external": false};
+window.dfnpanelData['dom-preferencemanager-reducedmotion'] = {"dfnID": "dom-preferencemanager-reducedmotion", "url": "#dom-preferencemanager-reducedmotion", "dfnText": "reducedMotion", "refSections": [{"refs": [{"id": "ref-for-dom-preferencemanager-reducedmotion"}, {"id": "ref-for-dom-preferencemanager-reducedmotion\u2460"}], "title": "3.2.5. reducedMotion preference"}], "external": false};
+window.dfnpanelData['dom-preferencemanager-reducedtransparency'] = {"dfnID": "dom-preferencemanager-reducedtransparency", "url": "#dom-preferencemanager-reducedtransparency", "dfnText": "reducedTransparency", "refSections": [{"refs": [{"id": "ref-for-dom-preferencemanager-reducedtransparency"}, {"id": "ref-for-dom-preferencemanager-reducedtransparency\u2460"}], "title": "3.2.6. reducedTransparency preference"}], "external": false};
+window.dfnpanelData['dom-preferencemanager-reduceddata'] = {"dfnID": "dom-preferencemanager-reduceddata", "url": "#dom-preferencemanager-reduceddata", "dfnText": "reducedData", "refSections": [{"refs": [{"id": "ref-for-dom-preferencemanager-reduceddata"}, {"id": "ref-for-dom-preferencemanager-reduceddata\u2460"}], "title": "3.2.7. reducedData preference"}], "external": false};
+window.dfnpanelData['dom-preferencemanager-getsupported'] = {"dfnID": "dom-preferencemanager-getsupported", "url": "#dom-preferencemanager-getsupported", "dfnText": "getSupported()", "refSections": [{"refs": [{"id": "ref-for-dom-preferencemanager-getsupported"}], "title": "3. PreferenceManager interface"}, {"refs": [{"id": "ref-for-dom-preferencemanager-getsupported\u2460"}], "title": "3.1. getSupported method"}], "external": false};
+window.dfnpanelData['preferencesupportdata'] = {"dfnID": "preferencesupportdata", "url": "#preferencesupportdata", "dfnText": "PreferenceSupportData", "refSections": [{"refs": [{"id": "ref-for-preferencesupportdata"}], "title": "3. PreferenceManager interface"}, {"refs": [{"id": "ref-for-preferencesupportdata\u2460"}], "title": "3.1. getSupported method"}, {"refs": [{"id": "ref-for-preferencesupportdata\u2461"}], "title": "3.1.1. PreferenceSupportData interface"}], "external": false};
+window.dfnpanelData['enumdef-colorschemepref'] = {"dfnID": "enumdef-colorschemepref", "url": "#enumdef-colorschemepref", "dfnText": "ColorSchemePref", "refSections": [{"refs": [{"id": "ref-for-enumdef-colorschemepref"}], "title": "3. PreferenceManager interface"}], "external": false};
+window.dfnpanelData['enumdef-contrastpref'] = {"dfnID": "enumdef-contrastpref", "url": "#enumdef-contrastpref", "dfnText": "ContrastPref", "refSections": [{"refs": [{"id": "ref-for-enumdef-contrastpref"}], "title": "3. PreferenceManager interface"}], "external": false};
+window.dfnpanelData['enumdef-reducedmotionpref'] = {"dfnID": "enumdef-reducedmotionpref", "url": "#enumdef-reducedmotionpref", "dfnText": "ReducedMotionPref", "refSections": [{"refs": [{"id": "ref-for-enumdef-reducedmotionpref"}], "title": "3. PreferenceManager interface"}], "external": false};
+window.dfnpanelData['enumdef-reducedtransparencypref'] = {"dfnID": "enumdef-reducedtransparencypref", "url": "#enumdef-reducedtransparencypref", "dfnText": "ReducedTransparencyPref", "refSections": [{"refs": [{"id": "ref-for-enumdef-reducedtransparencypref"}], "title": "3. PreferenceManager interface"}], "external": false};
+window.dfnpanelData['enumdef-reduceddatapref'] = {"dfnID": "enumdef-reduceddatapref", "url": "#enumdef-reduceddatapref", "dfnText": "ReducedDataPref", "refSections": [{"refs": [{"id": "ref-for-enumdef-reduceddatapref"}], "title": "3. PreferenceManager interface"}], "external": false};
 </script>
 <script>/* Boilerplate: script-dom-helper */
 function query(sel) { return document.querySelector(sel); }
@@ -1496,5 +1628,103 @@ function parseHTML(markup) {
 		el.innerHTML = markup;
 		return el.content;
 	}
+}
+</script>
+<script>/* Boilerplate: script-var-click-highlighting */
+/*
+Color-choosing design:
+
+Colors are ordered by goodness.
+Each color has a usage count (initially zero).
+Each variable has a last-used color.
+
+* If the var has a last-used color, and that color's usage is 0,
+    return that color.
+* Otherwise, return the lowest-indexed color with the lowest usage.
+    Increment the color's usage and set it as the last-used color
+    for that var.
+* On unclicking, decrement usage of the color.
+*/
+"use strict";
+{
+    document.addEventListener("click", e=>{
+        if(e.target.nodeName == "VAR") {
+            highlightSameAlgoVars(e.target);
+        }
+    });
+    const indexCounts = new Map();
+    const indexNames = new Map();
+    function highlightSameAlgoVars(v) {
+        // Find the algorithm container.
+        let algoContainer = null;
+        let searchEl = v;
+        while(algoContainer == null && searchEl != document.body) {
+            searchEl = searchEl.parentNode;
+            if(searchEl.hasAttribute("data-algorithm")) {
+                algoContainer = searchEl;
+            }
+        }
+
+        // Not highlighting document-global vars,
+        // too likely to be unrelated.
+        if(algoContainer == null) return;
+
+        const algoName = algoContainer.getAttribute("data-algorithm");
+        const varName = getVarName(v);
+        const addClass = !v.classList.contains("selected");
+        let highlightClass = null;
+        if(addClass) {
+            const index = chooseHighlightIndex(algoName, varName);
+            indexCounts.get(algoName)[index] += 1;
+            indexNames.set(algoName+"///"+varName, index);
+            highlightClass = nameFromIndex(index);
+        } else {
+            const index = previousHighlightIndex(algoName, varName);
+            indexCounts.get(algoName)[index] -= 1;
+            highlightClass = nameFromIndex(index);
+        }
+
+        // Find all same-name vars, and toggle their class appropriately.
+        for(const el of algoContainer.querySelectorAll("var")) {
+            if(getVarName(el) == varName) {
+                el.classList.toggle("selected", addClass);
+                el.classList.toggle(highlightClass, addClass);
+            }
+        }
+    }
+    function getVarName(el) {
+        return el.textContent.replace(/(\s|\xa0)+/, " ").trim();
+    }
+    function chooseHighlightIndex(algoName, varName) {
+        let indexes = null;
+        if(indexCounts.has(algoName)) {
+            indexes = indexCounts.get(algoName);
+        } else {
+            // 7 classes right now
+            indexes = [0,0,0,0,0,0,0];
+            indexCounts.set(algoName, indexes);
+        }
+
+        // If the element was recently unclicked,
+        // *and* that color is still unclaimed,
+        // give it back the same color.
+        const lastIndex = previousHighlightIndex(algoName, varName);
+        if(indexes[lastIndex] === 0) return lastIndex;
+
+        // Find the earliest index with the lowest count.
+        const minCount = Math.min.apply(null, indexes);
+        let index = null;
+        for(var i = 0; i < indexes.length; i++) {
+            if(indexes[i] == minCount) {
+                return i;
+            }
+        }
+    }
+    function previousHighlightIndex(algoName, varName) {
+        return indexNames.get(algoName+"///"+varName);
+    }
+    function nameFromIndex(index) {
+        return "selected" + index;
+    }
 }
 </script>
