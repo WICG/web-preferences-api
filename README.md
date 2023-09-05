@@ -78,6 +78,7 @@ A new `navigator.preferences` object will be added to the platform. This object 
 #### WebIDL
 
 ```webidl
+[Exposed=Window]
 partial interface Navigator {
   readonly attribute PreferenceManager preferences;
 };
@@ -92,7 +93,7 @@ interface PreferenceManager {
   attribute ReducedDataPref? reducedData;
   // Future preferences can be added here, the exact properties will be down to the browser support.
 
-  Promise<sequence<PreferenceSupportData>> getSupported();
+  sequence<PreferenceSupportData> getSupported();
 };
 
 enum ColorSchemePref { "light", "dark" };
@@ -124,7 +125,7 @@ interface PreferenceManager {
   reducedData: string | null; // "no-preference" | "reduce" | null
   // Future preferences can be added here, the exact properties will be down to the browser support.
 
-  getSupported(): Promise<PreferenceSupportData[]>;
+  getSupported(): PreferenceSupportData[];
 }
 
 interface PreferenceSupportData {
@@ -168,7 +169,7 @@ This method allows a site to get the preferences supported by the browser. This 
 It also allows sites to determine if a preference value is supported before attempting to set it.
 
 ```js
-const preferenceSupportData = await navigator.preferences.getSupported();
+const preferenceSupportData = navigator.preferences.getSupported();
 console.log(preferenceSupportData); // [ { name: 'contrast', values: ['more', 'less', 'no-preference'] }, ... ]
 ```
 
@@ -217,6 +218,14 @@ This also doesn't solve the key issue of third party libraries being aware of th
 While this would be a nice solution, the lack of any such UI in any browser makes it unlikely that this will happen any time soon.
 
 This also doesn't fix the (relatively minor) issue of preference syncing across devices.
+
+## Open Questions
+
+- Should getSupported be asynchronous? It was originally but has been changed to synchronous because it is unlikely to be a performance bottleneck and it makes the API easier to use.
+- Where should the PreferenceManager interface be exposed?
+    - It is currently exposed on the `navigator` object, is this best?
+    - It is currently exposed even in insecure contexts, is this okay? (For the same reasons it's not user activation locked I think this is fine)
+    - It is currently only exposed to Window, should it also be exposed to Service and/or Web Workers?
 
 ## Acknowledgements
 

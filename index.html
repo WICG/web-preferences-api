@@ -6,7 +6,7 @@
   <link href="https://www.w3.org/StyleSheets/TR/2021/W3C-UD" rel="stylesheet">
   <meta content="Bikeshed version 5edf5e459, updated Thu Jun 22 11:28:01 2023 -0700" name="generator">
   <link href="https://specs.lukewarlow.dev/web-preferences-api/" rel="canonical">
-  <meta content="32c1e93d377a51d78fdc04da05ed1d30d74fa4b7" name="document-revision">
+  <meta content="4b1c34ad58eee2523dd47fe76f8baa9175e58bf7" name="document-revision">
 <style>/* Boilerplate: style-autolinks */
 .css.css, .property.property, .descriptor.descriptor {
     color: var(--a-normal-text);
@@ -668,7 +668,7 @@ var.selected6 { background-color: #FFBCF2; box-shadow: 0 0 0 2px #FFBCF2; }
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2021/logos/W3C" width="72"> </a> </p>
    <h1 class="p-name no-ref" id="title">Web Preferences API</h1>
-   <p id="w3c-state"><a href="https://www.w3.org/standards/types#UD">Unofficial Proposal Draft</a>, <time class="dt-updated" datetime="2023-09-02">2 September 2023</time></p>
+   <p id="w3c-state"><a href="https://www.w3.org/standards/types#UD">Unofficial Proposal Draft</a>, <time class="dt-updated" datetime="2023-09-05">5 September 2023</time></p>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -825,7 +825,7 @@ The override should be passed down to sub-resource where possible, see privacy s
   <c- b>attribute</c-> <a data-link-type="idl-name" href="#enumdef-reducedtransparencypref" id="ref-for-enumdef-reducedtransparencypref"><c- n>ReducedTransparencyPref</c-></a>? <dfn class="dfn-paneled idl-code" data-dfn-for="PreferenceManager" data-dfn-type="attribute" data-export data-type="ReducedTransparencyPref?" id="dom-preferencemanager-reducedtransparency"><code><c- g>reducedTransparency</c-></code></dfn>;
   <c- b>attribute</c-> <a data-link-type="idl-name" href="#enumdef-reduceddatapref" id="ref-for-enumdef-reduceddatapref"><c- n>ReducedDataPref</c-></a>? <dfn class="dfn-paneled idl-code" data-dfn-for="PreferenceManager" data-dfn-type="attribute" data-export data-type="ReducedDataPref?" id="dom-preferencemanager-reduceddata"><code><c- g>reducedData</c-></code></dfn>;
 
-  <a class="idl-code" data-link-type="interface" href="https://webidl.spec.whatwg.org/#idl-promise" id="ref-for-idl-promise"><c- b>Promise</c-></a>&lt;<a data-link-type="dfn" href="https://webidl.spec.whatwg.org/#idl-sequence" id="ref-for-idl-sequence"><c- b>sequence</c-></a>&lt;<a data-link-type="idl-name" href="#preferencesupportdata" id="ref-for-preferencesupportdata"><c- n>PreferenceSupportData</c-></a>>> <a class="idl-code" data-link-type="method" href="#dom-preferencemanager-getsupported" id="ref-for-dom-preferencemanager-getsupported"><c- g>getSupported</c-></a>();
+  <a data-link-type="dfn" href="https://webidl.spec.whatwg.org/#idl-sequence" id="ref-for-idl-sequence"><c- b>sequence</c-></a>&lt;<a data-link-type="idl-name" href="#preferencesupportdata" id="ref-for-preferencesupportdata"><c- n>PreferenceSupportData</c-></a>> <a class="idl-code" data-link-type="method" href="#dom-preferencemanager-getsupported" id="ref-for-dom-preferencemanager-getsupported"><c- g>getSupported</c-></a>();
 };
 </pre>
    <p class="note" role="note"><span class="marker">Note:</span> The exact set of preferences is down to the browser vendor, but it is expected that the set of preferences will be the same as those defined in <a data-link-type="biblio" href="#biblio-mediaqueries-5" title="Media Queries Level 5">[mediaqueries-5]</a>.</p>
@@ -833,8 +833,6 @@ The override should be passed down to sub-resource where possible, see privacy s
    <div class="algorithm" data-algorithm="getSupported()" data-algorithm-for="PreferenceManager">
      The <dfn class="dfn-paneled idl-code" data-dfn-for="PreferenceManager" data-dfn-type="method" data-export id="dom-preferencemanager-getsupported"><code>getSupported()</code></dfn> method, when invoked, must run these steps: 
     <ol>
-     <li data-md>
-      <p>Let <var>result</var> be <a data-link-type="dfn" href="https://webidl.spec.whatwg.org/#a-new-promise" id="ref-for-a-new-promise">a new promise</a>.</p>
      <li data-md>
       <p>Let <var>supportedPreferences</var> be a new empty sequence.</p>
      <li data-md>
@@ -846,9 +844,7 @@ The override should be passed down to sub-resource where possible, see privacy s
         <p><code>values</code> set to a sequence of strings representing the valid values for the preference</p>
       </ul>
      <li data-md>
-      <p>Resolve <var>result</var> with <var>supportedPreferences</var>.</p>
-     <li data-md>
-      <p>Return <var>result</var>.</p>
+      <p>Return <var>supportedPreferences</var>.</p>
     </ol>
    </div>
    <h4 class="heading settled" data-level="3.1.1" id="preferencesupportdata-interface"><span class="secno">3.1.1. </span><span class="content"><code class="idl"><a data-link-type="idl" href="#preferencesupportdata" id="ref-for-preferencesupportdata②">PreferenceSupportData</a></code> interface</span><a class="self-link" href="#preferencesupportdata-interface"></a></h4>
@@ -940,10 +936,11 @@ Each property will return the string value indicating the preference, or null if
    <h3 class="heading settled" data-level="4.4" id="get-supported"><span class="secno">4.4. </span><span class="content">The <code>navigator.preferences.getSupported</code> method</span><a class="self-link" href="#get-supported"></a></h3>
    <p>This method allows a site to get the preferences supported by the browser. This is useful for sites that want to dynamically generate UI for overriding preferences.</p>
    <p>It also allows sites to determine if a preference value is supported before attempting to set it.</p>
-<pre class="language-js highlight"><c- a>const</c-> preferenceSupportData <c- o>=</c-> <c- k>await</c-> navigator<c- p>.</c->preferences<c- p>.</c->getSupported<c- p>();</c->
+<pre class="language-js highlight"><c- a>const</c-> preferenceSupportData <c- o>=</c-> navigator<c- p>.</c->preferences<c- p>.</c->getSupported<c- p>();</c->
 console<c- p>.</c->log<c- p>(</c->preferenceSupportData<c- p>);</c-> <c- c1>// [ { name: 'contrast', values: ['more', 'less', 'no-preference'] }, ... ]</c->
 </pre>
    <h2 class="heading settled" data-level="5" id="sec-security"><span class="secno">5. </span><span class="content">Security and Privacy Considerations</span><a class="self-link" href="#sec-security"></a></h2>
+   <p class="issue" id="issue-49e7f9d0"><a class="self-link" href="#issue-49e7f9d0"></a> The API is currently exposed even to insecure contexts. This is probably fine but should be justified in this section probably?</p>
    <p><em>This section is non-normative.</em></p>
    <h3 class="heading settled" data-level="5.1" id="fingerprinting"><span class="secno">5.1. </span><span class="content">Avoiding fingerprinting</span><a class="self-link" href="#fingerprinting"></a></h3>
    <p>This API exposes no new fingerprinting surfaces beyond that which already exist in the platform.</p>
@@ -957,14 +954,14 @@ console<c- p>.</c->log<c- p>(</c->preferenceSupportData<c- p>);</c-> <c- c1>// [
     <li data-md>
      <p>Any <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#same-origin" id="ref-for-same-origin">same origin</a> subresource (e.g. iframes) should get the overridden value.</p>
     <li data-md>
-     <p>Any cross-origin subresource that already has communication with the parent (e.g. ``) should get the override value.</p>
+     <p>Any cross-origin subresource that already has communication with the parent (e.g. <code>postMessage</code>) should get the override value.</p>
     <li data-md>
      <p>Any cross-origin subresource with no external communication (e.g. an SVG loaded as an image) should get the override value.</p>
     <li data-md>
      <p>Any cross-origin subresource that has no communication with parent but can communicate externally should <strong>NOT</strong> get the override value.</p>
    </ul>
    <p>Wherever the override value is passed down it should be done so in an opaque manner.</p>
-   <div class="example" id="example-dc7811f5"><a class="self-link" href="#example-dc7811f5"></a> If the parent frame sets `colorScheme` to `dark` then the iframe should see `prefers-color-scheme` as dark but shouldn’t read `navigator.preferences.colorScheme` as `dark`. </div>
+   <div class="example" id="example-c7663e92"><a class="self-link" href="#example-c7663e92"></a> If the parent frame sets <code>colorScheme</code> to <code>dark</code> then the iframe should see <code>prefers-color-scheme</code> as dark but shouldn’t read <code>navigator.preferences.colorScheme</code> as <code>dark</code>. </div>
    <h2 class="heading settled" data-level="6" id="sec-acknowledgements"><span class="secno">6. </span><span class="content">Acknowledgements</span><a class="self-link" href="#sec-acknowledgements"></a></h2>
    <p><em>This section is non-normative.</em></p>
    <p class="issue" id="issue-bfd5fd46"><a class="self-link" href="#issue-bfd5fd46"></a> TODO fill in acknowledgements section</p>
@@ -1051,8 +1048,6 @@ console<c- p>.</c->log<c- p>(</c->preferenceSupportData<c- p>);</c-> <c- c1>// [
      <li><span class="dfn-paneled" id="8855a9aa">DOMString</span>
      <li><span class="dfn-paneled" id="889e932f">Exposed</span>
      <li><span class="dfn-paneled" id="dcf5fafa">FrozenArray</span>
-     <li><span class="dfn-paneled" id="bdbd19d1">Promise</span>
-     <li><span class="dfn-paneled" id="dacde8b5">a new promise</span>
      <li><span class="dfn-paneled" id="9cce47fd">sequence</span>
     </ul>
   </ul>
@@ -1091,7 +1086,7 @@ console<c- p>.</c->log<c- p>(</c->preferenceSupportData<c- p>);</c-> <c- c1>// [
   <c- b>attribute</c-> <a data-link-type="idl-name" href="#enumdef-reducedtransparencypref"><c- n>ReducedTransparencyPref</c-></a>? <a data-type="ReducedTransparencyPref?" href="#dom-preferencemanager-reducedtransparency"><code><c- g>reducedTransparency</c-></code></a>;
   <c- b>attribute</c-> <a data-link-type="idl-name" href="#enumdef-reduceddatapref"><c- n>ReducedDataPref</c-></a>? <a data-type="ReducedDataPref?" href="#dom-preferencemanager-reduceddata"><code><c- g>reducedData</c-></code></a>;
 
-  <a class="idl-code" data-link-type="interface" href="https://webidl.spec.whatwg.org/#idl-promise"><c- b>Promise</c-></a>&lt;<a data-link-type="dfn" href="https://webidl.spec.whatwg.org/#idl-sequence"><c- b>sequence</c-></a>&lt;<a data-link-type="idl-name" href="#preferencesupportdata"><c- n>PreferenceSupportData</c-></a>>> <a class="idl-code" data-link-type="method" href="#dom-preferencemanager-getsupported"><c- g>getSupported</c-></a>();
+  <a data-link-type="dfn" href="https://webidl.spec.whatwg.org/#idl-sequence"><c- b>sequence</c-></a>&lt;<a data-link-type="idl-name" href="#preferencesupportdata"><c- n>PreferenceSupportData</c-></a>> <a class="idl-code" data-link-type="method" href="#dom-preferencemanager-getsupported"><c- g>getSupported</c-></a>();
 };
 
 [<a class="idl-code" data-link-type="extended-attribute" href="https://webidl.spec.whatwg.org/#Exposed"><c- g>Exposed</c-></a>=<c- n>Window</c->]
@@ -1121,6 +1116,7 @@ console<c- p>.</c->log<c- p>(</c->preferenceSupportData<c- p>);</c-> <c- c1>// [
    </div>
    <div class="issue"> This algorithm needs more detail on where the overrides are stored. Also need to define what happens when a preference is overridden, with specific regard to sub-resources. <a class="issue-return" href="#issue-86abb4ed" title="Jump to section">↵</a></div>
    <div class="issue"> This algorithm needs more detail on where the overrides are stored. <a class="issue-return" href="#issue-482fa236" title="Jump to section">↵</a></div>
+   <div class="issue"> The API is currently exposed even to insecure contexts. This is probably fine but should be justified in this section probably? <a class="issue-return" href="#issue-49e7f9d0" title="Jump to section">↵</a></div>
    <div class="issue"> TODO fill in acknowledgements section <a class="issue-return" href="#issue-bfd5fd46" title="Jump to section">↵</a></div>
   </div>
 <script>/* Boilerplate: script-dfn-panel */
@@ -1437,8 +1433,6 @@ window.dfnpanelData['7393da89'] = {"dfnID": "7393da89", "url": "https://html.spe
 window.dfnpanelData['8855a9aa'] = {"dfnID": "8855a9aa", "url": "https://webidl.spec.whatwg.org/#idl-DOMString", "dfnText": "DOMString", "refSections": [{"refs": [{"id": "ref-for-idl-DOMString"}, {"id": "ref-for-idl-DOMString\u2460"}], "title": "3.1.1. PreferenceSupportData interface"}], "external": true};
 window.dfnpanelData['889e932f'] = {"dfnID": "889e932f", "url": "https://webidl.spec.whatwg.org/#Exposed", "dfnText": "Exposed", "refSections": [{"refs": [{"id": "ref-for-Exposed"}], "title": "2. Extensions to the Navigator interface"}, {"refs": [{"id": "ref-for-Exposed\u2460"}], "title": "3. PreferenceManager interface"}, {"refs": [{"id": "ref-for-Exposed\u2461"}], "title": "3.1.1. PreferenceSupportData interface"}], "external": true};
 window.dfnpanelData['dcf5fafa'] = {"dfnID": "dcf5fafa", "url": "https://webidl.spec.whatwg.org/#idl-frozen-array", "dfnText": "FrozenArray", "refSections": [{"refs": [{"id": "ref-for-idl-frozen-array"}], "title": "3.1.1. PreferenceSupportData interface"}], "external": true};
-window.dfnpanelData['bdbd19d1'] = {"dfnID": "bdbd19d1", "url": "https://webidl.spec.whatwg.org/#idl-promise", "dfnText": "Promise", "refSections": [{"refs": [{"id": "ref-for-idl-promise"}], "title": "3. PreferenceManager interface"}], "external": true};
-window.dfnpanelData['dacde8b5'] = {"dfnID": "dacde8b5", "url": "https://webidl.spec.whatwg.org/#a-new-promise", "dfnText": "a new promise", "refSections": [{"refs": [{"id": "ref-for-a-new-promise"}], "title": "3.1. getSupported method"}], "external": true};
 window.dfnpanelData['9cce47fd'] = {"dfnID": "9cce47fd", "url": "https://webidl.spec.whatwg.org/#idl-sequence", "dfnText": "sequence", "refSections": [{"refs": [{"id": "ref-for-idl-sequence"}], "title": "3. PreferenceManager interface"}], "external": true};
 window.dfnpanelData['dom-navigator-preferences'] = {"dfnID": "dom-navigator-preferences", "url": "#dom-navigator-preferences", "dfnText": "preferences", "refSections": [{"refs": [{"id": "ref-for-dom-navigator-preferences"}, {"id": "ref-for-dom-navigator-preferences\u2460"}], "title": "2.1. preferences attribute"}], "external": false};
 window.dfnpanelData['preferencemanager'] = {"dfnID": "preferencemanager", "url": "#preferencemanager", "dfnText": "PreferenceManager", "refSections": [{"refs": [{"id": "ref-for-preferencemanager"}], "title": "2. Extensions to the Navigator interface"}, {"refs": [{"id": "ref-for-preferencemanager\u2460"}], "title": "2.1. preferences attribute"}, {"refs": [{"id": "ref-for-preferencemanager\u2461"}], "title": "3. PreferenceManager interface"}], "external": false};
