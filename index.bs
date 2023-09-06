@@ -32,13 +32,13 @@ They can choose to "use the platform" where the user must indicate their prefere
 
 Alternatively, sites can and do offer site-level settings, but this currently comes with a number of issues:
 - No integration with [[mediaqueries-5#mf-user-preferences]]
-- No integration with conditional resource loading (e.g. using `<source media="(prefers-contrast: more)">`)
+- No integration with conditional resource loading (e.g. using `media="(prefers-contrast: more)"` on a `source` element)
 - No integration with JS APIs for retrieval of these preferences (e.g. `matchMedia` in [[cssom-view#extensions-to-the-window-interface]]
 - No integration with [[USER-PREFERENCE-MEDIA-FEATURES-HEADERS]]
 - No integration with the [[css-color-adjust-1#preferred]] concept
 - The various client storage mechanisms that could store these preferences can be cleared in a number of scenarios
 
-Issue: Unsure how to link to html spec for the <source media=""> example.
+Issue: Unsure how to link to html spec for the source media attribute example.
 
 The **Web Preferences API** aims to solve this by providing a way for sites to override the value for a given a user preference.
 
