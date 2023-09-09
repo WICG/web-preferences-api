@@ -50,7 +50,7 @@ The override should be passed down to sub-resource where possible, see privacy s
 <script type=idl>
 [Exposed=Window]
 partial interface Navigator {
-  readonly attribute PreferenceManager preferences;
+  [SameObject] readonly attribute PreferenceManager preferences;
 };
 </script>
 
@@ -106,7 +106,7 @@ interface PreferenceSupportData {
 
     1. Let |preference| be the preference attribute's name.
     1. Let |validValues| be the preference attribute's valid values.
-    1. If |value| is not in |validValues|, return.
+    1. If |value| is not in |validValues|, throw a {{TypeError}} exception.
     1. If |value| is the same as the preference override for |preference|, return.
     1. Set the preference override for |preference| to |value|.
 </div>
