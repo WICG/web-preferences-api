@@ -48,7 +48,7 @@ The override should be passed down to sub-resource where possible, see privacy s
 # Extensions to the {{Navigator}} interface # {#extensions-to-the-navigator-interface}
 
 <script type=idl>
-[Exposed=Window]
+[Exposed=Window, SecureContext]
 partial interface Navigator {
   [SameObject] readonly attribute PreferenceManager preferences;
 };
@@ -61,13 +61,13 @@ When getting the {{preferences}} attribute always return the same instance of th
 # {{PreferenceManager}} interface # {#preference-manager}
 
 <script type=idl>
-[Exposed=Window]
+[Exposed=Window, SecureContext]
 interface PreferenceManager {
-  attribute ColorSchemePref? colorScheme;
-  attribute ContrastPref? contrast;
-  attribute ReducedMotionPref? reducedMotion;
-  attribute ReducedTransparencyPref? reducedTransparency;
-  attribute ReducedDataPref? reducedData;
+  readonly attribute PreferenceObject colorScheme;
+  readonly attribute PreferenceObject contrast;
+  readonly attribute PreferenceObject reducedMotion;
+  readonly attribute PreferenceObject reducedTransparency;
+  readonly attribute PreferenceObject reducedData;
 
   sequence<PreferenceSupportData> getSupported();
 };
@@ -75,103 +75,223 @@ interface PreferenceManager {
 
 Note: The exact set of preferences is down to the browser vendor, but it is expected that the set of preferences will be the same as those defined in [[!mediaqueries-5]].
 
+## {{colorScheme}} attribute ## {#colorscheme-attribute}
+
+The {{colorScheme}} attribute is a {{PreferenceObject}} used to override the user's preference for the color scheme of the site.
+This is modeled after the `prefers-color-scheme` user preference media feature as defined in [[mediaqueries-5#prefers-color-scheme]].
+
+<div algorithm='get valid values for colorScheme'>
+    The <dfn>get valid values for colorScheme</dfn> algorithm, when invoked, must run these steps:
+
+    1. Let |validValues| be a new empty [=sequence=].
+    1. Add `"light"` to |validValues|.
+    1. Add `"dark"` to |validValues|.
+    1. Return |validValues|.
+</div>
+
+If an override is set for this preference:
+- The user agent MUST use this override for the [[mediaqueries-5#prefers-color-scheme]] in all stylesheets applied to an [=origin=] including the [=UA style sheet=].
+- The user agent MUST also use this override when queried via `matchMedia()` from [[cssom-view#extensions-to-the-window-interface]].
+- The user agent MUST also use this override when calculating the [=used color scheme=].
+- The user agent MUST also use this override when sending [[USER-PREFERENCE-MEDIA-FEATURES-HEADERS#sec-ch-prefers-color-scheme]].
+- The user agent MUST also use this override for any UA features that are normally affected by [[mediaqueries-5#prefers-color-scheme]].
+
+Issue: How does this work with `forced-colors` or forced dark mode features?
+
+## {{contrast}} attribute ## {#contrast-attribute}
+
+The {{contrast}} attribute is a {{PreferenceObject}} used to override the user's preference for the contrast of the site.
+This is modeled after the `prefers-contrast` user preference media feature as defined in [[mediaqueries-5#prefers-contrast]].
+
+<div algorithm='get valid values for contrast'>
+    The <dfn>get valid values for contrast</dfn> algorithm, when invoked, must run these steps:
+
+    1. Let |validValues| be a new empty [=sequence=].
+    1. Add `"no-preference"` to |validValues|.
+    1. Add `"more"` to |validValues|.
+    1. Add `"less"` to |validValues|.
+    1. Return |validValues|.
+</div>
+
+If an override is set for this preference:
+- The user agent MUST use this override for the [[mediaqueries-5#prefers-contrast]] in all stylesheets applied to an [=origin=] including the [=UA style sheet=].
+- The user agent MUST also use this override when queried via `matchMedia()` from [[cssom-view#extensions-to-the-window-interface]].
+- The user agent MUST also use this override when sending [[USER-PREFERENCE-MEDIA-FEATURES-HEADERS#sec-ch-prefers-contrast]].
+- The user agent MUST also use this override for any UA features that are normally affected by [[mediaqueries-5#prefers-contrast]].
+
+Note: Unlike the media feature this preference is NOT able to be set to `custom` as this is tightly coupled to the `forced-colors` media feature.
+
+## {{reducedMotion}} attribute ## {#reducedmotion-attribute}
+
+The {{reducedMotion}} attribute is a {{PreferenceObject}} used to override the user's preference for reduced motion on the site.
+This is modeled after the `prefers-reduced-motion` user preference media feature as defined in [[mediaqueries-5#prefers-reduced-motion]].
+
+<div algorithm='get valid values for reducedMotion'>
+    The <dfn>get valid values for reducedMotion</dfn> algorithm, when invoked, must run these steps:
+
+    1. Let |validValues| be a new empty [=sequence=].
+    1. Add `"no-preference"` to |validValues|.
+    1. Add `"reduce"` to |validValues|.
+    1. Return |validValues|.
+</div>
+
+If an override is set for this preference:
+- The user agent MUST use this override for the [[mediaqueries-5#prefers-reduced-motion]] in all stylesheets applied to an [=origin=] including the [=UA style sheet=].
+- The user agent MUST also use this override when queried via `matchMedia()` from [[cssom-view#extensions-to-the-window-interface]].
+- The user agent MUST also use this override when sending [[USER-PREFERENCE-MEDIA-FEATURES-HEADERS#sec-ch-prefers-reduced-motion]].
+- The user agent MUST also use this override for any UA features that are normally affected by [[mediaqueries-5#prefers-reduced-motion]].
+
+Note: An example of a UA feature that is affected by this preference could be disabling smooth scrolling, or pausing marquee elements.
+
+## {{reducedTransparency}} attribute ## {#reducedtransparency-attribute}
+
+The {{reducedTransparency}} attribute is a {{PreferenceObject}} used to override the user's preference for reduced transparency on the site.
+This is modeled after the `prefers-reduced-transparency` user preference media feature as defined in [[mediaqueries-5#prefers-reduced-transparency]].
+
+<div algorithm='get valid values for reducedTransparency'>
+    The <dfn>get valid values for reducedTransparency</dfn> algorithm, when invoked, must run these steps:
+
+    1. Let |validValues| be a new empty [=sequence=].
+    1. Add `"no-preference"` to |validValues|.
+    1. Add `"reduce"` to |validValues|.
+    1. Return |validValues|.
+</div>
+
+If an override is set for this preference:
+- The user agent MUST use this override for the [[mediaqueries-5#prefers-reduced-transparency]] in all stylesheets applied to an [=origin=] including the [=UA style sheet=].
+- The user agent MUST also use this override when queried via `matchMedia()` from [[cssom-view#extensions-to-the-window-interface]].
+- The user agent MUST also use this override when sending [[USER-PREFERENCE-MEDIA-FEATURES-HEADERS#sec-ch-prefers-reduced-transparency]].
+- The user agent MUST also use this override for any UA features that are normally affected by [[mediaqueries-5#prefers-reduced-transparency]].
+
+## {{reducedData}} attribute ## {#reduceddata-attribute}
+
+The {{reducedData}} attribute is a {{PreferenceObject}} used to override the user's preference for reduced data usage on the site.
+This is modeled after the `prefers-reduced-data` user preference media feature as defined in [[mediaqueries-5#prefers-reduced-data]].
+
+<div algorithm='get valid values for reducedData'>
+    The <dfn>get valid values for reducedData</dfn> algorithm, when invoked, must run these steps:
+
+    1. Let |validValues| be a new empty [=sequence=].
+    1. Add `"no-preference"` to |validValues|.
+    1. Add `"reduce"` to |validValues|.
+    1. Return |validValues|.
+</div>
+
+If an override is set for this preference:
+- The user agent MUST use this override for the [[mediaqueries-5#prefers-reduced-data]] in all stylesheets applied to an [=origin=] including the [=UA style sheet=].
+- The user agent MUST also use this override when queried via `matchMedia()` from [[cssom-view#extensions-to-the-window-interface]].
+- The user agent MUST also use this override when sending [[SAVEDATA#save-data-request-header-field]].
+- The user agent MUST also use this override when calculating the [[SAVEDATA#savedata-attribute]].
+- The user agent MUST also use this override for any UA features that are normally affected by [[mediaqueries-5#prefers-reduced-data]].
+
 ## {{getSupported}} method ## {#get-supported-method}
 
 <div algorithm>
     The <dfn method for=PreferenceManager>getSupported()</dfn> method, when invoked, must run these steps:
 
-    1. Let |supportedPreferences| be a new empty sequence.
-    1. For each preference that the browser supports, add a new {{PreferenceSupportData}} object to |supportedPreferences| with the following properties:
-        - `name` set to the name of the preference
-        - `values` set to a sequence of strings representing the valid values for the preference
+    1. Let |supportedPreferences| be a new empty [=sequence=].
+    1. For each preference that the browser supports, let |preference| be the name of that preference:
+        1. Let |preferenceData| be a new {{PreferenceSupportData}} object.
+        1. Let |values| be a new empty [=sequence=].
+            1. If |preference| is "{{colorScheme}}", set |values| to the result of [=get valid values for colorScheme=].
+            1. If |preference| is "{{contrast}}", set |values| to the result of [=get valid values for contrast=].
+            1. If |preference| is "{{reducedMotion}}", set |values| to the result of [=get valid values for reducedMotion=].
+            1. If |preference| is "{{reducedTransparency}}", set |values| to the result of [=get valid values for reducedTransparency=].
+            1. If |preference| is "{{reducedData}}", set |values| to the result of [=get valid values for reducedData=].
+        1. Set |preferenceData|'s {{name}} attribute to |preference|.
+        1. Set |preferenceData|'s {{values}} attribute to |values|.
+        1. Add |preferenceData| to |supportedPreferences|.
     1. Return |supportedPreferences|.
 </div>
 
 ### {{PreferenceSupportData}} interface ### {#preferencesupportdata-interface}
 
 <script type=idl>
-[Exposed=Window]
+[Exposed=Window, SecureContext]
 interface PreferenceSupportData {
   readonly attribute DOMString name;
   readonly attribute FrozenArray<DOMString> values;
 };
 </script>
 
-## Preference attributes ## {#preference-attributes}
+## {{PreferenceObject}} interface ## {#preferenceobject-interface}
 
-### Setting a preference attribute ### {#setting-a-preference-attribute}
+<script type=idl>
+[Exposed=Window, SecureContext]
+interface PreferenceObject {
+  readonly attribute DOMString? override;
 
-<div algorithm='setting preference override'>
-    The preference attributes, when set, must run these steps:
+  undefined clearOverride();
+  Promise<undefined> requestOverride(DOMString value);
+};
+</script>
 
-    1. Let |preference| be the preference attribute's name.
-    1. Let |validValues| be the preference attribute's valid values.
-    1. If |value| is not in |validValues|, throw a {{TypeError}} exception.
-    1. If |value| is the same as the preference override for |preference|, return.
-    1. Set the preference override for |preference| to |value|.
+### {{override}} attribute ### {#override-attribute}
+
+<div algorithm='get preference override'>
+    The <dfn attribute for=PreferenceObject>override</dfn> attribute, when accessed, must run these steps:
+
+    1. Let |preference| be the preference object's name.
+    1. Let |override| be null.
+    1. If an override for |preference| exists, set |override| to the value of that override.
+    1. Return |override|.
 </div>
 
-Issue: This algorithm needs more detail on where the overrides are stored. Also need to define what happens when a preference is overridden, with specific regard to sub-resources.
+### {{requestOverride()}} method ### {#request-override-method}
 
-### Getting a preference attribute ### {#getting-a-preference-attribute}
+<div algorithm='request preference override'>
+    The <dfn method for=PreferenceObject>requestOverride()</dfn> method, when invoked, must run these steps:
 
-<div algorithm='getting-preference-override'>
-    The preference attributes, when accessed, must run these steps:
-
-    1. Let |preference| be the preference attribute's name.
-    1. If no overrides have been set for the preference, return `null`.
-    1. Let |result| be the preference override for |preference|.
-    1. Return |result|.
+    1. Let |result| be [=a new promise=].
+    1. Let |allowed| be `false`.
+    1. Set |allowed| to whether the [=relevant global object=]'s [=associated Document=] is [=allowed to use=] <a permission>"preferences"</a>.
+    1. If |allowed| is `false`:
+        1. If the [=relevant global object=] of [=this=] does not have [=transient activation=], return [=a promise rejected with=] a "{{NotAllowedError}}" {{DOMException}}.
+        1. Let |permissionState| be the result of [=requesting permission to use=] <a permission>"preferences"</a>.
+        1. If |permissionState| is not [=permission/granted=], return [=a promise rejected with=] a "{{NotAllowedError}}" {{DOMException}}.
+    1. Let |preference| be the preference object's name.
+    1. Let |validValues| be null.
+    1. If |preference| is "{{colorScheme}}", set |validValues| to the result of [=get valid values for colorScheme=].
+    1. If |preference| is "{{contrast}}", set |validValues| to the result of [=get valid values for contrast=].
+    1. If |preference| is "{{reducedMotion}}", set |validValues| to the result of [=get valid values for reducedMotion=].
+    1. If |preference| is "{{reducedTransparency}}", set |validValues| to the result of [=get valid values for reducedTransparency=].
+    1. If |preference| is "{{reducedData}}", set |validValues| to the result of [=get valid values for reducedData=].
+    1. Let |value| be the method's argument.
+    1. Let |result| be [=a new promise=].
+    1. If |value| is not in |validValues|:
+        1. [=Reject=] |result| with a "{{TypeError}}" {{DOMException}}.
+        1. Return |result|.
+    1. Let |override| be null.
+    1. If an override for |preference| exists, set |override| to the value of that override.
+    1. If |value| is different from |override|:
+        1. Set the preference override for |preference| to |value|.
+    1. [=Resolve=] and return |result|.
 </div>
 
-Issue: This algorithm needs more detail on where the overrides are stored.
+Issue: This algorithm needs more detail on what exactly setting the preference override does.
 
-### {{colorScheme}} preference ### {#colorscheme-preference}
+Issue: Is TypeError correct here?
 
-The {{colorScheme}} preference represents the user's preference for the color scheme of the site.
-This is modeled after the `prefers-color-scheme` user preference media feature as defined in [[mediaqueries-5#prefers-color-scheme]].
 
-<script type=idl>
-enum ColorSchemePref { "light", "dark" };
-</script>
+### {{clearOverride}} method ### {#clear-override-method}
 
-### {{contrast}} preference ### {#contrast-preference}
+<div algorithm='clear preference override'>
+    The <dfn method for=PreferenceObject>clearOverride()</dfn> method, when invoked, must run these steps:
 
-The {{contrast}} preference represents the user's preference for the contrast of the site.
-This is modeled after the `prefers-contrast` user preference media feature as defined in [[mediaqueries-5#prefers-contrast]].
+    1. Let |preference| be the preference object's name.
+    1. Let |override| be null.
+    1. If an override for |preference| exists, set |override| to the value of that override.
+    1. If |override| is null, then return.
+    1. Clear the override for |preference|.
+</div>
 
-Unlike the media feature this preference is not able to be set to `custom` this is tightly coupled to the `forced-colors` media feature.
+# Permissions # {#permissions}
 
-<script type=idl>
-enum ContrastPref { "no-preference", "more", "less" };
-</script>
+The <dfn permission export>"preferences"</dfn> permission is a [=default powerful feature=].
 
-### {{reducedMotion}} preference ### {#reducedmotion-preference}
+## Permissions Policy ## {#permissions-policy}
 
-The {{reducedMotion}} preference represents the user's preference for reduced motion on the site.
-This is modeled after the `prefers-reduced-motion` user preference media feature as defined in [[mediaqueries-5#prefers-reduced-motion]].
-
-<script type=idl>
-enum ReducedMotionPref { "no-preference", "reduce" };
-</script>
-
-### {{reducedTransparency}} preference ### {#reducedtransparency-preference}
-
-The {{reducedTransparency}} preference represents the user's preference for reduced transparency on the site.
-This is modeled after the `prefers-reduced-transparency` user preference media feature as defined in [[mediaqueries-5#prefers-reduced-transparency]].
-
-<script type=idl>
-enum ReducedTransparencyPref { "no-preference", "reduce" };
-</script>
-
-### {{reducedData}} preference ### {#reduceddata-preference}
-
-The {{reducedData}} preference represents the user's preference for reduced data usage on the site.
-This is modeled after the `prefers-reduced-data` user preference media feature as defined in [[mediaqueries-5#prefers-reduced-data]].
-
-<script type=idl>
-enum ReducedDataPref { "no-preference", "reduce" };
-</script>
+This specification defines a [=policy-controlled feature=] identified by the string `"preferences"`. Its [=default allowlist=] is `'self'`.
 
 # Usage Examples # {#usage-examples}
 
@@ -185,30 +305,35 @@ Feature detection for a given preference is as simple as:
 const colorSchemeSupported = 'colorScheme' in navigator.preferences;
 ```
 
-## Setting a preference override ## {#setting-a-preference-override}
+## Requesting a preference override ## {#usage-request-a-preference-override}
 
-To set a preference override, the property can be set to a valid value for the preference.
-If an invalid value is set then this will be a no-op.
+To request a preference override, the {{requestOverride}} method can be called.
 
 ```js
-navigator.preferences.colorScheme = 'dark';
+navigator.preferences.colorScheme.requestOverride('dark')
+    .then(() => {
+         // The preference override was successful.
+    })
+    .catch((error) => {
+         // The preference override request was rejected.
+    });
 ```
 
-## Clearing a preference override ## {#clearing-overrides}
+## Clearing a preference override ## {#usage-clearing-a-preference-override}
 
-To clear an override and return the preference to the browser default, the property can be set to null.
+To clear an override and return the preference to the browser default, the {{clearOverride}} method can be called.
 
 ```js
-navigator.preferences.colorScheme = null;
+navigator.preferences.colorScheme.clearOverride();
 ```
 
-## Getting a preference override ## {#getting-a-preference-override}
+## Getting a preference override ## {#usage-getting-a-preference-override}
 
-To get the value of a preference override, the property can be read.
-Each property will return the string value indicating the preference, or null if no override is set.
+To get the value of a preference override, the {{override}} property can be read.
+Each preference property's override property will return the string value indicating the preference, or null if no override is set.
 
 ```js
-const colorScheme = navigator.preferences.colorScheme; // "light" | "dark" | null
+const colorScheme = navigator.preferences.colorScheme.override; // "light" | "dark" | null
 ```
 
 ## The `navigator.preferences.getSupported` method ## {#get-supported}
@@ -224,9 +349,13 @@ console.log(preferenceSupportData); // [ { name: 'contrast', values: ['more', 'l
 
 # Security and Privacy Considerations # {#sec-security}
 
-Issue: The API is currently exposed even to insecure contexts. This is probably fine but should be justified in this section probably?
-
 *This section is non-normative.*
+
+## Storage of preference overrides ## {#storage}
+
+The overrides set by this API are intended to be persisted by the browser. These settings are clearable by any means the browser sees fit to implement.
+
+Issue: Should this be in a normative section somewhere? See [#23](https://github.com/WICG/web-preferences-api/issues/23)
 
 ## Avoiding fingerprinting ## {#fingerprinting}
 
@@ -234,9 +363,11 @@ This API exposes no new fingerprinting surfaces beyond that which already exist 
 
 ## Permissions & User Activation ## {#permissions}
 
-This API does not require any permissions or user activation. It exposes no new capabilities to a site beyond that which already exists in the platform.
+The {{requestOverride}} API is gated behind a new permission, {{"preferences"}}.
 
-A site can already store a value in local storage and read into the DOM to override a preference. This API simply makes the ergonomics of this better.
+The API requires user activation to request the permission but once granted user activation is no longer required. This is so that automatic syncing on page load can work without a user prompt.
+
+As this method is a promise it also gives user agents more control over the process of overriding a preference.
 
 ## Sub-resources ## {#sub-resources}
 
@@ -249,10 +380,12 @@ For the spec we can probably find an existing definition to reference, but for t
 - Any cross-origin subresource with no external communication (e.g. an SVG loaded as an image) should get the override value.
 - Any cross-origin subresource that has no communication with parent but can communicate externally should **NOT** get the override value.
 
-Wherever the override value is passed down it should be done so in an opaque manner.
+Wherever the override value is passed down it should probably be done so in an opaque manner.
+
+Issue: How do any potential iframe restrictions interact with permissions policy, should we restrict the ability to grant this permission to cross-origin iframes, or would these restrictions be separate from permissions policy?
 
 <div class="example">
-If the parent frame sets `colorScheme` to `dark` then the iframe should see `prefers-color-scheme` as dark but shouldn't read `navigator.preferences.colorScheme` as `dark`.
+If the parent frame sets `colorScheme` to `dark` then the iframe should see `prefers-color-scheme` as dark but shouldn't read `navigator.preferences.colorScheme.override` as `dark`.
 </div>
 
 # Acknowledgements # {#sec-acknowledgements}

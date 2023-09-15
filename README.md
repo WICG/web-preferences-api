@@ -6,6 +6,8 @@ Authors: [Luke Warlow](https://github.com/lukewarlow)
 
 This document is intended as a starting point to engage standards bodies in developing a solution to the problem listed below.
 
+See [the draft spec](https://wicg.github.io/web-preferences-api/) for more details.
+
 ## Introduction
 
 Currently, website authors have a choice when wishing to honour a user's preference for a given setting:
@@ -75,40 +77,6 @@ With the **Web Preferences API**, sites could simply use the `color-scheme` prop
 
 A new `navigator.preferences` object will be added to the platform. This object will be the entry point to this API.
 
-#### WebIDL
-
-```webidl
-[Exposed=Window]
-partial interface Navigator {
-  readonly attribute PreferenceManager preferences;
-};
-
-[Exposed=Window]
-interface PreferenceManager {
-  // null means the preference is not overridden
-  attribute ColorSchemePref?  colorScheme;
-  attribute ContrastPref?  contrast;
-  attribute ReducedMotionPref?  reducedMotion;
-  attribute ReducedTransparencyPref?  reducedTransparency;
-  attribute ReducedDataPref? reducedData;
-  // Future preferences can be added here, the exact properties will be down to the browser support.
-
-  sequence<PreferenceSupportData> getSupported();
-};
-
-enum ColorSchemePref { "light", "dark" };
-enum ContrastPref { "no-preference", "more", "less" };
-enum ReducedMotionPref { "no-preference", "reduce" };
-enum ReducedTransparencyPref { "no-preference", "reduce" };
-enum ReducedDataPref { "no-preference", "reduce" };
-
-[Exposed=Window]
-interface PreferenceSupportData {
-  readonly attribute DOMString name;
-  readonly attribute FrozenArray<DOMString> values;
-};
-```
-
 #### TypeScript
 
 ```ts
@@ -117,15 +85,22 @@ interface Navigator {
 }
 
 interface PreferenceManager {
-  // null means the preference is not overriden
-  colorScheme: string | null; // "light" | "dark" | null
-  contrast: string | null; // "no-preference" | "more" | "less" | null
-  reducedMotion: string | null; // "no-preference" | "reduce" | null
-  reducedTransparency: string | null; // "no-preference" | "reduce" | null
-  reducedData: string | null; // "no-preference" | "reduce" | null
-  // Future preferences can be added here, the exact properties will be down to the browser support.
+	readonly colorScheme: PreferenceObject;
+    readonly contrast: PreferenceObject;
+    readonly reducedMotion: PreferenceObject;
+    readonly reducedTransparency: PreferenceObject;
+    readonly reducedData: PreferenceObject;
+    // Future preferences can be added here, the exact properties will be down to the browser support.
 
-  getSupported(): PreferenceSupportData[];
+    getSupported(): PreferenceSupportData[];
+}
+
+interface PreferenceObject {
+    // null means the preference is not overridden
+    readonly override: string | null;
+
+	requestOverride(value: string): Promise<void>;
+	clearOverride(): void;
 }
 
 interface PreferenceSupportData {
@@ -134,57 +109,21 @@ interface PreferenceSupportData {
 }
 ```
 
-### The `navigator.preferences.[preferenceName]` properties
-
-Each preference the browser supports will be exposed as a property on the `navigator.preferences` object.
-
-Feature detection for a given preference is as simple as:
-
-```js
-const colorSchemeSupported = 'colorScheme' in navigator.preferences;
-```
-
-Each property will return null if not overridden or a string value indicating the preference.
-
-```js
-const colorScheme = navigator.preferences.colorScheme; // "light" | "dark" | null
-```
-
-To clear an override and return the preference to the browser default, the property can be set to null.
-
-```js
-navigator.preferences.colorScheme = null;
-```
-
-To set a preference override, the property can be set to a valid value for the preference.
-If an invalid value is set then this will be a no-op.
-```js
-navigator.preferences.colorScheme = 'dark';
-```
-
-### The `navigator.preferences.getSupported` method
-
-This method allows a site to get the preferences supported by the browser. This is useful for sites that want to dynamically generate UI for overriding preferences.
-
-It also allows sites to determine if a preference value is supported before attempting to set it.
-
-```js
-const preferenceSupportData = navigator.preferences.getSupported();
-console.log(preferenceSupportData); // [ { name: 'contrast', values: ['more', 'less', 'no-preference'] }, ... ]
-```
-
 ## Privacy and Security Considerations
 
 ### Avoiding fingerprinting
 
 This API exposes no new fingerprinting surfaces beyond that which already exist in the platform.
 
-
 ### Permissions & User Activation
 
-This API does not require any permissions or user activation. It exposes no new capabilities to a site beyond that which already exists in the platform.
+The requestOverride API is gated behind a new permission.
 
-A site can already store a value in local storage and read into the DOM to override a preference. This API simply makes the ergonomics of this better.
+The API requires user activation to request the permission but once granted user activation is no longer required. This is so that automatic syncing on page load can work without a user prompt.
+
+As this method is a promise it also gives user agents more control over the process of overriding a preference.
+
+While this API by and large doesn't provide new capabilities it was decided that it should be gated behind a permission so that UAs concerned with potential abuse could put in place a mechanism to prevent abuse.
 
 ### Iframes etc
 
@@ -221,10 +160,8 @@ This also doesn't fix the (relatively minor) issue of preference syncing across 
 
 ## Open Questions
 
-- Should getSupported be asynchronous? It was originally but has been changed to synchronous because it is unlikely to be a performance bottleneck and it makes the API easier to use.
 - Where should the PreferenceManager interface be exposed?
     - It is currently exposed on the `navigator` object, is this best?
-    - It is currently exposed even in insecure contexts, is this okay? (For the same reasons it's not user activation locked I think this is fine)
     - It is currently only exposed to Window, should it also be exposed to Service and/or Web Workers?
 
 ## Acknowledgements
