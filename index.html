@@ -6,7 +6,7 @@
   <link href="https://www.w3.org/StyleSheets/TR/2021/W3C-UD" rel="stylesheet">
   <meta content="Bikeshed version 82ce88815, updated Thu Sep 7 16:33:55 2023 -0700" name="generator">
   <link href="https://wicg.github.io/web-preferences-api/" rel="canonical">
-  <meta content="298abb80b0747cf1cfb5c84e41c68bdee2ed329c" name="document-revision">
+  <meta content="bfec2c59e58a7dd44bcde9f9d5812dd57d3cfe99" name="document-revision">
 <style>/* Boilerplate: style-autolinks */
 .css.css, .property.property, .descriptor.descriptor {
     color: var(--a-normal-text);
@@ -668,7 +668,7 @@ var.selected6 { background-color: #FFBCF2; box-shadow: 0 0 0 2px #FFBCF2; }
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2021/logos/W3C" width="72"> </a> </p>
    <h1 class="p-name no-ref" id="title">Web Preferences API</h1>
-   <p id="w3c-state"><a href="https://www.w3.org/standards/types#UD">Unofficial Proposal Draft</a>, <time class="dt-updated" datetime="2023-09-15">15 September 2023</time></p>
+   <p id="w3c-state"><a href="https://www.w3.org/standards/types#UD">Unofficial Proposal Draft</a>, <time class="dt-updated" datetime="2023-09-18">18 September 2023</time></p>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -734,27 +734,22 @@ A human-readable <a href="http://www.w3.org/community/about/agreements/cla-deed/
        </ol>
      </ol>
     <li>
-     <a href="#permissions"><span class="secno">4</span> <span class="content">Permissions</span></a>
+     <a href="#usage-examples"><span class="secno">4</span> <span class="content">Usage Examples</span></a>
      <ol class="toc">
-      <li><a href="#permissions-policy"><span class="secno">4.1</span> <span class="content">Permissions Policy</span></a>
+      <li><a href="#usage-request-a-preference-override"><span class="secno">4.1</span> <span class="content">Requesting a preference override</span></a>
+      <li><a href="#usage-clearing-a-preference-override"><span class="secno">4.2</span> <span class="content">Clearing a preference override</span></a>
+      <li><a href="#usage-getting-a-preference-override"><span class="secno">4.3</span> <span class="content">Getting a preference override</span></a>
+      <li><a href="#get-supported"><span class="secno">4.4</span> <span class="content">The <code>navigator.preferences.getSupported</code> method</span></a>
      </ol>
     <li>
-     <a href="#usage-examples"><span class="secno">5</span> <span class="content">Usage Examples</span></a>
+     <a href="#sec-security"><span class="secno">5</span> <span class="content">Security and Privacy Considerations</span></a>
      <ol class="toc">
-      <li><a href="#usage-request-a-preference-override"><span class="secno">5.1</span> <span class="content">Requesting a preference override</span></a>
-      <li><a href="#usage-clearing-a-preference-override"><span class="secno">5.2</span> <span class="content">Clearing a preference override</span></a>
-      <li><a href="#usage-getting-a-preference-override"><span class="secno">5.3</span> <span class="content">Getting a preference override</span></a>
-      <li><a href="#get-supported"><span class="secno">5.4</span> <span class="content">The <code>navigator.preferences.getSupported</code> method</span></a>
+      <li><a href="#storage"><span class="secno">5.1</span> <span class="content">Storage of preference overrides</span></a>
+      <li><a href="#fingerprinting"><span class="secno">5.2</span> <span class="content">Avoiding fingerprinting</span></a>
+      <li><a href="#permissions"><span class="secno">5.3</span> <span class="content">Permissions &amp; User Activation</span></a>
+      <li><a href="#sub-resources"><span class="secno">5.4</span> <span class="content">Sub-resources</span></a>
      </ol>
-    <li>
-     <a href="#sec-security"><span class="secno">6</span> <span class="content">Security and Privacy Considerations</span></a>
-     <ol class="toc">
-      <li><a href="#storage"><span class="secno">6.1</span> <span class="content">Storage of preference overrides</span></a>
-      <li><a href="#fingerprinting"><span class="secno">6.2</span> <span class="content">Avoiding fingerprinting</span></a>
-      <li><a href="#permissions①"><span class="secno">6.3</span> <span class="content">Permissions &amp; User Activation</span></a>
-      <li><a href="#sub-resources"><span class="secno">6.4</span> <span class="content">Sub-resources</span></a>
-     </ol>
-    <li><a href="#sec-acknowledgements"><span class="secno">7</span> <span class="content">Acknowledgements</span></a>
+    <li><a href="#sec-acknowledgements"><span class="secno">6</span> <span class="content">Acknowledgements</span></a>
     <li>
      <a href="#w3c-conformance"><span class="secno"></span> <span class="content">Conformance</span></a>
      <ol class="toc">
@@ -1050,17 +1045,9 @@ This is modeled after the <code>prefers-reduced-data</code> user preference medi
      <li data-md>
       <p>Let <var>allowed</var> be <code>false</code>.</p>
      <li data-md>
-      <p>Set <var>allowed</var> to whether the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-relevant-global" id="ref-for-concept-relevant-global">relevant global object</a>'s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/nav-history-apis.html#concept-document-window" id="ref-for-concept-document-window">associated Document</a> is <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/iframe-embed-object.html#allowed-to-use" id="ref-for-allowed-to-use">allowed to use</a> <a class="idl-code" data-link-type="permission" href="#permissiondef-preferences" id="ref-for-permissiondef-preferences">"preferences"</a>.</p>
+      <p>Set <var>allowed</var> to the result of executing a UA defined algorithm for deciding whether the request is allowed.</p>
      <li data-md>
-      <p>If <var>allowed</var> is <code>false</code>:</p>
-      <ol>
-       <li data-md>
-        <p>If the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-relevant-global" id="ref-for-concept-relevant-global①">relevant global object</a> of <a data-link-type="dfn" href="https://webidl.spec.whatwg.org/#this" id="ref-for-this">this</a> does not have <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/interaction.html#transient-activation" id="ref-for-transient-activation">transient activation</a>, return <a data-link-type="dfn" href="https://webidl.spec.whatwg.org/#a-promise-rejected-with" id="ref-for-a-promise-rejected-with">a promise rejected with</a> a "<code class="idl"><a data-link-type="idl" href="https://webidl.spec.whatwg.org/#notallowederror" id="ref-for-notallowederror">NotAllowedError</a></code>" <code class="idl"><a data-link-type="idl" href="https://webidl.spec.whatwg.org/#idl-DOMException" id="ref-for-idl-DOMException">DOMException</a></code>.</p>
-       <li data-md>
-        <p>Let <var>permissionState</var> be the result of <a data-link-type="dfn" href="https://w3c.github.io/permissions/#dfn-request-permission-to-use" id="ref-for-dfn-request-permission-to-use">requesting permission to use</a> <a class="idl-code" data-link-type="permission" href="#permissiondef-preferences" id="ref-for-permissiondef-preferences①">"preferences"</a>.</p>
-       <li data-md>
-        <p>If <var>permissionState</var> is not <a data-link-type="dfn" href="https://w3c.github.io/permissions/#dfn-granted" id="ref-for-dfn-granted">granted</a>, return <a data-link-type="dfn" href="https://webidl.spec.whatwg.org/#a-promise-rejected-with" id="ref-for-a-promise-rejected-with①">a promise rejected with</a> a "<code class="idl"><a data-link-type="idl" href="https://webidl.spec.whatwg.org/#notallowederror" id="ref-for-notallowederror①">NotAllowedError</a></code>" <code class="idl"><a data-link-type="idl" href="https://webidl.spec.whatwg.org/#idl-DOMException" id="ref-for-idl-DOMException①">DOMException</a></code>.</p>
-      </ol>
+      <p>If <var>allowed</var> is <code>false</code>, return <a data-link-type="dfn" href="https://webidl.spec.whatwg.org/#a-promise-rejected-with" id="ref-for-a-promise-rejected-with">a promise rejected with</a> a "<code class="idl"><a data-link-type="idl" href="https://webidl.spec.whatwg.org/#notallowederror" id="ref-for-notallowederror">NotAllowedError</a></code>" <code class="idl"><a data-link-type="idl" href="https://webidl.spec.whatwg.org/#idl-DOMException" id="ref-for-idl-DOMException">DOMException</a></code>.</p>
      <li data-md>
       <p>Let <var>preference</var> be the preference object’s name.</p>
      <li data-md>
@@ -1083,7 +1070,7 @@ This is modeled after the <code>prefers-reduced-data</code> user preference medi
       <p>If <var>value</var> is not in <var>validValues</var>:</p>
       <ol>
        <li data-md>
-        <p><a data-link-type="dfn" href="https://webidl.spec.whatwg.org/#reject" id="ref-for-reject">Reject</a> <var>result</var> with a "<code class="idl"><a data-link-type="idl" href="https://webidl.spec.whatwg.org/#exceptiondef-typeerror" id="ref-for-exceptiondef-typeerror">TypeError</a></code>" <code class="idl"><a data-link-type="idl" href="https://webidl.spec.whatwg.org/#idl-DOMException" id="ref-for-idl-DOMException②">DOMException</a></code>.</p>
+        <p><a data-link-type="dfn" href="https://webidl.spec.whatwg.org/#reject" id="ref-for-reject">Reject</a> <var>result</var> with a "<code class="idl"><a data-link-type="idl" href="https://webidl.spec.whatwg.org/#exceptiondef-typeerror" id="ref-for-exceptiondef-typeerror">TypeError</a></code>" <code class="idl"><a data-link-type="idl" href="https://webidl.spec.whatwg.org/#idl-DOMException" id="ref-for-idl-DOMException①">DOMException</a></code>.</p>
        <li data-md>
         <p>Return <var>result</var>.</p>
       </ol>
@@ -1119,17 +1106,13 @@ This is modeled after the <code>prefers-reduced-data</code> user preference medi
       <p>Clear the override for <var>preference</var>.</p>
     </ol>
    </div>
-   <h2 class="heading settled" data-level="4" id="permissions"><span class="secno">4. </span><span class="content">Permissions</span><a class="self-link" href="#permissions"></a></h2>
-   <p>The <dfn class="dfn-paneled idl-code" data-dfn-type="permission" data-export id="permissiondef-preferences"><code>"preferences"</code></dfn> permission is a <a data-link-type="dfn" href="https://w3c.github.io/permissions/#dfn-default-powerful-feature" id="ref-for-dfn-default-powerful-feature">default powerful feature</a>.</p>
-   <h3 class="heading settled" data-level="4.1" id="permissions-policy"><span class="secno">4.1. </span><span class="content">Permissions Policy</span><a class="self-link" href="#permissions-policy"></a></h3>
-   <p>This specification defines a <a data-link-type="dfn" href="https://w3c.github.io/webappsec-permissions-policy/#policy-controlled-feature" id="ref-for-policy-controlled-feature">policy-controlled feature</a> identified by the string <code>"preferences"</code>. Its <a data-link-type="dfn" href="https://w3c.github.io/webappsec-permissions-policy/#policy-controlled-feature-default-allowlist" id="ref-for-policy-controlled-feature-default-allowlist">default allowlist</a> is <code>'self'</code>.</p>
-   <h2 class="heading settled" data-level="5" id="usage-examples"><span class="secno">5. </span><span class="content">Usage Examples</span><a class="self-link" href="#usage-examples"></a></h2>
+   <h2 class="heading settled" data-level="4" id="usage-examples"><span class="secno">4. </span><span class="content">Usage Examples</span><a class="self-link" href="#usage-examples"></a></h2>
    <p><em>This section is non-normative.</em></p>
    <p>Each preference the browser supports will be exposed as a property on the <code>navigator.preferences</code> object.</p>
    <p>Feature detection for a given preference is as simple as:</p>
 <pre class="language-js highlight"><c- a>const</c-> colorSchemeSupported <c- o>=</c-> <c- t>'colorScheme'</c-> <c- ow>in</c-> navigator<c- p>.</c->preferences<c- p>;</c->
 </pre>
-   <h3 class="heading settled" data-level="5.1" id="usage-request-a-preference-override"><span class="secno">5.1. </span><span class="content">Requesting a preference override</span><a class="self-link" href="#usage-request-a-preference-override"></a></h3>
+   <h3 class="heading settled" data-level="4.1" id="usage-request-a-preference-override"><span class="secno">4.1. </span><span class="content">Requesting a preference override</span><a class="self-link" href="#usage-request-a-preference-override"></a></h3>
    <p>To request a preference override, the <code class="idl"><a data-link-type="idl" href="#dom-preferenceobject-requestoverride" id="ref-for-dom-preferenceobject-requestoverride①">requestOverride</a></code> method can be called.</p>
 <pre class="language-js highlight">navigator<c- p>.</c->preferences<c- p>.</c->colorScheme<c- p>.</c->requestOverride<c- p>(</c-><c- t>'dark'</c-><c- p>)</c->
     <c- p>.</c->then<c- p>(()</c-> <c- p>=></c-> <c- p>{</c->
@@ -1139,33 +1122,33 @@ This is modeled after the <code>prefers-reduced-data</code> user preference medi
          <c- c1>// The preference override request was rejected.</c->
     <c- p>});</c->
 </pre>
-   <h3 class="heading settled" data-level="5.2" id="usage-clearing-a-preference-override"><span class="secno">5.2. </span><span class="content">Clearing a preference override</span><a class="self-link" href="#usage-clearing-a-preference-override"></a></h3>
+   <h3 class="heading settled" data-level="4.2" id="usage-clearing-a-preference-override"><span class="secno">4.2. </span><span class="content">Clearing a preference override</span><a class="self-link" href="#usage-clearing-a-preference-override"></a></h3>
    <p>To clear an override and return the preference to the browser default, the <code class="idl"><a data-link-type="idl" href="#dom-preferenceobject-clearoverride" id="ref-for-dom-preferenceobject-clearoverride②">clearOverride</a></code> method can be called.</p>
 <pre class="language-js highlight">navigator<c- p>.</c->preferences<c- p>.</c->colorScheme<c- p>.</c->clearOverride<c- p>();</c->
 </pre>
-   <h3 class="heading settled" data-level="5.3" id="usage-getting-a-preference-override"><span class="secno">5.3. </span><span class="content">Getting a preference override</span><a class="self-link" href="#usage-getting-a-preference-override"></a></h3>
+   <h3 class="heading settled" data-level="4.3" id="usage-getting-a-preference-override"><span class="secno">4.3. </span><span class="content">Getting a preference override</span><a class="self-link" href="#usage-getting-a-preference-override"></a></h3>
    <p>To get the value of a preference override, the <code class="idl"><a data-link-type="idl" href="#dom-preferenceobject-override" id="ref-for-dom-preferenceobject-override②">override</a></code> property can be read.
 Each preference property’s override property will return the string value indicating the preference, or null if no override is set.</p>
 <pre class="language-js highlight"><c- a>const</c-> colorScheme <c- o>=</c-> navigator<c- p>.</c->preferences<c- p>.</c->colorScheme<c- p>.</c->override<c- p>;</c-> <c- c1>// "light" | "dark" | null</c->
 </pre>
-   <h3 class="heading settled" data-level="5.4" id="get-supported"><span class="secno">5.4. </span><span class="content">The <code>navigator.preferences.getSupported</code> method</span><a class="self-link" href="#get-supported"></a></h3>
+   <h3 class="heading settled" data-level="4.4" id="get-supported"><span class="secno">4.4. </span><span class="content">The <code>navigator.preferences.getSupported</code> method</span><a class="self-link" href="#get-supported"></a></h3>
    <p>This method allows a site to get the preferences supported by the browser. This is useful for sites that want to dynamically generate UI for overriding preferences.</p>
    <p>It also allows sites to determine if a preference value is supported before attempting to set it.</p>
 <pre class="language-js highlight"><c- a>const</c-> preferenceSupportData <c- o>=</c-> navigator<c- p>.</c->preferences<c- p>.</c->getSupported<c- p>();</c->
 console<c- p>.</c->log<c- p>(</c->preferenceSupportData<c- p>);</c-> <c- c1>// [ { name: 'contrast', values: ['more', 'less', 'no-preference'] }, ... ]</c->
 </pre>
-   <h2 class="heading settled" data-level="6" id="sec-security"><span class="secno">6. </span><span class="content">Security and Privacy Considerations</span><a class="self-link" href="#sec-security"></a></h2>
+   <h2 class="heading settled" data-level="5" id="sec-security"><span class="secno">5. </span><span class="content">Security and Privacy Considerations</span><a class="self-link" href="#sec-security"></a></h2>
    <p><em>This section is non-normative.</em></p>
-   <h3 class="heading settled" data-level="6.1" id="storage"><span class="secno">6.1. </span><span class="content">Storage of preference overrides</span><a class="self-link" href="#storage"></a></h3>
+   <h3 class="heading settled" data-level="5.1" id="storage"><span class="secno">5.1. </span><span class="content">Storage of preference overrides</span><a class="self-link" href="#storage"></a></h3>
    <p>The overrides set by this API are intended to be persisted by the browser. These settings are clearable by any means the browser sees fit to implement.</p>
    <p class="issue" id="issue-f93cfd62"><a class="self-link" href="#issue-f93cfd62"></a> Should this be in a normative section somewhere? See <a href="https://github.com/WICG/web-preferences-api/issues/23">#23</a></p>
-   <h3 class="heading settled" data-level="6.2" id="fingerprinting"><span class="secno">6.2. </span><span class="content">Avoiding fingerprinting</span><a class="self-link" href="#fingerprinting"></a></h3>
+   <h3 class="heading settled" data-level="5.2" id="fingerprinting"><span class="secno">5.2. </span><span class="content">Avoiding fingerprinting</span><a class="self-link" href="#fingerprinting"></a></h3>
    <p>This API exposes no new fingerprinting surfaces beyond that which already exist in the platform.</p>
-   <h3 class="heading settled" data-level="6.3" id="permissions①"><span class="secno">6.3. </span><span class="content">Permissions &amp; User Activation</span><a class="self-link" href="#permissions①"></a></h3>
-   <p>The <code class="idl"><a data-link-type="idl" href="#dom-preferenceobject-requestoverride" id="ref-for-dom-preferenceobject-requestoverride②">requestOverride</a></code> API is gated behind a new permission, <code class="idl"><a data-link-type="idl" href="#permissiondef-preferences" id="ref-for-permissiondef-preferences②">"preferences"</a></code>.</p>
-   <p>The API requires user activation to request the permission but once granted user activation is no longer required. This is so that automatic syncing on page load can work without a user prompt.</p>
-   <p>As this method is a promise it also gives user agents more control over the process of overriding a preference.</p>
-   <h3 class="heading settled" data-level="6.4" id="sub-resources"><span class="secno">6.4. </span><span class="content">Sub-resources</span><a class="self-link" href="#sub-resources"></a></h3>
+   <h3 class="heading settled" data-level="5.3" id="permissions"><span class="secno">5.3. </span><span class="content">Permissions &amp; User Activation</span><a class="self-link" href="#permissions"></a></h3>
+   <p>As the <code class="idl"><a data-link-type="idl" href="#dom-preferenceobject-requestoverride" id="ref-for-dom-preferenceobject-requestoverride②">requestOverride</a></code> method is a promise it gives user agents more control over the process of overriding a preference.</p>
+   <p>The <code class="idl"><a data-link-type="idl" href="#dom-preferenceobject-requestoverride" id="ref-for-dom-preferenceobject-requestoverride③">requestOverride</a></code> method is gated behind a UA defined algorithm for determining if the action can proceed.</p>
+   <p>This could include a user prompt, or it could be a simple check to see if the user has interacted with the page.</p>
+   <h3 class="heading settled" data-level="5.4" id="sub-resources"><span class="secno">5.4. </span><span class="content">Sub-resources</span><a class="self-link" href="#sub-resources"></a></h3>
    <p class="note" role="note"><span class="marker">Note:</span> See <a href="https://github.com/lukewarlow/web-preferences-api/issues/8">#8</a> for discussion regarding this.</p>
    <p>For the spec we can probably find an existing definition to reference, but for the purposes of this explainer:</p>
    <ul>
@@ -1181,7 +1164,7 @@ console<c- p>.</c->log<c- p>(</c->preferenceSupportData<c- p>);</c-> <c- c1>// [
    <p>Wherever the override value is passed down it should probably be done so in an opaque manner.</p>
    <p class="issue" id="issue-ba02c906"><a class="self-link" href="#issue-ba02c906"></a> How do any potential iframe restrictions interact with permissions policy, should we restrict the ability to grant this permission to cross-origin iframes, or would these restrictions be separate from permissions policy?</p>
    <div class="example" id="example-55911358"><a class="self-link" href="#example-55911358"></a> If the parent frame sets <code>colorScheme</code> to <code>dark</code> then the iframe should see <code>prefers-color-scheme</code> as dark but shouldn’t read <code>navigator.preferences.colorScheme.override</code> as <code>dark</code>. </div>
-   <h2 class="heading settled" data-level="7" id="sec-acknowledgements"><span class="secno">7. </span><span class="content">Acknowledgements</span><a class="self-link" href="#sec-acknowledgements"></a></h2>
+   <h2 class="heading settled" data-level="6" id="sec-acknowledgements"><span class="secno">6. </span><span class="content">Acknowledgements</span><a class="self-link" href="#sec-acknowledgements"></a></h2>
    <p><em>This section is non-normative.</em></p>
    <p class="issue" id="issue-bfd5fd46"><a class="self-link" href="#issue-bfd5fd46"></a> TODO fill in acknowledgements section</p>
   </main>
@@ -1229,7 +1212,6 @@ console<c- p>.</c->log<c- p>(</c->preferenceSupportData<c- p>);</c-> <c- c1>// [
    <li><a href="#dom-preferenceobject-override">override</a><span>, in § 3.7.1</span>
    <li><a href="#preferencemanager">PreferenceManager</a><span>, in § 3</span>
    <li><a href="#preferenceobject">PreferenceObject</a><span>, in § 3.7</span>
-   <li><a href="#permissiondef-preferences">"preferences"</a><span>, in § 4</span>
    <li><a href="#dom-navigator-preferences">preferences</a><span>, in § 2</span>
    <li><a href="#preferencesupportdata">PreferenceSupportData</a><span>, in § 3.6.1</span>
    <li><a href="#dom-preferencemanager-reduceddata">reducedData</a><span>, in § 3</span>
@@ -1255,25 +1237,8 @@ console<c- p>.</c->log<c- p>(</c->preferenceSupportData<c- p>);</c-> <c- c1>// [
     <a data-link-type="biblio">[HTML]</a> defines the following terms:
     <ul>
      <li><span class="dfn-paneled" id="be0c27b2">Navigator</span>
-     <li><span class="dfn-paneled" id="3610bd67">allowed to use</span>
-     <li><span class="dfn-paneled" id="3349d69f">associated document</span>
      <li><span class="dfn-paneled" id="086e3aff">origin</span>
-     <li><span class="dfn-paneled" id="e99bd18e">relevant global object</span>
      <li><span class="dfn-paneled" id="7393da89">same origin</span>
-     <li><span class="dfn-paneled" id="47fe679e">transient activation</span>
-    </ul>
-   <li>
-    <a data-link-type="biblio">[PERMISSIONS]</a> defines the following terms:
-    <ul>
-     <li><span class="dfn-paneled" id="ba1bd741">default powerful feature</span>
-     <li><span class="dfn-paneled" id="6821ab89">granted</span>
-     <li><span class="dfn-paneled" id="d357c753">requesting permission to use</span>
-    </ul>
-   <li>
-    <a data-link-type="biblio">[PERMISSIONS-POLICY-1]</a> defines the following terms:
-    <ul>
-     <li><span class="dfn-paneled" id="1570624a">default allowlist</span>
-     <li><span class="dfn-paneled" id="cc890cc1">policy-controlled feature</span>
     </ul>
    <li>
     <a data-link-type="biblio">[WEBIDL]</a> defines the following terms:
@@ -1292,7 +1257,6 @@ console<c- p>.</c->log<c- p>(</c->preferenceSupportData<c- p>);</c-> <c- c1>// [
      <li><span class="dfn-paneled" id="b262501e">reject</span>
      <li><span class="dfn-paneled" id="3b90bdcd">resolve</span>
      <li><span class="dfn-paneled" id="9cce47fd">sequence</span>
-     <li><span class="dfn-paneled" id="4013a022">this</span>
      <li><span class="dfn-paneled" id="5f90bbfb">undefined</span>
     </ul>
   </ul>
@@ -1309,10 +1273,6 @@ console<c- p>.</c->log<c- p>(</c->preferenceSupportData<c- p>);</c-> <c- c1>// [
    <dd>Anne van Kesteren; et al. <a href="https://html.spec.whatwg.org/multipage/"><cite>HTML Standard</cite></a>. Living Standard. URL: <a href="https://html.spec.whatwg.org/multipage/">https://html.spec.whatwg.org/multipage/</a>
    <dt id="biblio-mediaqueries-5">[MEDIAQUERIES-5]
    <dd>Dean Jackson; et al. <a href="https://drafts.csswg.org/mediaqueries-5/"><cite>Media Queries Level 5</cite></a>. URL: <a href="https://drafts.csswg.org/mediaqueries-5/">https://drafts.csswg.org/mediaqueries-5/</a>
-   <dt id="biblio-permissions">[PERMISSIONS]
-   <dd>Marcos Caceres; Mike Taylor. <a href="https://w3c.github.io/permissions/"><cite>Permissions</cite></a>. URL: <a href="https://w3c.github.io/permissions/">https://w3c.github.io/permissions/</a>
-   <dt id="biblio-permissions-policy-1">[PERMISSIONS-POLICY-1]
-   <dd>Ian Clelland. <a href="https://w3c.github.io/webappsec-permissions-policy/"><cite>Permissions Policy</cite></a>. URL: <a href="https://w3c.github.io/webappsec-permissions-policy/">https://w3c.github.io/webappsec-permissions-policy/</a>
    <dt id="biblio-rfc2119">[RFC2119]
    <dd>S. Bradner. <a href="https://datatracker.ietf.org/doc/html/rfc2119"><cite>Key words for use in RFCs to Indicate Requirement Levels</cite></a>. March 1997. Best Current Practice. URL: <a href="https://datatracker.ietf.org/doc/html/rfc2119">https://datatracker.ietf.org/doc/html/rfc2119</a>
    <dt id="biblio-savedata">[SAVEDATA]
@@ -1676,32 +1636,22 @@ window.dfnpanelData = {};
 window.dfnpanelData['64747b41'] = {"dfnID": "64747b41", "url": "https://drafts.csswg.org/css-cascade-5/#cascade-origin-ua", "dfnText": "ua style sheet", "refSections": [{"refs": [{"id": "ref-for-cascade-origin-ua"}], "title": "3.1. colorScheme attribute"}, {"refs": [{"id": "ref-for-cascade-origin-ua\u2460"}], "title": "3.2. contrast attribute"}, {"refs": [{"id": "ref-for-cascade-origin-ua\u2461"}], "title": "3.3. reducedMotion attribute"}, {"refs": [{"id": "ref-for-cascade-origin-ua\u2462"}], "title": "3.4. reducedTransparency attribute"}, {"refs": [{"id": "ref-for-cascade-origin-ua\u2463"}], "title": "3.5. reducedData attribute"}], "external": true};
 window.dfnpanelData['d5b6d58f'] = {"dfnID": "d5b6d58f", "url": "https://drafts.csswg.org/css-color-adjust-1/#used-color-scheme", "dfnText": "used color scheme", "refSections": [{"refs": [{"id": "ref-for-used-color-scheme"}], "title": "3.1. colorScheme attribute"}], "external": true};
 window.dfnpanelData['be0c27b2'] = {"dfnID": "be0c27b2", "url": "https://html.spec.whatwg.org/multipage/system-state.html#navigator", "dfnText": "Navigator", "refSections": [{"refs": [{"id": "ref-for-navigator"}, {"id": "ref-for-navigator\u2460"}], "title": "2. Extensions to the Navigator interface"}], "external": true};
-window.dfnpanelData['3610bd67'] = {"dfnID": "3610bd67", "url": "https://html.spec.whatwg.org/multipage/iframe-embed-object.html#allowed-to-use", "dfnText": "allowed to use", "refSections": [{"refs": [{"id": "ref-for-allowed-to-use"}], "title": "3.7.2. requestOverride() method"}], "external": true};
-window.dfnpanelData['3349d69f'] = {"dfnID": "3349d69f", "url": "https://html.spec.whatwg.org/multipage/nav-history-apis.html#concept-document-window", "dfnText": "associated document", "refSections": [{"refs": [{"id": "ref-for-concept-document-window"}], "title": "3.7.2. requestOverride() method"}], "external": true};
 window.dfnpanelData['086e3aff'] = {"dfnID": "086e3aff", "url": "https://html.spec.whatwg.org/multipage/browsers.html#concept-origin", "dfnText": "origin", "refSections": [{"refs": [{"id": "ref-for-concept-origin"}], "title": "1. Introduction"}, {"refs": [{"id": "ref-for-concept-origin\u2460"}], "title": "3.1. colorScheme attribute"}, {"refs": [{"id": "ref-for-concept-origin\u2461"}], "title": "3.2. contrast attribute"}, {"refs": [{"id": "ref-for-concept-origin\u2462"}], "title": "3.3. reducedMotion attribute"}, {"refs": [{"id": "ref-for-concept-origin\u2463"}], "title": "3.4. reducedTransparency attribute"}, {"refs": [{"id": "ref-for-concept-origin\u2464"}], "title": "3.5. reducedData attribute"}], "external": true};
-window.dfnpanelData['e99bd18e'] = {"dfnID": "e99bd18e", "url": "https://html.spec.whatwg.org/multipage/webappapis.html#concept-relevant-global", "dfnText": "relevant global object", "refSections": [{"refs": [{"id": "ref-for-concept-relevant-global"}, {"id": "ref-for-concept-relevant-global\u2460"}], "title": "3.7.2. requestOverride() method"}], "external": true};
-window.dfnpanelData['7393da89'] = {"dfnID": "7393da89", "url": "https://html.spec.whatwg.org/multipage/browsers.html#same-origin", "dfnText": "same origin", "refSections": [{"refs": [{"id": "ref-for-same-origin"}], "title": "6.4. Sub-resources"}], "external": true};
-window.dfnpanelData['47fe679e'] = {"dfnID": "47fe679e", "url": "https://html.spec.whatwg.org/multipage/interaction.html#transient-activation", "dfnText": "transient activation", "refSections": [{"refs": [{"id": "ref-for-transient-activation"}], "title": "3.7.2. requestOverride() method"}], "external": true};
-window.dfnpanelData['ba1bd741'] = {"dfnID": "ba1bd741", "url": "https://w3c.github.io/permissions/#dfn-default-powerful-feature", "dfnText": "default powerful feature", "refSections": [{"refs": [{"id": "ref-for-dfn-default-powerful-feature"}], "title": "4. Permissions"}], "external": true};
-window.dfnpanelData['6821ab89'] = {"dfnID": "6821ab89", "url": "https://w3c.github.io/permissions/#dfn-granted", "dfnText": "granted", "refSections": [{"refs": [{"id": "ref-for-dfn-granted"}], "title": "3.7.2. requestOverride() method"}], "external": true};
-window.dfnpanelData['d357c753'] = {"dfnID": "d357c753", "url": "https://w3c.github.io/permissions/#dfn-request-permission-to-use", "dfnText": "requesting permission to use", "refSections": [{"refs": [{"id": "ref-for-dfn-request-permission-to-use"}], "title": "3.7.2. requestOverride() method"}], "external": true};
-window.dfnpanelData['1570624a'] = {"dfnID": "1570624a", "url": "https://w3c.github.io/webappsec-permissions-policy/#policy-controlled-feature-default-allowlist", "dfnText": "default allowlist", "refSections": [{"refs": [{"id": "ref-for-policy-controlled-feature-default-allowlist"}], "title": "4.1. Permissions Policy"}], "external": true};
-window.dfnpanelData['cc890cc1'] = {"dfnID": "cc890cc1", "url": "https://w3c.github.io/webappsec-permissions-policy/#policy-controlled-feature", "dfnText": "policy-controlled feature", "refSections": [{"refs": [{"id": "ref-for-policy-controlled-feature"}], "title": "4.1. Permissions Policy"}], "external": true};
-window.dfnpanelData['dca2de17'] = {"dfnID": "dca2de17", "url": "https://webidl.spec.whatwg.org/#idl-DOMException", "dfnText": "DOMException", "refSections": [{"refs": [{"id": "ref-for-idl-DOMException"}, {"id": "ref-for-idl-DOMException\u2460"}, {"id": "ref-for-idl-DOMException\u2461"}], "title": "3.7.2. requestOverride() method"}], "external": true};
+window.dfnpanelData['7393da89'] = {"dfnID": "7393da89", "url": "https://html.spec.whatwg.org/multipage/browsers.html#same-origin", "dfnText": "same origin", "refSections": [{"refs": [{"id": "ref-for-same-origin"}], "title": "5.4. Sub-resources"}], "external": true};
+window.dfnpanelData['dca2de17'] = {"dfnID": "dca2de17", "url": "https://webidl.spec.whatwg.org/#idl-DOMException", "dfnText": "DOMException", "refSections": [{"refs": [{"id": "ref-for-idl-DOMException"}, {"id": "ref-for-idl-DOMException\u2460"}], "title": "3.7.2. requestOverride() method"}], "external": true};
 window.dfnpanelData['8855a9aa'] = {"dfnID": "8855a9aa", "url": "https://webidl.spec.whatwg.org/#idl-DOMString", "dfnText": "DOMString", "refSections": [{"refs": [{"id": "ref-for-idl-DOMString"}, {"id": "ref-for-idl-DOMString\u2460"}], "title": "3.6.1. PreferenceSupportData interface"}, {"refs": [{"id": "ref-for-idl-DOMString\u2461"}, {"id": "ref-for-idl-DOMString\u2462"}], "title": "3.7. PreferenceObject interface"}], "external": true};
 window.dfnpanelData['889e932f'] = {"dfnID": "889e932f", "url": "https://webidl.spec.whatwg.org/#Exposed", "dfnText": "Exposed", "refSections": [{"refs": [{"id": "ref-for-Exposed"}], "title": "2. Extensions to the Navigator interface"}, {"refs": [{"id": "ref-for-Exposed\u2460"}], "title": "3. PreferenceManager interface"}, {"refs": [{"id": "ref-for-Exposed\u2461"}], "title": "3.6.1. PreferenceSupportData interface"}, {"refs": [{"id": "ref-for-Exposed\u2462"}], "title": "3.7. PreferenceObject interface"}], "external": true};
 window.dfnpanelData['dcf5fafa'] = {"dfnID": "dcf5fafa", "url": "https://webidl.spec.whatwg.org/#idl-frozen-array", "dfnText": "FrozenArray", "refSections": [{"refs": [{"id": "ref-for-idl-frozen-array"}], "title": "3.6.1. PreferenceSupportData interface"}], "external": true};
-window.dfnpanelData['ba556545'] = {"dfnID": "ba556545", "url": "https://webidl.spec.whatwg.org/#notallowederror", "dfnText": "NotAllowedError", "refSections": [{"refs": [{"id": "ref-for-notallowederror"}, {"id": "ref-for-notallowederror\u2460"}], "title": "3.7.2. requestOverride() method"}], "external": true};
+window.dfnpanelData['ba556545'] = {"dfnID": "ba556545", "url": "https://webidl.spec.whatwg.org/#notallowederror", "dfnText": "NotAllowedError", "refSections": [{"refs": [{"id": "ref-for-notallowederror"}], "title": "3.7.2. requestOverride() method"}], "external": true};
 window.dfnpanelData['bdbd19d1'] = {"dfnID": "bdbd19d1", "url": "https://webidl.spec.whatwg.org/#idl-promise", "dfnText": "Promise", "refSections": [{"refs": [{"id": "ref-for-idl-promise"}], "title": "3.7. PreferenceObject interface"}], "external": true};
 window.dfnpanelData['a5c91173'] = {"dfnID": "a5c91173", "url": "https://webidl.spec.whatwg.org/#SameObject", "dfnText": "SameObject", "refSections": [{"refs": [{"id": "ref-for-SameObject"}], "title": "2. Extensions to the Navigator interface"}], "external": true};
 window.dfnpanelData['b75bb3bd'] = {"dfnID": "b75bb3bd", "url": "https://webidl.spec.whatwg.org/#SecureContext", "dfnText": "SecureContext", "refSections": [{"refs": [{"id": "ref-for-SecureContext"}], "title": "2. Extensions to the Navigator interface"}, {"refs": [{"id": "ref-for-SecureContext\u2460"}], "title": "3. PreferenceManager interface"}, {"refs": [{"id": "ref-for-SecureContext\u2461"}], "title": "3.6.1. PreferenceSupportData interface"}, {"refs": [{"id": "ref-for-SecureContext\u2462"}], "title": "3.7. PreferenceObject interface"}], "external": true};
 window.dfnpanelData['82ca3efc'] = {"dfnID": "82ca3efc", "url": "https://webidl.spec.whatwg.org/#exceptiondef-typeerror", "dfnText": "TypeError", "refSections": [{"refs": [{"id": "ref-for-exceptiondef-typeerror"}], "title": "3.7.2. requestOverride() method"}], "external": true};
 window.dfnpanelData['dacde8b5'] = {"dfnID": "dacde8b5", "url": "https://webidl.spec.whatwg.org/#a-new-promise", "dfnText": "a new promise", "refSections": [{"refs": [{"id": "ref-for-a-new-promise"}, {"id": "ref-for-a-new-promise\u2460"}], "title": "3.7.2. requestOverride() method"}], "external": true};
-window.dfnpanelData['d0b4a948'] = {"dfnID": "d0b4a948", "url": "https://webidl.spec.whatwg.org/#a-promise-rejected-with", "dfnText": "a promise rejected with", "refSections": [{"refs": [{"id": "ref-for-a-promise-rejected-with"}, {"id": "ref-for-a-promise-rejected-with\u2460"}], "title": "3.7.2. requestOverride() method"}], "external": true};
+window.dfnpanelData['d0b4a948'] = {"dfnID": "d0b4a948", "url": "https://webidl.spec.whatwg.org/#a-promise-rejected-with", "dfnText": "a promise rejected with", "refSections": [{"refs": [{"id": "ref-for-a-promise-rejected-with"}], "title": "3.7.2. requestOverride() method"}], "external": true};
 window.dfnpanelData['b262501e'] = {"dfnID": "b262501e", "url": "https://webidl.spec.whatwg.org/#reject", "dfnText": "reject", "refSections": [{"refs": [{"id": "ref-for-reject"}], "title": "3.7.2. requestOverride() method"}], "external": true};
 window.dfnpanelData['3b90bdcd'] = {"dfnID": "3b90bdcd", "url": "https://webidl.spec.whatwg.org/#resolve", "dfnText": "resolve", "refSections": [{"refs": [{"id": "ref-for-resolve"}], "title": "3.7.2. requestOverride() method"}], "external": true};
 window.dfnpanelData['9cce47fd'] = {"dfnID": "9cce47fd", "url": "https://webidl.spec.whatwg.org/#idl-sequence", "dfnText": "sequence", "refSections": [{"refs": [{"id": "ref-for-idl-sequence"}], "title": "3. PreferenceManager interface"}, {"refs": [{"id": "ref-for-idl-sequence\u2460"}], "title": "3.1. colorScheme attribute"}, {"refs": [{"id": "ref-for-idl-sequence\u2461"}], "title": "3.2. contrast attribute"}, {"refs": [{"id": "ref-for-idl-sequence\u2462"}], "title": "3.3. reducedMotion attribute"}, {"refs": [{"id": "ref-for-idl-sequence\u2463"}], "title": "3.4. reducedTransparency attribute"}, {"refs": [{"id": "ref-for-idl-sequence\u2464"}], "title": "3.5. reducedData attribute"}, {"refs": [{"id": "ref-for-idl-sequence\u2465"}, {"id": "ref-for-idl-sequence\u2466"}], "title": "3.6. getSupported method"}], "external": true};
-window.dfnpanelData['4013a022'] = {"dfnID": "4013a022", "url": "https://webidl.spec.whatwg.org/#this", "dfnText": "this", "refSections": [{"refs": [{"id": "ref-for-this"}], "title": "3.7.2. requestOverride() method"}], "external": true};
 window.dfnpanelData['5f90bbfb'] = {"dfnID": "5f90bbfb", "url": "https://webidl.spec.whatwg.org/#idl-undefined", "dfnText": "undefined", "refSections": [{"refs": [{"id": "ref-for-idl-undefined"}, {"id": "ref-for-idl-undefined\u2460"}], "title": "3.7. PreferenceObject interface"}], "external": true};
 window.dfnpanelData['dom-navigator-preferences'] = {"dfnID": "dom-navigator-preferences", "url": "#dom-navigator-preferences", "dfnText": "preferences", "refSections": [{"refs": [{"id": "ref-for-dom-navigator-preferences"}, {"id": "ref-for-dom-navigator-preferences\u2460"}], "title": "2.1. preferences attribute"}], "external": false};
 window.dfnpanelData['preferencemanager'] = {"dfnID": "preferencemanager", "url": "#preferencemanager", "dfnText": "PreferenceManager", "refSections": [{"refs": [{"id": "ref-for-preferencemanager"}], "title": "2. Extensions to the Navigator interface"}, {"refs": [{"id": "ref-for-preferencemanager\u2460"}], "title": "2.1. preferences attribute"}, {"refs": [{"id": "ref-for-preferencemanager\u2461"}], "title": "3. PreferenceManager interface"}], "external": false};
@@ -1720,10 +1670,9 @@ window.dfnpanelData['preferencesupportdata'] = {"dfnID": "preferencesupportdata"
 window.dfnpanelData['dom-preferencesupportdata-name'] = {"dfnID": "dom-preferencesupportdata-name", "url": "#dom-preferencesupportdata-name", "dfnText": "name", "refSections": [{"refs": [{"id": "ref-for-dom-preferencesupportdata-name"}], "title": "3.6. getSupported method"}], "external": false};
 window.dfnpanelData['dom-preferencesupportdata-values'] = {"dfnID": "dom-preferencesupportdata-values", "url": "#dom-preferencesupportdata-values", "dfnText": "values", "refSections": [{"refs": [{"id": "ref-for-dom-preferencesupportdata-values"}], "title": "3.6. getSupported method"}], "external": false};
 window.dfnpanelData['preferenceobject'] = {"dfnID": "preferenceobject", "url": "#preferenceobject", "dfnText": "PreferenceObject", "refSections": [{"refs": [{"id": "ref-for-preferenceobject"}, {"id": "ref-for-preferenceobject\u2460"}, {"id": "ref-for-preferenceobject\u2461"}, {"id": "ref-for-preferenceobject\u2462"}, {"id": "ref-for-preferenceobject\u2463"}], "title": "3. PreferenceManager interface"}, {"refs": [{"id": "ref-for-preferenceobject\u2464"}], "title": "3.1. colorScheme attribute"}, {"refs": [{"id": "ref-for-preferenceobject\u2465"}], "title": "3.2. contrast attribute"}, {"refs": [{"id": "ref-for-preferenceobject\u2466"}], "title": "3.3. reducedMotion attribute"}, {"refs": [{"id": "ref-for-preferenceobject\u2467"}], "title": "3.4. reducedTransparency attribute"}, {"refs": [{"id": "ref-for-preferenceobject\u2468"}], "title": "3.5. reducedData attribute"}, {"refs": [{"id": "ref-for-preferenceobject\u2460\u24ea"}], "title": "3.7. PreferenceObject interface"}], "external": false};
-window.dfnpanelData['dom-preferenceobject-requestoverride'] = {"dfnID": "dom-preferenceobject-requestoverride", "url": "#dom-preferenceobject-requestoverride", "dfnText": "requestOverride", "refSections": [{"refs": [{"id": "ref-for-dom-preferenceobject-requestoverride"}], "title": "3.7.2. requestOverride() method"}, {"refs": [{"id": "ref-for-dom-preferenceobject-requestoverride\u2460"}], "title": "5.1. Requesting a preference override"}, {"refs": [{"id": "ref-for-dom-preferenceobject-requestoverride\u2461"}], "title": "6.3. Permissions & User Activation"}], "external": false};
-window.dfnpanelData['dom-preferenceobject-override'] = {"dfnID": "dom-preferenceobject-override", "url": "#dom-preferenceobject-override", "dfnText": "override", "refSections": [{"refs": [{"id": "ref-for-dom-preferenceobject-override"}], "title": "3.7. PreferenceObject interface"}, {"refs": [{"id": "ref-for-dom-preferenceobject-override\u2460"}], "title": "3.7.1. override attribute"}, {"refs": [{"id": "ref-for-dom-preferenceobject-override\u2461"}], "title": "5.3. Getting a preference override"}], "external": false};
-window.dfnpanelData['dom-preferenceobject-clearoverride'] = {"dfnID": "dom-preferenceobject-clearoverride", "url": "#dom-preferenceobject-clearoverride", "dfnText": "clearOverride()", "refSections": [{"refs": [{"id": "ref-for-dom-preferenceobject-clearoverride"}], "title": "3.7. PreferenceObject interface"}, {"refs": [{"id": "ref-for-dom-preferenceobject-clearoverride\u2460"}], "title": "3.7.3. clearOverride method"}, {"refs": [{"id": "ref-for-dom-preferenceobject-clearoverride\u2461"}], "title": "5.2. Clearing a preference override"}], "external": false};
-window.dfnpanelData['permissiondef-preferences'] = {"dfnID": "permissiondef-preferences", "url": "#permissiondef-preferences", "dfnText": "\"preferences\"", "refSections": [{"refs": [{"id": "ref-for-permissiondef-preferences"}, {"id": "ref-for-permissiondef-preferences\u2460"}], "title": "3.7.2. requestOverride() method"}, {"refs": [{"id": "ref-for-permissiondef-preferences\u2461"}], "title": "6.3. Permissions & User Activation"}], "external": false};
+window.dfnpanelData['dom-preferenceobject-requestoverride'] = {"dfnID": "dom-preferenceobject-requestoverride", "url": "#dom-preferenceobject-requestoverride", "dfnText": "requestOverride", "refSections": [{"refs": [{"id": "ref-for-dom-preferenceobject-requestoverride"}], "title": "3.7.2. requestOverride() method"}, {"refs": [{"id": "ref-for-dom-preferenceobject-requestoverride\u2460"}], "title": "4.1. Requesting a preference override"}, {"refs": [{"id": "ref-for-dom-preferenceobject-requestoverride\u2461"}, {"id": "ref-for-dom-preferenceobject-requestoverride\u2462"}], "title": "5.3. Permissions & User Activation"}], "external": false};
+window.dfnpanelData['dom-preferenceobject-override'] = {"dfnID": "dom-preferenceobject-override", "url": "#dom-preferenceobject-override", "dfnText": "override", "refSections": [{"refs": [{"id": "ref-for-dom-preferenceobject-override"}], "title": "3.7. PreferenceObject interface"}, {"refs": [{"id": "ref-for-dom-preferenceobject-override\u2460"}], "title": "3.7.1. override attribute"}, {"refs": [{"id": "ref-for-dom-preferenceobject-override\u2461"}], "title": "4.3. Getting a preference override"}], "external": false};
+window.dfnpanelData['dom-preferenceobject-clearoverride'] = {"dfnID": "dom-preferenceobject-clearoverride", "url": "#dom-preferenceobject-clearoverride", "dfnText": "clearOverride()", "refSections": [{"refs": [{"id": "ref-for-dom-preferenceobject-clearoverride"}], "title": "3.7. PreferenceObject interface"}, {"refs": [{"id": "ref-for-dom-preferenceobject-clearoverride\u2460"}], "title": "3.7.3. clearOverride method"}, {"refs": [{"id": "ref-for-dom-preferenceobject-clearoverride\u2461"}], "title": "4.2. Clearing a preference override"}], "external": false};
 </script>
 <script>/* Boilerplate: script-dom-helper */
 function query(sel) { return document.querySelector(sel); }
