@@ -68,8 +68,6 @@ interface PreferenceManager {
   readonly attribute PreferenceObject reducedMotion;
   readonly attribute PreferenceObject reducedTransparency;
   readonly attribute PreferenceObject reducedData;
-
-  sequence<PreferenceSupportData> getSupported();
 };
 </script>
 
@@ -184,42 +182,13 @@ If an override is set for this preference:
 - The user agent MUST also use this override when calculating the [[SAVEDATA#savedata-attribute]].
 - The user agent MUST also use this override for any UA features that are normally affected by [[mediaqueries-5#prefers-reduced-data]].
 
-## {{getSupported}} method ## {#get-supported-method}
-
-<div algorithm>
-    The <dfn method for=PreferenceManager>getSupported()</dfn> method, when invoked, must run these steps:
-
-    1. Let |supportedPreferences| be a new empty [=sequence=].
-    1. For each preference that the browser supports, let |preference| be the name of that preference:
-        1. Let |preferenceData| be a new {{PreferenceSupportData}} object.
-        1. Let |values| be a new empty [=sequence=].
-            1. If |preference| is "{{colorScheme}}", set |values| to the result of [=get valid values for colorScheme=].
-            1. If |preference| is "{{contrast}}", set |values| to the result of [=get valid values for contrast=].
-            1. If |preference| is "{{reducedMotion}}", set |values| to the result of [=get valid values for reducedMotion=].
-            1. If |preference| is "{{reducedTransparency}}", set |values| to the result of [=get valid values for reducedTransparency=].
-            1. If |preference| is "{{reducedData}}", set |values| to the result of [=get valid values for reducedData=].
-        1. Set |preferenceData|'s {{name}} attribute to |preference|.
-        1. Set |preferenceData|'s {{values}} attribute to |values|.
-        1. Add |preferenceData| to |supportedPreferences|.
-    1. Return |supportedPreferences|.
-</div>
-
-### {{PreferenceSupportData}} interface ### {#preferencesupportdata-interface}
-
-<script type=idl>
-[Exposed=Window, SecureContext]
-interface PreferenceSupportData {
-  readonly attribute DOMString name;
-  readonly attribute FrozenArray<DOMString> values;
-};
-</script>
-
 ## {{PreferenceObject}} interface ## {#preferenceobject-interface}
 
 <script type=idl>
 [Exposed=Window, SecureContext]
 interface PreferenceObject {
   readonly attribute DOMString? override;
+  readonly attribute FrozenArray<DOMString> validValues;
 
   undefined clearOverride();
   Promise<undefined> requestOverride(DOMString value);
@@ -235,6 +204,21 @@ interface PreferenceObject {
     1. Let |override| be null.
     1. If an override for |preference| exists, set |override| to the value of that override.
     1. Return |override|.
+</div>
+
+### {{validValues}} attribute ### {#validValues-attribute}
+
+<div algorithm>
+    The <dfn attribute for=PreferenceObject>validValues</dfn> attribute, when accessed, must run these steps:
+
+    1. Let |preference| be the preference object's name.
+    1. Let |validValues| be a new empty [=sequence=].
+    1. If |preference| is "{{colorScheme}}", set |validValues| to the result of [=get valid values for colorScheme=].
+    1. If |preference| is "{{contrast}}", set |validValues| to the result of [=get valid values for contrast=].
+    1. If |preference| is "{{reducedMotion}}", set |validValues| to the result of [=get valid values for reducedMotion=].
+    1. If |preference| is "{{reducedTransparency}}", set |validValues| to the result of [=get valid values for reducedTransparency=].
+    1. If |preference| is "{{reducedData}}", set |validValues| to the result of [=get valid values for reducedData=].
+    1. Return |validValues|.
 </div>
 
 ### {{requestOverride()}} method ### {#request-override-method}
@@ -325,15 +309,16 @@ Each preference property's override property will return the string value indica
 const colorScheme = navigator.preferences.colorScheme.override; // "light" | "dark" | null
 ```
 
-## The `navigator.preferences.getSupported` method ## {#get-supported}
+## Getting valid values for a preference ## {#get-validValues}
 
-This method allows a site to get the preferences supported by the browser. This is useful for sites that want to dynamically generate UI for overriding preferences.
+Each {{PreferenceObject}} contains a validValues attribute that can be used to determine the valid values for a preference.
+
+This is useful for sites that want to dynamically generate UI for overriding preferences.
 
 It also allows sites to determine if a preference value is supported before attempting to set it.
 
 ```js
-const preferenceSupportData = navigator.preferences.getSupported();
-console.log(preferenceSupportData); // [ { name: 'contrast', values: ['more', 'less', 'no-preference'] }, ... ]
+const validValues = navigator.preferences.colorScheme.validValues; // ["light", "dark"]
 ```
 
 # Security and Privacy Considerations # {#sec-security}

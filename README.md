@@ -91,13 +91,12 @@ interface PreferenceManager {
     readonly reducedTransparency: PreferenceObject;
     readonly reducedData: PreferenceObject;
     // Future preferences can be added here, the exact properties will be down to the browser support.
-
-    getSupported(): PreferenceSupportData[];
 }
 
 interface PreferenceObject {
     // null means the preference is not overridden
     readonly override: string | null;
+	readonly validValues: string[];
 
 	requestOverride(value: string): Promise<void>;
 	clearOverride(): void;
