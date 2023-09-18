@@ -6,7 +6,7 @@
   <link href="https://www.w3.org/StyleSheets/TR/2021/W3C-UD" rel="stylesheet">
   <meta content="Bikeshed version 82ce88815, updated Thu Sep 7 16:33:55 2023 -0700" name="generator">
   <link href="https://wicg.github.io/web-preferences-api/" rel="canonical">
-  <meta content="91bc25da1d2a3590b56a998da2db157deb07b259" name="document-revision">
+  <meta content="dcc0733755fad4614fb0b87b39b556b09e32fbb8" name="document-revision">
 <style>/* Boilerplate: style-autolinks */
 .css.css, .property.property, .descriptor.descriptor {
     color: var(--a-normal-text);
@@ -817,8 +817,6 @@ The override should be passed down to sub-resource where possible, see privacy s
   <c- b>readonly</c-> <c- b>attribute</c-> <a data-link-type="idl-name" href="#preferenceobject" id="ref-for-preferenceobject②"><c- n>PreferenceObject</c-></a> <dfn class="dfn-paneled idl-code" data-dfn-for="PreferenceManager" data-dfn-type="attribute" data-export data-readonly data-type="PreferenceObject" id="dom-preferencemanager-reducedmotion"><code><c- g>reducedMotion</c-></code></dfn>;
   <c- b>readonly</c-> <c- b>attribute</c-> <a data-link-type="idl-name" href="#preferenceobject" id="ref-for-preferenceobject③"><c- n>PreferenceObject</c-></a> <dfn class="dfn-paneled idl-code" data-dfn-for="PreferenceManager" data-dfn-type="attribute" data-export data-readonly data-type="PreferenceObject" id="dom-preferencemanager-reducedtransparency"><code><c- g>reducedTransparency</c-></code></dfn>;
   <c- b>readonly</c-> <c- b>attribute</c-> <a data-link-type="idl-name" href="#preferenceobject" id="ref-for-preferenceobject④"><c- n>PreferenceObject</c-></a> <dfn class="dfn-paneled idl-code" data-dfn-for="PreferenceManager" data-dfn-type="attribute" data-export data-readonly data-type="PreferenceObject" id="dom-preferencemanager-reduceddata"><code><c- g>reducedData</c-></code></dfn>;
-
-  <a data-link-type="dfn" href="https://webidl.spec.whatwg.org/#idl-sequence" id="ref-for-idl-sequence"><c- b>sequence</c-></a>&lt;<a data-link-type="idl-name"><c- n>PreferenceSupportData</c-></a>> <dfn class="idl-code" data-dfn-for="PreferenceManager" data-dfn-type="method" data-export data-lt="getSupported()" id="dom-preferencemanager-getsupported"><code><c- g>getSupported</c-></code><a class="self-link" href="#dom-preferencemanager-getsupported"></a></dfn>();
 };
 </pre>
    <p class="note" role="note"><span class="marker">Note:</span> The exact set of preferences is down to the browser vendor, but it is expected that the set of preferences will be the same as those defined in <a data-link-type="biblio" href="#biblio-mediaqueries-5" title="Media Queries Level 5">[mediaqueries-5]</a>.</p>
@@ -829,7 +827,7 @@ This is modeled after the <code>prefers-color-scheme</code> user preference medi
      The <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="get-valid-values-for-colorscheme">get valid values for colorScheme</dfn> algorithm, when invoked, must run these steps: 
     <ol>
      <li data-md>
-      <p>Let <var>validValues</var> be a new empty <a data-link-type="dfn" href="https://webidl.spec.whatwg.org/#idl-sequence" id="ref-for-idl-sequence①">sequence</a>.</p>
+      <p>Let <var>validValues</var> be a new empty <a data-link-type="dfn" href="https://webidl.spec.whatwg.org/#idl-sequence" id="ref-for-idl-sequence">sequence</a>.</p>
      <li data-md>
       <p>Add <code>"light"</code> to <var>validValues</var>.</p>
      <li data-md>
@@ -859,7 +857,7 @@ This is modeled after the <code>prefers-contrast</code> user preference media fe
      The <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="get-valid-values-for-contrast">get valid values for contrast</dfn> algorithm, when invoked, must run these steps: 
     <ol>
      <li data-md>
-      <p>Let <var>validValues</var> be a new empty <a data-link-type="dfn" href="https://webidl.spec.whatwg.org/#idl-sequence" id="ref-for-idl-sequence②">sequence</a>.</p>
+      <p>Let <var>validValues</var> be a new empty <a data-link-type="dfn" href="https://webidl.spec.whatwg.org/#idl-sequence" id="ref-for-idl-sequence①">sequence</a>.</p>
      <li data-md>
       <p>Add <code>"no-preference"</code> to <var>validValues</var>.</p>
      <li data-md>
@@ -889,7 +887,7 @@ This is modeled after the <code>prefers-reduced-motion</code> user preference me
      The <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="get-valid-values-for-reducedmotion">get valid values for reducedMotion</dfn> algorithm, when invoked, must run these steps: 
     <ol>
      <li data-md>
-      <p>Let <var>validValues</var> be a new empty <a data-link-type="dfn" href="https://webidl.spec.whatwg.org/#idl-sequence" id="ref-for-idl-sequence③">sequence</a>.</p>
+      <p>Let <var>validValues</var> be a new empty <a data-link-type="dfn" href="https://webidl.spec.whatwg.org/#idl-sequence" id="ref-for-idl-sequence②">sequence</a>.</p>
      <li data-md>
       <p>Add <code>"no-preference"</code> to <var>validValues</var>.</p>
      <li data-md>
@@ -917,7 +915,7 @@ This is modeled after the <code>prefers-reduced-transparency</code> user prefere
      The <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="get-valid-values-for-reducedtransparency">get valid values for reducedTransparency</dfn> algorithm, when invoked, must run these steps: 
     <ol>
      <li data-md>
-      <p>Let <var>validValues</var> be a new empty <a data-link-type="dfn" href="https://webidl.spec.whatwg.org/#idl-sequence" id="ref-for-idl-sequence④">sequence</a>.</p>
+      <p>Let <var>validValues</var> be a new empty <a data-link-type="dfn" href="https://webidl.spec.whatwg.org/#idl-sequence" id="ref-for-idl-sequence③">sequence</a>.</p>
      <li data-md>
       <p>Add <code>"no-preference"</code> to <var>validValues</var>.</p>
      <li data-md>
@@ -944,7 +942,7 @@ This is modeled after the <code>prefers-reduced-data</code> user preference medi
      The <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="get-valid-values-for-reduceddata">get valid values for reducedData</dfn> algorithm, when invoked, must run these steps: 
     <ol>
      <li data-md>
-      <p>Let <var>validValues</var> be a new empty <a data-link-type="dfn" href="https://webidl.spec.whatwg.org/#idl-sequence" id="ref-for-idl-sequence⑤">sequence</a>.</p>
+      <p>Let <var>validValues</var> be a new empty <a data-link-type="dfn" href="https://webidl.spec.whatwg.org/#idl-sequence" id="ref-for-idl-sequence④">sequence</a>.</p>
      <li data-md>
       <p>Add <code>"no-preference"</code> to <var>validValues</var>.</p>
      <li data-md>
@@ -997,7 +995,7 @@ This is modeled after the <code>prefers-reduced-data</code> user preference medi
      <li data-md>
       <p>Let <var>preference</var> be the preference object’s name.</p>
      <li data-md>
-      <p>Let <var>validValues</var> be a new empty <a data-link-type="dfn" href="https://webidl.spec.whatwg.org/#idl-sequence" id="ref-for-idl-sequence⑥">sequence</a>.</p>
+      <p>Let <var>validValues</var> be a new empty <a data-link-type="dfn" href="https://webidl.spec.whatwg.org/#idl-sequence" id="ref-for-idl-sequence⑤">sequence</a>.</p>
      <li data-md>
       <p>If <var>preference</var> is "<code class="idl"><a data-link-type="idl" href="#dom-preferencemanager-colorscheme" id="ref-for-dom-preferencemanager-colorscheme②">colorScheme</a></code>", set <var>validValues</var> to the result of <a data-link-type="dfn" href="#get-valid-values-for-colorscheme" id="ref-for-get-valid-values-for-colorscheme">get valid values for colorScheme</a>.</p>
      <li data-md>
@@ -1178,7 +1176,6 @@ Each preference property’s override property will return the string value indi
    <li><a href="#dom-preferenceobject-clearoverride">clearOverride()</a><span>, in § 3.6.4</span>
    <li><a href="#dom-preferencemanager-colorscheme">colorScheme</a><span>, in § 3</span>
    <li><a href="#dom-preferencemanager-contrast">contrast</a><span>, in § 3</span>
-   <li><a href="#dom-preferencemanager-getsupported">getSupported()</a><span>, in § 3</span>
    <li><a href="#get-valid-values-for-colorscheme">get valid values for colorScheme</a><span>, in § 3.1</span>
    <li><a href="#get-valid-values-for-contrast">get valid values for contrast</a><span>, in § 3.2</span>
    <li><a href="#get-valid-values-for-reduceddata">get valid values for reducedData</a><span>, in § 3.5</span>
@@ -1269,8 +1266,6 @@ Each preference property’s override property will return the string value indi
   <c- b>readonly</c-> <c- b>attribute</c-> <a data-link-type="idl-name" href="#preferenceobject"><c- n>PreferenceObject</c-></a> <a data-readonly data-type="PreferenceObject" href="#dom-preferencemanager-reducedmotion"><code><c- g>reducedMotion</c-></code></a>;
   <c- b>readonly</c-> <c- b>attribute</c-> <a data-link-type="idl-name" href="#preferenceobject"><c- n>PreferenceObject</c-></a> <a data-readonly data-type="PreferenceObject" href="#dom-preferencemanager-reducedtransparency"><code><c- g>reducedTransparency</c-></code></a>;
   <c- b>readonly</c-> <c- b>attribute</c-> <a data-link-type="idl-name" href="#preferenceobject"><c- n>PreferenceObject</c-></a> <a data-readonly data-type="PreferenceObject" href="#dom-preferencemanager-reduceddata"><code><c- g>reducedData</c-></code></a>;
-
-  <a data-link-type="dfn" href="https://webidl.spec.whatwg.org/#idl-sequence"><c- b>sequence</c-></a>&lt;<a data-link-type="idl-name"><c- n>PreferenceSupportData</c-></a>> <a href="#dom-preferencemanager-getsupported"><code><c- g>getSupported</c-></code></a>();
 };
 
 [<a class="idl-code" data-link-type="extended-attribute" href="https://webidl.spec.whatwg.org/#Exposed"><c- g>Exposed</c-></a>=<c- n>Window</c->, <a class="idl-code" data-link-type="extended-attribute" href="https://webidl.spec.whatwg.org/#SecureContext"><c- g>SecureContext</c-></a>]
@@ -1620,7 +1615,7 @@ window.dfnpanelData['dacde8b5'] = {"dfnID": "dacde8b5", "url": "https://webidl.s
 window.dfnpanelData['d0b4a948'] = {"dfnID": "d0b4a948", "url": "https://webidl.spec.whatwg.org/#a-promise-rejected-with", "dfnText": "a promise rejected with", "refSections": [{"refs": [{"id": "ref-for-a-promise-rejected-with"}], "title": "3.6.3. requestOverride() method"}], "external": true};
 window.dfnpanelData['b262501e'] = {"dfnID": "b262501e", "url": "https://webidl.spec.whatwg.org/#reject", "dfnText": "reject", "refSections": [{"refs": [{"id": "ref-for-reject"}], "title": "3.6.3. requestOverride() method"}], "external": true};
 window.dfnpanelData['3b90bdcd'] = {"dfnID": "3b90bdcd", "url": "https://webidl.spec.whatwg.org/#resolve", "dfnText": "resolve", "refSections": [{"refs": [{"id": "ref-for-resolve"}], "title": "3.6.3. requestOverride() method"}], "external": true};
-window.dfnpanelData['9cce47fd'] = {"dfnID": "9cce47fd", "url": "https://webidl.spec.whatwg.org/#idl-sequence", "dfnText": "sequence", "refSections": [{"refs": [{"id": "ref-for-idl-sequence"}], "title": "3. PreferenceManager interface"}, {"refs": [{"id": "ref-for-idl-sequence\u2460"}], "title": "3.1. colorScheme attribute"}, {"refs": [{"id": "ref-for-idl-sequence\u2461"}], "title": "3.2. contrast attribute"}, {"refs": [{"id": "ref-for-idl-sequence\u2462"}], "title": "3.3. reducedMotion attribute"}, {"refs": [{"id": "ref-for-idl-sequence\u2463"}], "title": "3.4. reducedTransparency attribute"}, {"refs": [{"id": "ref-for-idl-sequence\u2464"}], "title": "3.5. reducedData attribute"}, {"refs": [{"id": "ref-for-idl-sequence\u2465"}], "title": "3.6.2. validValues attribute"}], "external": true};
+window.dfnpanelData['9cce47fd'] = {"dfnID": "9cce47fd", "url": "https://webidl.spec.whatwg.org/#idl-sequence", "dfnText": "sequence", "refSections": [{"refs": [{"id": "ref-for-idl-sequence"}], "title": "3.1. colorScheme attribute"}, {"refs": [{"id": "ref-for-idl-sequence\u2460"}], "title": "3.2. contrast attribute"}, {"refs": [{"id": "ref-for-idl-sequence\u2461"}], "title": "3.3. reducedMotion attribute"}, {"refs": [{"id": "ref-for-idl-sequence\u2462"}], "title": "3.4. reducedTransparency attribute"}, {"refs": [{"id": "ref-for-idl-sequence\u2463"}], "title": "3.5. reducedData attribute"}, {"refs": [{"id": "ref-for-idl-sequence\u2464"}], "title": "3.6.2. validValues attribute"}], "external": true};
 window.dfnpanelData['5f90bbfb'] = {"dfnID": "5f90bbfb", "url": "https://webidl.spec.whatwg.org/#idl-undefined", "dfnText": "undefined", "refSections": [{"refs": [{"id": "ref-for-idl-undefined"}, {"id": "ref-for-idl-undefined\u2460"}], "title": "3.6. PreferenceObject interface"}], "external": true};
 window.dfnpanelData['dom-navigator-preferences'] = {"dfnID": "dom-navigator-preferences", "url": "#dom-navigator-preferences", "dfnText": "preferences", "refSections": [{"refs": [{"id": "ref-for-dom-navigator-preferences"}, {"id": "ref-for-dom-navigator-preferences\u2460"}], "title": "2.1. preferences attribute"}], "external": false};
 window.dfnpanelData['preferencemanager'] = {"dfnID": "preferencemanager", "url": "#preferencemanager", "dfnText": "PreferenceManager", "refSections": [{"refs": [{"id": "ref-for-preferencemanager"}], "title": "2. Extensions to the Navigator interface"}, {"refs": [{"id": "ref-for-preferencemanager\u2460"}], "title": "2.1. preferences attribute"}, {"refs": [{"id": "ref-for-preferencemanager\u2461"}], "title": "3. PreferenceManager interface"}], "external": false};
