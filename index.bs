@@ -244,11 +244,8 @@ interface PreferenceObject {
 
     1. Let |result| be [=a new promise=].
     1. Let |allowed| be `false`.
-    1. Set |allowed| to whether the [=relevant global object=]'s [=associated Document=] is [=allowed to use=] <a permission>"preferences"</a>.
-    1. If |allowed| is `false`:
-        1. If the [=relevant global object=] of [=this=] does not have [=transient activation=], return [=a promise rejected with=] a "{{NotAllowedError}}" {{DOMException}}.
-        1. Let |permissionState| be the result of [=requesting permission to use=] <a permission>"preferences"</a>.
-        1. If |permissionState| is not [=permission/granted=], return [=a promise rejected with=] a "{{NotAllowedError}}" {{DOMException}}.
+    1. Set |allowed| to the result of executing a UA defined algorithm for deciding whether the request is allowed.
+    1. If |allowed| is `false`, return [=a promise rejected with=] a "{{NotAllowedError}}" {{DOMException}}.
     1. Let |preference| be the preference object's name.
     1. Let |validValues| be null.
     1. If |preference| is "{{colorScheme}}", set |validValues| to the result of [=get valid values for colorScheme=].
@@ -284,14 +281,6 @@ Issue: Is TypeError correct here?
     1. If |override| is null, then return.
     1. Clear the override for |preference|.
 </div>
-
-# Permissions # {#permissions}
-
-The <dfn permission export>"preferences"</dfn> permission is a [=default powerful feature=].
-
-## Permissions Policy ## {#permissions-policy}
-
-This specification defines a [=policy-controlled feature=] identified by the string `"preferences"`. Its [=default allowlist=] is `'self'`.
 
 # Usage Examples # {#usage-examples}
 
@@ -363,11 +352,11 @@ This API exposes no new fingerprinting surfaces beyond that which already exist 
 
 ## Permissions & User Activation ## {#permissions}
 
-The {{requestOverride}} API is gated behind a new permission, {{"preferences"}}.
+As the {{requestOverride}} method is a promise it gives user agents more control over the process of overriding a preference.
 
-The API requires user activation to request the permission but once granted user activation is no longer required. This is so that automatic syncing on page load can work without a user prompt.
+The {{requestOverride}} method is gated behind a UA defined algorithm for determining if the action can proceed.
 
-As this method is a promise it also gives user agents more control over the process of overriding a preference.
+This could include a user prompt, or it could be a simple check to see if the user has interacted with the page.
 
 ## Sub-resources ## {#sub-resources}
 

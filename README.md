@@ -117,13 +117,11 @@ This API exposes no new fingerprinting surfaces beyond that which already exist 
 
 ### Permissions & User Activation
 
-The requestOverride API is gated behind a new permission.
+As the `requestOverride` method is a promise it gives user agents more control over the process of overriding a preference.
 
-The API requires user activation to request the permission but once granted user activation is no longer required. This is so that automatic syncing on page load can work without a user prompt.
+The `requestOverride` method is gated behind a UA defined algorithm for determining if the action can proceed.
 
-As this method is a promise it also gives user agents more control over the process of overriding a preference.
-
-While this API by and large doesn't provide new capabilities it was decided that it should be gated behind a permission so that UAs concerned with potential abuse could put in place a mechanism to prevent abuse.
+This could include a user prompt, or it could be a simple check to see if the user has interacted with the page.
 
 ### Iframes etc
 
