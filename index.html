@@ -6,7 +6,7 @@
   <link href="https://www.w3.org/StyleSheets/TR/2021/W3C-UD" rel="stylesheet">
   <meta content="Bikeshed version 82ce88815, updated Thu Sep 7 16:33:55 2023 -0700" name="generator">
   <link href="https://wicg.github.io/web-preferences-api/" rel="canonical">
-  <meta content="5ad92d71b7cc10be993d67cd8961c5aa3c1ff4a2" name="document-revision">
+  <meta content="78e3e24ace2a6703974766800d6ff329a38f4715" name="document-revision">
 <style>/* Boilerplate: style-autolinks */
 .css.css, .property.property, .descriptor.descriptor {
     color: var(--a-normal-text);
@@ -859,8 +859,6 @@ This is modeled after the <code>prefers-contrast</code> user preference media fe
      <li data-md>
       <p>Let <var>validValues</var> be a new empty <a data-link-type="dfn" href="https://webidl.spec.whatwg.org/#idl-sequence" id="ref-for-idl-sequence①">sequence</a>.</p>
      <li data-md>
-      <p>Add <code>"no-preference"</code> to <var>validValues</var>.</p>
-     <li data-md>
       <p>Add <code>"more"</code> to <var>validValues</var>.</p>
      <li data-md>
       <p>Add <code>"less"</code> to <var>validValues</var>.</p>
@@ -889,8 +887,6 @@ This is modeled after the <code>prefers-reduced-motion</code> user preference me
      <li data-md>
       <p>Let <var>validValues</var> be a new empty <a data-link-type="dfn" href="https://webidl.spec.whatwg.org/#idl-sequence" id="ref-for-idl-sequence②">sequence</a>.</p>
      <li data-md>
-      <p>Add <code>"no-preference"</code> to <var>validValues</var>.</p>
-     <li data-md>
       <p>Add <code>"reduce"</code> to <var>validValues</var>.</p>
      <li data-md>
       <p>Return <var>validValues</var>.</p>
@@ -917,8 +913,6 @@ This is modeled after the <code>prefers-reduced-transparency</code> user prefere
      <li data-md>
       <p>Let <var>validValues</var> be a new empty <a data-link-type="dfn" href="https://webidl.spec.whatwg.org/#idl-sequence" id="ref-for-idl-sequence③">sequence</a>.</p>
      <li data-md>
-      <p>Add <code>"no-preference"</code> to <var>validValues</var>.</p>
-     <li data-md>
       <p>Add <code>"reduce"</code> to <var>validValues</var>.</p>
      <li data-md>
       <p>Return <var>validValues</var>.</p>
@@ -943,8 +937,6 @@ This is modeled after the <code>prefers-reduced-data</code> user preference medi
     <ol>
      <li data-md>
       <p>Let <var>validValues</var> be a new empty <a data-link-type="dfn" href="https://webidl.spec.whatwg.org/#idl-sequence" id="ref-for-idl-sequence④">sequence</a>.</p>
-     <li data-md>
-      <p>Add <code>"no-preference"</code> to <var>validValues</var>.</p>
      <li data-md>
       <p>Add <code>"reduce"</code> to <var>validValues</var>.</p>
      <li data-md>
@@ -1010,6 +1002,9 @@ This is modeled after the <code>prefers-reduced-data</code> user preference medi
       <p>Return <var>validValues</var>.</p>
     </ol>
    </div>
+   <p class="note" role="note"><span class="marker">Note:</span> "no-preference" is deliberately not an allowed value for any preference.
+This is to mitigate the risk of sites misusing the API to the detriment of user experience.
+Authors should instead clear the preference override. See <a href="https://github.com/WICG/web-preferences-api/issues/30">#30</a> for more details.</p>
    <h4 class="heading settled" data-level="3.6.3" id="request-override-method"><span class="secno">3.6.3. </span><span class="content"><code class="idl"><a data-link-type="idl" href="#dom-preferenceobject-requestoverride" id="ref-for-dom-preferenceobject-requestoverride">requestOverride()</a></code> method</span><a class="self-link" href="#request-override-method"></a></h4>
    <div class="algorithm" data-algorithm="request preference override">
      The <dfn class="idl-code" data-dfn-for="PreferenceObject" data-dfn-type="method" data-export id="dom-preferenceobject-requestoverride①"><code>requestOverride()</code><a class="self-link" href="#dom-preferenceobject-requestoverride①"></a></dfn> method, when invoked, must run these steps: 
