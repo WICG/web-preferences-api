@@ -105,7 +105,6 @@ This is modeled after the `prefers-contrast` user preference media feature as de
     The <dfn>get valid values for contrast</dfn> algorithm, when invoked, must run these steps:
 
     1. Let |validValues| be a new empty [=sequence=].
-    1. Add `"no-preference"` to |validValues|.
     1. Add `"more"` to |validValues|.
     1. Add `"less"` to |validValues|.
     1. Return |validValues|.
@@ -128,7 +127,6 @@ This is modeled after the `prefers-reduced-motion` user preference media feature
     The <dfn>get valid values for reducedMotion</dfn> algorithm, when invoked, must run these steps:
 
     1. Let |validValues| be a new empty [=sequence=].
-    1. Add `"no-preference"` to |validValues|.
     1. Add `"reduce"` to |validValues|.
     1. Return |validValues|.
 </div>
@@ -150,7 +148,6 @@ This is modeled after the `prefers-reduced-transparency` user preference media f
     The <dfn>get valid values for reducedTransparency</dfn> algorithm, when invoked, must run these steps:
 
     1. Let |validValues| be a new empty [=sequence=].
-    1. Add `"no-preference"` to |validValues|.
     1. Add `"reduce"` to |validValues|.
     1. Return |validValues|.
 </div>
@@ -170,7 +167,6 @@ This is modeled after the `prefers-reduced-data` user preference media feature a
     The <dfn>get valid values for reducedData</dfn> algorithm, when invoked, must run these steps:
 
     1. Let |validValues| be a new empty [=sequence=].
-    1. Add `"no-preference"` to |validValues|.
     1. Add `"reduce"` to |validValues|.
     1. Return |validValues|.
 </div>
@@ -220,6 +216,10 @@ interface PreferenceObject {
     1. If |preference| is "{{reducedData}}", set |validValues| to the result of [=get valid values for reducedData=].
     1. Return |validValues|.
 </div>
+
+Note: "no-preference" is deliberately not an allowed value for any preference.
+This is to mitigate the risk of sites misusing the API to the detriment of user experience.
+Authors should instead clear the preference override. See [#30](https://github.com/WICG/web-preferences-api/issues/30) for more details.
 
 ### {{requestOverride()}} method ### {#request-override-method}
 
