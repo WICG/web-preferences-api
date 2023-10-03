@@ -191,7 +191,7 @@ interface PreferenceObject {
   readonly attribute FrozenArray<DOMString> validValues;
 
   undefined clearOverride();
-  Promise<undefined> requestOverride(DOMString value);
+  Promise<undefined> requestOverride(DOMString? value);
 };
 </script>
 
@@ -230,6 +230,11 @@ interface PreferenceObject {
     1. Let |allowed| be `false`.
     1. Set |allowed| to the result of executing a UA defined algorithm for deciding whether the request is allowed.
     1. If |allowed| is `false`, return [=a promise rejected with=] a "{{NotAllowedError}}" {{DOMException}}.
+    1. Let |value| be the method's argument.
+    1. Let |result| be [=a new promise=].
+    1. If |value| is `null` or an empty [=string=]:
+        1. Run {{clearOverride}}.
+        1. [=Resolve=] and return |result|.
     1. Let |preference| be the preference object's name.
     1. Let |validValues| be null.
     1. If |preference| is "{{colorScheme}}", set |validValues| to the result of [=get valid values for colorScheme=].
@@ -237,8 +242,6 @@ interface PreferenceObject {
     1. If |preference| is "{{reducedMotion}}", set |validValues| to the result of [=get valid values for reducedMotion=].
     1. If |preference| is "{{reducedTransparency}}", set |validValues| to the result of [=get valid values for reducedTransparency=].
     1. If |preference| is "{{reducedData}}", set |validValues| to the result of [=get valid values for reducedData=].
-    1. Let |value| be the method's argument.
-    1. Let |result| be [=a new promise=].
     1. If |value| is not in |validValues|:
         1. [=Reject=] |result| with a "{{TypeError}}" {{DOMException}}.
         1. Return |result|.
@@ -252,7 +255,6 @@ interface PreferenceObject {
 Issue: This algorithm needs more detail on what exactly setting the preference override does.
 
 Issue: Is TypeError correct here?
-
 
 ### {{clearOverride}} method ### {#clear-override-method}
 

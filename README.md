@@ -98,7 +98,7 @@ interface PreferenceObject {
     readonly override: string | null;
 	readonly validValues: string[];
 
-	requestOverride(value: string): Promise<void>;
+	requestOverride(value: string | null): Promise<void>;
 	clearOverride(): void;
 }
 
