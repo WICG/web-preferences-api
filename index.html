@@ -6,7 +6,7 @@
   <link href="https://www.w3.org/StyleSheets/TR/2021/W3C-UD" rel="stylesheet">
   <meta content="Bikeshed version 82ce88815, updated Thu Sep 7 16:33:55 2023 -0700" name="generator">
   <link href="https://wicg.github.io/web-preferences-api/" rel="canonical">
-  <meta content="dcc0733755fad4614fb0b87b39b556b09e32fbb8" name="document-revision">
+  <meta content="5ad92d71b7cc10be993d67cd8961c5aa3c1ff4a2" name="document-revision">
 <style>/* Boilerplate: style-autolinks */
 .css.css, .property.property, .descriptor.descriptor {
     color: var(--a-normal-text);
@@ -668,7 +668,7 @@ var.selected6 { background-color: #FFBCF2; box-shadow: 0 0 0 2px #FFBCF2; }
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2021/logos/W3C" width="72"> </a> </p>
    <h1 class="p-name no-ref" id="title">Web Preferences API</h1>
-   <p id="w3c-state"><a href="https://www.w3.org/standards/types#UD">Unofficial Proposal Draft</a>, <time class="dt-updated" datetime="2023-09-18">18 September 2023</time></p>
+   <p id="w3c-state"><a href="https://www.w3.org/standards/types#UD">Unofficial Proposal Draft</a>, <time class="dt-updated" datetime="2023-10-03">3 October 2023</time></p>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -971,7 +971,7 @@ This is modeled after the <code>prefers-reduced-data</code> user preference medi
   <c- b>readonly</c-> <c- b>attribute</c-> <a class="idl-code" data-link-type="interface" href="https://webidl.spec.whatwg.org/#idl-frozen-array" id="ref-for-idl-frozen-array"><c- b>FrozenArray</c-></a>&lt;<a class="idl-code" data-link-type="interface" href="https://webidl.spec.whatwg.org/#idl-DOMString" id="ref-for-idl-DOMString①"><c- b>DOMString</c-></a>> <a class="idl-code" data-link-type="attribute" data-readonly data-type="FrozenArray<DOMString>" href="#dom-preferenceobject-validvalues" id="ref-for-dom-preferenceobject-validvalues"><c- g>validValues</c-></a>;
 
   <a class="idl-code" data-link-type="interface" href="https://webidl.spec.whatwg.org/#idl-undefined" id="ref-for-idl-undefined"><c- b>undefined</c-></a> <a class="idl-code" data-link-type="method" href="#dom-preferenceobject-clearoverride" id="ref-for-dom-preferenceobject-clearoverride"><c- g>clearOverride</c-></a>();
-  <a class="idl-code" data-link-type="interface" href="https://webidl.spec.whatwg.org/#idl-promise" id="ref-for-idl-promise"><c- b>Promise</c-></a>&lt;<a class="idl-code" data-link-type="interface" href="https://webidl.spec.whatwg.org/#idl-undefined" id="ref-for-idl-undefined①"><c- b>undefined</c-></a>> <dfn class="dfn-paneled idl-code" data-dfn-for="PreferenceObject" data-dfn-type="method" data-export data-lt="requestOverride(value)" id="dom-preferenceobject-requestoverride"><code><c- g>requestOverride</c-></code></dfn>(<a class="idl-code" data-link-type="interface" href="https://webidl.spec.whatwg.org/#idl-DOMString" id="ref-for-idl-DOMString②"><c- b>DOMString</c-></a> <dfn class="idl-code" data-dfn-for="PreferenceObject/requestOverride(value)" data-dfn-type="argument" data-export id="dom-preferenceobject-requestoverride-value-value"><code><c- g>value</c-></code><a class="self-link" href="#dom-preferenceobject-requestoverride-value-value"></a></dfn>);
+  <a class="idl-code" data-link-type="interface" href="https://webidl.spec.whatwg.org/#idl-promise" id="ref-for-idl-promise"><c- b>Promise</c-></a>&lt;<a class="idl-code" data-link-type="interface" href="https://webidl.spec.whatwg.org/#idl-undefined" id="ref-for-idl-undefined①"><c- b>undefined</c-></a>> <dfn class="dfn-paneled idl-code" data-dfn-for="PreferenceObject" data-dfn-type="method" data-export data-lt="requestOverride(value)" id="dom-preferenceobject-requestoverride"><code><c- g>requestOverride</c-></code></dfn>(<a class="idl-code" data-link-type="interface" href="https://webidl.spec.whatwg.org/#idl-DOMString" id="ref-for-idl-DOMString②"><c- b>DOMString</c-></a>? <dfn class="idl-code" data-dfn-for="PreferenceObject/requestOverride(value)" data-dfn-type="argument" data-export id="dom-preferenceobject-requestoverride-value-value"><code><c- g>value</c-></code><a class="self-link" href="#dom-preferenceobject-requestoverride-value-value"></a></dfn>);
 };
 </pre>
    <h4 class="heading settled" data-level="3.6.1" id="override-attribute"><span class="secno">3.6.1. </span><span class="content"><code class="idl"><a data-link-type="idl" href="#dom-preferenceobject-override" id="ref-for-dom-preferenceobject-override①">override</a></code> attribute</span><a class="self-link" href="#override-attribute"></a></h4>
@@ -1023,6 +1023,18 @@ This is modeled after the <code>prefers-reduced-data</code> user preference medi
      <li data-md>
       <p>If <var>allowed</var> is <code>false</code>, return <a data-link-type="dfn" href="https://webidl.spec.whatwg.org/#a-promise-rejected-with" id="ref-for-a-promise-rejected-with">a promise rejected with</a> a "<code class="idl"><a data-link-type="idl" href="https://webidl.spec.whatwg.org/#notallowederror" id="ref-for-notallowederror">NotAllowedError</a></code>" <code class="idl"><a data-link-type="idl" href="https://webidl.spec.whatwg.org/#idl-DOMException" id="ref-for-idl-DOMException">DOMException</a></code>.</p>
      <li data-md>
+      <p>Let <var>value</var> be the method’s argument.</p>
+     <li data-md>
+      <p>Let <var>result</var> be <a data-link-type="dfn" href="https://webidl.spec.whatwg.org/#a-new-promise" id="ref-for-a-new-promise①">a new promise</a>.</p>
+     <li data-md>
+      <p>If <var>value</var> is <code>null</code> or an empty <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#string" id="ref-for-string">string</a>:</p>
+      <ol>
+       <li data-md>
+        <p>Run <code class="idl"><a data-link-type="idl" href="#dom-preferenceobject-clearoverride" id="ref-for-dom-preferenceobject-clearoverride①">clearOverride</a></code>.</p>
+       <li data-md>
+        <p><a data-link-type="dfn" href="https://webidl.spec.whatwg.org/#resolve" id="ref-for-resolve">Resolve</a> and return <var>result</var>.</p>
+      </ol>
+     <li data-md>
       <p>Let <var>preference</var> be the preference object’s name.</p>
      <li data-md>
       <p>Let <var>validValues</var> be null.</p>
@@ -1036,10 +1048,6 @@ This is modeled after the <code>prefers-reduced-data</code> user preference medi
       <p>If <var>preference</var> is "<code class="idl"><a data-link-type="idl" href="#dom-preferencemanager-reducedtransparency" id="ref-for-dom-preferencemanager-reducedtransparency③">reducedTransparency</a></code>", set <var>validValues</var> to the result of <a data-link-type="dfn" href="#get-valid-values-for-reducedtransparency" id="ref-for-get-valid-values-for-reducedtransparency①">get valid values for reducedTransparency</a>.</p>
      <li data-md>
       <p>If <var>preference</var> is "<code class="idl"><a data-link-type="idl" href="#dom-preferencemanager-reduceddata" id="ref-for-dom-preferencemanager-reduceddata③">reducedData</a></code>", set <var>validValues</var> to the result of <a data-link-type="dfn" href="#get-valid-values-for-reduceddata" id="ref-for-get-valid-values-for-reduceddata①">get valid values for reducedData</a>.</p>
-     <li data-md>
-      <p>Let <var>value</var> be the method’s argument.</p>
-     <li data-md>
-      <p>Let <var>result</var> be <a data-link-type="dfn" href="https://webidl.spec.whatwg.org/#a-new-promise" id="ref-for-a-new-promise①">a new promise</a>.</p>
      <li data-md>
       <p>If <var>value</var> is not in <var>validValues</var>:</p>
       <ol>
@@ -1059,12 +1067,12 @@ This is modeled after the <code>prefers-reduced-data</code> user preference medi
         <p>Set the preference override for <var>preference</var> to <var>value</var>.</p>
       </ol>
      <li data-md>
-      <p><a data-link-type="dfn" href="https://webidl.spec.whatwg.org/#resolve" id="ref-for-resolve">Resolve</a> and return <var>result</var>.</p>
+      <p><a data-link-type="dfn" href="https://webidl.spec.whatwg.org/#resolve" id="ref-for-resolve①">Resolve</a> and return <var>result</var>.</p>
     </ol>
    </div>
    <p class="issue" id="issue-1e7d2733"><a class="self-link" href="#issue-1e7d2733"></a> This algorithm needs more detail on what exactly setting the preference override does.</p>
    <p class="issue" id="issue-42b17e45"><a class="self-link" href="#issue-42b17e45"></a> Is TypeError correct here?</p>
-   <h4 class="heading settled" data-level="3.6.4" id="clear-override-method"><span class="secno">3.6.4. </span><span class="content"><code class="idl"><a data-link-type="idl" href="#dom-preferenceobject-clearoverride" id="ref-for-dom-preferenceobject-clearoverride①">clearOverride</a></code> method</span><a class="self-link" href="#clear-override-method"></a></h4>
+   <h4 class="heading settled" data-level="3.6.4" id="clear-override-method"><span class="secno">3.6.4. </span><span class="content"><code class="idl"><a data-link-type="idl" href="#dom-preferenceobject-clearoverride" id="ref-for-dom-preferenceobject-clearoverride②">clearOverride</a></code> method</span><a class="self-link" href="#clear-override-method"></a></h4>
    <div class="algorithm" data-algorithm="clear preference override">
      The <dfn class="dfn-paneled idl-code" data-dfn-for="PreferenceObject" data-dfn-type="method" data-export id="dom-preferenceobject-clearoverride"><code>clearOverride()</code></dfn> method, when invoked, must run these steps: 
     <ol>
@@ -1097,7 +1105,7 @@ This is modeled after the <code>prefers-reduced-data</code> user preference medi
     <c- p>});</c->
 </pre>
    <h3 class="heading settled" data-level="4.2" id="usage-clearing-a-preference-override"><span class="secno">4.2. </span><span class="content">Clearing a preference override</span><a class="self-link" href="#usage-clearing-a-preference-override"></a></h3>
-   <p>To clear an override and return the preference to the browser default, the <code class="idl"><a data-link-type="idl" href="#dom-preferenceobject-clearoverride" id="ref-for-dom-preferenceobject-clearoverride②">clearOverride</a></code> method can be called.</p>
+   <p>To clear an override and return the preference to the browser default, the <code class="idl"><a data-link-type="idl" href="#dom-preferenceobject-clearoverride" id="ref-for-dom-preferenceobject-clearoverride③">clearOverride</a></code> method can be called.</p>
 <pre class="language-js highlight">navigator<c- p>.</c->preferences<c- p>.</c->colorScheme<c- p>.</c->clearOverride<c- p>();</c->
 </pre>
    <h3 class="heading settled" data-level="4.3" id="usage-getting-a-preference-override"><span class="secno">4.3. </span><span class="content">Getting a preference override</span><a class="self-link" href="#usage-getting-a-preference-override"></a></h3>
@@ -1212,6 +1220,11 @@ Each preference property’s override property will return the string value indi
      <li><span class="dfn-paneled" id="7393da89">same origin</span>
     </ul>
    <li>
+    <a data-link-type="biblio">[INFRA]</a> defines the following terms:
+    <ul>
+     <li><span class="dfn-paneled" id="0698d556">string</span>
+    </ul>
+   <li>
     <a data-link-type="biblio">[WEBIDL]</a> defines the following terms:
     <ul>
      <li><span class="dfn-paneled" id="dca2de17">DOMException</span>
@@ -1242,6 +1255,8 @@ Each preference property’s override property will return the string value indi
    <dd>Simon Pieters. <a href="https://drafts.csswg.org/cssom-view/"><cite>CSSOM View Module</cite></a>. URL: <a href="https://drafts.csswg.org/cssom-view/">https://drafts.csswg.org/cssom-view/</a>
    <dt id="biblio-html">[HTML]
    <dd>Anne van Kesteren; et al. <a href="https://html.spec.whatwg.org/multipage/"><cite>HTML Standard</cite></a>. Living Standard. URL: <a href="https://html.spec.whatwg.org/multipage/">https://html.spec.whatwg.org/multipage/</a>
+   <dt id="biblio-infra">[INFRA]
+   <dd>Anne van Kesteren; Domenic Denicola. <a href="https://infra.spec.whatwg.org/"><cite>Infra Standard</cite></a>. Living Standard. URL: <a href="https://infra.spec.whatwg.org/">https://infra.spec.whatwg.org/</a>
    <dt id="biblio-mediaqueries-5">[MEDIAQUERIES-5]
    <dd>Dean Jackson; et al. <a href="https://drafts.csswg.org/mediaqueries-5/"><cite>Media Queries Level 5</cite></a>. URL: <a href="https://drafts.csswg.org/mediaqueries-5/">https://drafts.csswg.org/mediaqueries-5/</a>
    <dt id="biblio-rfc2119">[RFC2119]
@@ -1274,7 +1289,7 @@ Each preference property’s override property will return the string value indi
   <c- b>readonly</c-> <c- b>attribute</c-> <a class="idl-code" data-link-type="interface" href="https://webidl.spec.whatwg.org/#idl-frozen-array"><c- b>FrozenArray</c-></a>&lt;<a class="idl-code" data-link-type="interface" href="https://webidl.spec.whatwg.org/#idl-DOMString"><c- b>DOMString</c-></a>> <a class="idl-code" data-link-type="attribute" data-readonly data-type="FrozenArray<DOMString>" href="#dom-preferenceobject-validvalues"><c- g>validValues</c-></a>;
 
   <a class="idl-code" data-link-type="interface" href="https://webidl.spec.whatwg.org/#idl-undefined"><c- b>undefined</c-></a> <a class="idl-code" data-link-type="method" href="#dom-preferenceobject-clearoverride"><c- g>clearOverride</c-></a>();
-  <a class="idl-code" data-link-type="interface" href="https://webidl.spec.whatwg.org/#idl-promise"><c- b>Promise</c-></a>&lt;<a class="idl-code" data-link-type="interface" href="https://webidl.spec.whatwg.org/#idl-undefined"><c- b>undefined</c-></a>> <a href="#dom-preferenceobject-requestoverride"><code><c- g>requestOverride</c-></code></a>(<a class="idl-code" data-link-type="interface" href="https://webidl.spec.whatwg.org/#idl-DOMString"><c- b>DOMString</c-></a> <a href="#dom-preferenceobject-requestoverride-value-value"><code><c- g>value</c-></code></a>);
+  <a class="idl-code" data-link-type="interface" href="https://webidl.spec.whatwg.org/#idl-promise"><c- b>Promise</c-></a>&lt;<a class="idl-code" data-link-type="interface" href="https://webidl.spec.whatwg.org/#idl-undefined"><c- b>undefined</c-></a>> <a href="#dom-preferenceobject-requestoverride"><code><c- g>requestOverride</c-></code></a>(<a class="idl-code" data-link-type="interface" href="https://webidl.spec.whatwg.org/#idl-DOMString"><c- b>DOMString</c-></a>? <a href="#dom-preferenceobject-requestoverride-value-value"><code><c- g>value</c-></code></a>);
 };
 
 </pre>
@@ -1602,6 +1617,7 @@ window.dfnpanelData['d5b6d58f'] = {"dfnID": "d5b6d58f", "url": "https://drafts.c
 window.dfnpanelData['be0c27b2'] = {"dfnID": "be0c27b2", "url": "https://html.spec.whatwg.org/multipage/system-state.html#navigator", "dfnText": "Navigator", "refSections": [{"refs": [{"id": "ref-for-navigator"}, {"id": "ref-for-navigator\u2460"}], "title": "2. Extensions to the Navigator interface"}], "external": true};
 window.dfnpanelData['086e3aff'] = {"dfnID": "086e3aff", "url": "https://html.spec.whatwg.org/multipage/browsers.html#concept-origin", "dfnText": "origin", "refSections": [{"refs": [{"id": "ref-for-concept-origin"}], "title": "1. Introduction"}, {"refs": [{"id": "ref-for-concept-origin\u2460"}], "title": "3.1. colorScheme attribute"}, {"refs": [{"id": "ref-for-concept-origin\u2461"}], "title": "3.2. contrast attribute"}, {"refs": [{"id": "ref-for-concept-origin\u2462"}], "title": "3.3. reducedMotion attribute"}, {"refs": [{"id": "ref-for-concept-origin\u2463"}], "title": "3.4. reducedTransparency attribute"}, {"refs": [{"id": "ref-for-concept-origin\u2464"}], "title": "3.5. reducedData attribute"}], "external": true};
 window.dfnpanelData['7393da89'] = {"dfnID": "7393da89", "url": "https://html.spec.whatwg.org/multipage/browsers.html#same-origin", "dfnText": "same origin", "refSections": [{"refs": [{"id": "ref-for-same-origin"}], "title": "5.4. Sub-resources"}], "external": true};
+window.dfnpanelData['0698d556'] = {"dfnID": "0698d556", "url": "https://infra.spec.whatwg.org/#string", "dfnText": "string", "refSections": [{"refs": [{"id": "ref-for-string"}], "title": "3.6.3. requestOverride() method"}], "external": true};
 window.dfnpanelData['dca2de17'] = {"dfnID": "dca2de17", "url": "https://webidl.spec.whatwg.org/#idl-DOMException", "dfnText": "DOMException", "refSections": [{"refs": [{"id": "ref-for-idl-DOMException"}, {"id": "ref-for-idl-DOMException\u2460"}], "title": "3.6.3. requestOverride() method"}], "external": true};
 window.dfnpanelData['8855a9aa'] = {"dfnID": "8855a9aa", "url": "https://webidl.spec.whatwg.org/#idl-DOMString", "dfnText": "DOMString", "refSections": [{"refs": [{"id": "ref-for-idl-DOMString"}, {"id": "ref-for-idl-DOMString\u2460"}, {"id": "ref-for-idl-DOMString\u2461"}], "title": "3.6. PreferenceObject interface"}], "external": true};
 window.dfnpanelData['889e932f'] = {"dfnID": "889e932f", "url": "https://webidl.spec.whatwg.org/#Exposed", "dfnText": "Exposed", "refSections": [{"refs": [{"id": "ref-for-Exposed"}], "title": "2. Extensions to the Navigator interface"}, {"refs": [{"id": "ref-for-Exposed\u2460"}], "title": "3. PreferenceManager interface"}, {"refs": [{"id": "ref-for-Exposed\u2461"}], "title": "3.6. PreferenceObject interface"}], "external": true};
@@ -1614,7 +1630,7 @@ window.dfnpanelData['82ca3efc'] = {"dfnID": "82ca3efc", "url": "https://webidl.s
 window.dfnpanelData['dacde8b5'] = {"dfnID": "dacde8b5", "url": "https://webidl.spec.whatwg.org/#a-new-promise", "dfnText": "a new promise", "refSections": [{"refs": [{"id": "ref-for-a-new-promise"}, {"id": "ref-for-a-new-promise\u2460"}], "title": "3.6.3. requestOverride() method"}], "external": true};
 window.dfnpanelData['d0b4a948'] = {"dfnID": "d0b4a948", "url": "https://webidl.spec.whatwg.org/#a-promise-rejected-with", "dfnText": "a promise rejected with", "refSections": [{"refs": [{"id": "ref-for-a-promise-rejected-with"}], "title": "3.6.3. requestOverride() method"}], "external": true};
 window.dfnpanelData['b262501e'] = {"dfnID": "b262501e", "url": "https://webidl.spec.whatwg.org/#reject", "dfnText": "reject", "refSections": [{"refs": [{"id": "ref-for-reject"}], "title": "3.6.3. requestOverride() method"}], "external": true};
-window.dfnpanelData['3b90bdcd'] = {"dfnID": "3b90bdcd", "url": "https://webidl.spec.whatwg.org/#resolve", "dfnText": "resolve", "refSections": [{"refs": [{"id": "ref-for-resolve"}], "title": "3.6.3. requestOverride() method"}], "external": true};
+window.dfnpanelData['3b90bdcd'] = {"dfnID": "3b90bdcd", "url": "https://webidl.spec.whatwg.org/#resolve", "dfnText": "resolve", "refSections": [{"refs": [{"id": "ref-for-resolve"}, {"id": "ref-for-resolve\u2460"}], "title": "3.6.3. requestOverride() method"}], "external": true};
 window.dfnpanelData['9cce47fd'] = {"dfnID": "9cce47fd", "url": "https://webidl.spec.whatwg.org/#idl-sequence", "dfnText": "sequence", "refSections": [{"refs": [{"id": "ref-for-idl-sequence"}], "title": "3.1. colorScheme attribute"}, {"refs": [{"id": "ref-for-idl-sequence\u2460"}], "title": "3.2. contrast attribute"}, {"refs": [{"id": "ref-for-idl-sequence\u2461"}], "title": "3.3. reducedMotion attribute"}, {"refs": [{"id": "ref-for-idl-sequence\u2462"}], "title": "3.4. reducedTransparency attribute"}, {"refs": [{"id": "ref-for-idl-sequence\u2463"}], "title": "3.5. reducedData attribute"}, {"refs": [{"id": "ref-for-idl-sequence\u2464"}], "title": "3.6.2. validValues attribute"}], "external": true};
 window.dfnpanelData['5f90bbfb'] = {"dfnID": "5f90bbfb", "url": "https://webidl.spec.whatwg.org/#idl-undefined", "dfnText": "undefined", "refSections": [{"refs": [{"id": "ref-for-idl-undefined"}, {"id": "ref-for-idl-undefined\u2460"}], "title": "3.6. PreferenceObject interface"}], "external": true};
 window.dfnpanelData['dom-navigator-preferences'] = {"dfnID": "dom-navigator-preferences", "url": "#dom-navigator-preferences", "dfnText": "preferences", "refSections": [{"refs": [{"id": "ref-for-dom-navigator-preferences"}, {"id": "ref-for-dom-navigator-preferences\u2460"}], "title": "2.1. preferences attribute"}], "external": false};
@@ -1633,7 +1649,7 @@ window.dfnpanelData['preferenceobject'] = {"dfnID": "preferenceobject", "url": "
 window.dfnpanelData['dom-preferenceobject-requestoverride'] = {"dfnID": "dom-preferenceobject-requestoverride", "url": "#dom-preferenceobject-requestoverride", "dfnText": "requestOverride", "refSections": [{"refs": [{"id": "ref-for-dom-preferenceobject-requestoverride"}], "title": "3.6.3. requestOverride() method"}, {"refs": [{"id": "ref-for-dom-preferenceobject-requestoverride\u2460"}], "title": "4.1. Requesting a preference override"}, {"refs": [{"id": "ref-for-dom-preferenceobject-requestoverride\u2461"}, {"id": "ref-for-dom-preferenceobject-requestoverride\u2462"}], "title": "5.3. Permissions & User Activation"}], "external": false};
 window.dfnpanelData['dom-preferenceobject-override'] = {"dfnID": "dom-preferenceobject-override", "url": "#dom-preferenceobject-override", "dfnText": "override", "refSections": [{"refs": [{"id": "ref-for-dom-preferenceobject-override"}], "title": "3.6. PreferenceObject interface"}, {"refs": [{"id": "ref-for-dom-preferenceobject-override\u2460"}], "title": "3.6.1. override attribute"}, {"refs": [{"id": "ref-for-dom-preferenceobject-override\u2461"}], "title": "4.3. Getting a preference override"}], "external": false};
 window.dfnpanelData['dom-preferenceobject-validvalues'] = {"dfnID": "dom-preferenceobject-validvalues", "url": "#dom-preferenceobject-validvalues", "dfnText": "validValues", "refSections": [{"refs": [{"id": "ref-for-dom-preferenceobject-validvalues"}], "title": "3.6. PreferenceObject interface"}, {"refs": [{"id": "ref-for-dom-preferenceobject-validvalues\u2460"}], "title": "3.6.2. validValues attribute"}], "external": false};
-window.dfnpanelData['dom-preferenceobject-clearoverride'] = {"dfnID": "dom-preferenceobject-clearoverride", "url": "#dom-preferenceobject-clearoverride", "dfnText": "clearOverride()", "refSections": [{"refs": [{"id": "ref-for-dom-preferenceobject-clearoverride"}], "title": "3.6. PreferenceObject interface"}, {"refs": [{"id": "ref-for-dom-preferenceobject-clearoverride\u2460"}], "title": "3.6.4. clearOverride method"}, {"refs": [{"id": "ref-for-dom-preferenceobject-clearoverride\u2461"}], "title": "4.2. Clearing a preference override"}], "external": false};
+window.dfnpanelData['dom-preferenceobject-clearoverride'] = {"dfnID": "dom-preferenceobject-clearoverride", "url": "#dom-preferenceobject-clearoverride", "dfnText": "clearOverride()", "refSections": [{"refs": [{"id": "ref-for-dom-preferenceobject-clearoverride"}], "title": "3.6. PreferenceObject interface"}, {"refs": [{"id": "ref-for-dom-preferenceobject-clearoverride\u2460"}], "title": "3.6.3. requestOverride() method"}, {"refs": [{"id": "ref-for-dom-preferenceobject-clearoverride\u2461"}], "title": "3.6.4. clearOverride method"}, {"refs": [{"id": "ref-for-dom-preferenceobject-clearoverride\u2462"}], "title": "4.2. Clearing a preference override"}], "external": false};
 </script>
 <script>/* Boilerplate: script-dom-helper */
 function query(sel) { return document.querySelector(sel); }
