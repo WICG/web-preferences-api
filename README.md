@@ -96,6 +96,7 @@ interface PreferenceManager {
 interface PreferenceObject {
     // null means the preference is not overridden
     readonly override: string | null;
+    readonly value: string;
 	readonly validValues: string[];
 
 	requestOverride(value: string | null): Promise<void>;

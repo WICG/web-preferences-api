@@ -184,6 +184,7 @@ If an override is set for this preference:
 [Exposed=Window, SecureContext]
 interface PreferenceObject {
   readonly attribute DOMString? override;
+  readonly attribute DOMString value;
   readonly attribute FrozenArray<DOMString> validValues;
 
   undefined clearOverride();
@@ -200,6 +201,18 @@ interface PreferenceObject {
     1. Let |override| be null.
     1. If an override for |preference| exists, set |override| to the value of that override.
     1. Return |override|.
+</div>
+
+### {{value}} attribute ### {#value-attribute}
+
+<div algorithm='get preference value'>
+    The <dfn attribute for=PreferenceObject>value</dfn> attribute, when accessed, must run these steps:
+
+    1. Let |preference| be the preference object's name.
+    1. Let |value| be null.
+    1. If an override for |preference| exists, set |value| to the value of that override.
+    1. If |value| is null, set |value| to the UA value of the preference.
+    1. Return |value|.
 </div>
 
 ### {{validValues}} attribute ### {#validValues-attribute}
