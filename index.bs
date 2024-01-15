@@ -182,13 +182,15 @@ If an override is set for this preference:
 
 <script type=idl>
 [Exposed=Window, SecureContext]
-interface PreferenceObject {
+interface PreferenceObject : EventTarget {
   readonly attribute DOMString? override;
   readonly attribute DOMString value;
   readonly attribute FrozenArray<DOMString> validValues;
 
   undefined clearOverride();
   Promise<undefined> requestOverride(DOMString? value);
+
+  attribute EventHandler onchange;
 };
 </script>
 
@@ -234,10 +236,27 @@ Note: "no-preference" is deliberately not an allowed value for any preference.
 This is to mitigate the risk of sites misusing the API to the detriment of user experience.
 Authors should instead clear the preference override. See [#30](https://github.com/WICG/web-preferences-api/issues/30) for more details.
 
+### {{onchange}} event handler attribute ### {#onchange-attribute}
+
+The <dfn attribute for=PreferenceObject>onchange</dfn> attribute is an [=event handler IDL attribute=] for
+the {{onchange}} [=event handler=], whose [=event handler event type=]
+is <dfn class="event" data-dfn-for="PreferenceObject">change</dfn>.
+
+<div algorithm="update steps">
+Whenever the [=user agent=] is aware that the state of a {{PreferenceObject}}
+instance |value| has changed, it asynchronously runs the <dfn algorithm for="PreferenceObject">{{PreferenceObject}}
+update steps</dfn>:
+
+1. Let |preference| be the {{PreferenceObject}} object that |value| is associated with.
+1. If [=this=]'s [=relevant global object=] is a {{Window}} object, then:
+    1. Let |document| be |preference|'s [=relevant global object=]'s [=associated Document=].
+    1. If |document| is null or |document| is not [=Document/fully active=], terminate this algorithm.
+1. Queue a task on the [=preferences task source=] to <a>fire an event</a> named <code>change</code> at |preference|.
+
 ### {{requestOverride()}} method ### {#request-override-method}
 
 <div algorithm='request preference override'>
-    The <dfn method for=PreferenceObject>requestOverride()</dfn> method, when invoked, must run these steps:
+    The <dfn method for=PreferenceObject>requestOverride(value)</dfn> method, when invoked, must run these steps:
 
     1. Let |result| be [=a new promise=].
     1. Let |allowed| be `false`.
@@ -280,6 +299,12 @@ Issue: Is TypeError correct here?
     1. If |override| is null, then return.
     1. Clear the override for |preference|.
 </div>
+
+### Garbage Collection
+
+A {{PreferenceObject}} object MUST NOT be garbage collected if it has an [=event listener=] whose type is `change`.
+
+The <dfn>preferences task source</dfn> is a [=task source=] that is used to queue [=tasks=] that are related to the {{PreferenceObject}} interface.
 
 # Usage Examples # {#usage-examples}
 
