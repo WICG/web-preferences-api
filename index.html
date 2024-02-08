@@ -6,7 +6,7 @@
   <link href="https://www.w3.org/StyleSheets/TR/2021/W3C-UD" rel="stylesheet">
   <meta content="Bikeshed version 82ce88815, updated Thu Sep 7 16:33:55 2023 -0700" name="generator">
   <link href="https://wicg.github.io/web-preferences-api/" rel="canonical">
-  <meta content="1526f76de27bb34a16a1ba4e5c55bf4080eec8f4" name="document-revision">
+  <meta content="272f96d0c5d8867feb2f25ba75641d20c8cda621" name="document-revision">
 <style>/* Boilerplate: style-autolinks */
 .css.css, .property.property, .descriptor.descriptor {
     color: var(--a-normal-text);
@@ -668,7 +668,7 @@ var.selected6 { background-color: #FFBCF2; box-shadow: 0 0 0 2px #FFBCF2; }
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2021/logos/W3C" width="72"> </a> </p>
    <h1 class="p-name no-ref" id="title">Web Preferences API</h1>
-   <p id="w3c-state"><a href="https://www.w3.org/standards/types#UD">Unofficial Proposal Draft</a>, <time class="dt-updated" datetime="2024-01-15">15 January 2024</time></p>
+   <p id="w3c-state"><a href="https://www.w3.org/standards/types#UD">Unofficial Proposal Draft</a>, <time class="dt-updated" datetime="2024-02-08">8 February 2024</time></p>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -866,6 +866,8 @@ This is modeled after the <code>prefers-contrast</code> user preference media fe
      <li data-md>
       <p>Add <code>"less"</code> to <var>validValues</var>.</p>
      <li data-md>
+      <p>Add <code>"no-preference"</code> to <var>validValues</var>.</p>
+     <li data-md>
       <p>Return <var>validValues</var>.</p>
     </ol>
    </div>
@@ -891,6 +893,8 @@ This is modeled after the <code>prefers-reduced-motion</code> user preference me
       <p>Let <var>validValues</var> be a new empty <a data-link-type="dfn" href="https://webidl.spec.whatwg.org/#idl-sequence" id="ref-for-idl-sequence②">sequence</a>.</p>
      <li data-md>
       <p>Add <code>"reduce"</code> to <var>validValues</var>.</p>
+     <li data-md>
+      <p>Add <code>"no-preference"</code> to <var>validValues</var>.</p>
      <li data-md>
       <p>Return <var>validValues</var>.</p>
     </ol>
@@ -918,6 +922,8 @@ This is modeled after the <code>prefers-reduced-transparency</code> user prefere
      <li data-md>
       <p>Add <code>"reduce"</code> to <var>validValues</var>.</p>
      <li data-md>
+      <p>Add <code>"no-preference"</code> to <var>validValues</var>.</p>
+     <li data-md>
       <p>Return <var>validValues</var>.</p>
     </ol>
    </div>
@@ -943,6 +949,8 @@ This is modeled after the <code>prefers-reduced-data</code> user preference medi
      <li data-md>
       <p>Add <code>"reduce"</code> to <var>validValues</var>.</p>
      <li data-md>
+      <p>Add <code>"no-preference"</code> to <var>validValues</var>.</p>
+     <li data-md>
       <p>Return <var>validValues</var>.</p>
     </ol>
    </div>
@@ -967,7 +975,7 @@ This is modeled after the <code>prefers-reduced-data</code> user preference medi
   <c- b>readonly</c-> <c- b>attribute</c-> <a class="idl-code" data-link-type="interface" href="https://webidl.spec.whatwg.org/#idl-frozen-array" id="ref-for-idl-frozen-array"><c- b>FrozenArray</c-></a>&lt;<a class="idl-code" data-link-type="interface" href="https://webidl.spec.whatwg.org/#idl-DOMString" id="ref-for-idl-DOMString②"><c- b>DOMString</c-></a>> <a class="idl-code" data-link-type="attribute" data-readonly data-type="FrozenArray<DOMString>" href="#dom-preferenceobject-validvalues" id="ref-for-dom-preferenceobject-validvalues"><c- g>validValues</c-></a>;
 
   <a class="idl-code" data-link-type="interface" href="https://webidl.spec.whatwg.org/#idl-undefined" id="ref-for-idl-undefined"><c- b>undefined</c-></a> <a class="idl-code" data-link-type="method" href="#dom-preferenceobject-clearoverride" id="ref-for-dom-preferenceobject-clearoverride"><c- g>clearOverride</c-></a>();
-  <a class="idl-code" data-link-type="interface" href="https://webidl.spec.whatwg.org/#idl-promise" id="ref-for-idl-promise"><c- b>Promise</c-></a>&lt;<a class="idl-code" data-link-type="interface" href="https://webidl.spec.whatwg.org/#idl-undefined" id="ref-for-idl-undefined①"><c- b>undefined</c-></a>> <a class="idl-code" data-link-type="method" href="#dom-preferenceobject-requestoverride" id="ref-for-dom-preferenceobject-requestoverride"><c- g>requestOverride</c-></a>(<a class="idl-code" data-link-type="interface" href="https://webidl.spec.whatwg.org/#idl-DOMString" id="ref-for-idl-DOMString③"><c- b>DOMString</c-></a>? <dfn class="idl-code" data-dfn-for="PreferenceObject/requestOverride(value)" data-dfn-type="argument" data-export id="dom-preferenceobject-requestoverride-value-value"><code><c- g>value</c-></code><a class="self-link" href="#dom-preferenceobject-requestoverride-value-value"></a></dfn>);
+  <a class="idl-code" data-link-type="interface" href="https://webidl.spec.whatwg.org/#idl-promise" id="ref-for-idl-promise"><c- b>Promise</c-></a>&lt;<a class="idl-code" data-link-type="interface" href="https://webidl.spec.whatwg.org/#idl-undefined" id="ref-for-idl-undefined①"><c- b>undefined</c-></a>> <a class="idl-code" data-link-type="method" href="#dom-preferenceobject-requestoverride" id="ref-for-dom-preferenceobject-requestoverride"><c- g>requestOverride</c-></a>(<a class="idl-code" data-link-type="interface" href="https://webidl.spec.whatwg.org/#idl-DOMString" id="ref-for-idl-DOMString③"><c- b>DOMString</c-></a>? <dfn class="dfn-paneled idl-code" data-dfn-for="PreferenceObject/requestOverride(value)" data-dfn-type="argument" data-export id="dom-preferenceobject-requestoverride-value-value"><code><c- g>value</c-></code></dfn>);
 
   <c- b>attribute</c-> <a data-link-type="idl-name" href="https://html.spec.whatwg.org/multipage/webappapis.html#eventhandler" id="ref-for-eventhandler"><c- n>EventHandler</c-></a> <a class="idl-code" data-link-type="attribute" data-type="EventHandler" href="#dom-preferenceobject-onchange" id="ref-for-dom-preferenceobject-onchange"><c- g>onchange</c-></a>;
 };
@@ -986,7 +994,7 @@ This is modeled after the <code>prefers-reduced-data</code> user preference medi
       <p>Return <var>override</var>.</p>
     </ol>
    </div>
-   <h4 class="heading settled" data-level="3.6.2" id="value-attribute"><span class="secno">3.6.2. </span><span class="content"><code class="idl"><a data-link-type="idl" href="#dom-preferenceobject-value" id="ref-for-dom-preferenceobject-value①">value</a></code> attribute</span><a class="self-link" href="#value-attribute"></a></h4>
+   <h4 class="heading settled" data-level="3.6.2" id="value-attribute"><span class="secno">3.6.2. </span><span class="content"><code class="idl"><a data-link-type="idl" href="#dom-preferenceobject-requestoverride-value-value" id="ref-for-dom-preferenceobject-requestoverride-value-value">value</a></code> attribute</span><a class="self-link" href="#value-attribute"></a></h4>
    <div class="algorithm" data-algorithm="get preference value">
      The <dfn class="dfn-paneled idl-code" data-dfn-for="PreferenceObject" data-dfn-type="attribute" data-export id="dom-preferenceobject-value"><code>value</code></dfn> attribute, when accessed, must run these steps: 
     <ol>
@@ -1024,9 +1032,6 @@ This is modeled after the <code>prefers-reduced-data</code> user preference medi
       <p>Return <var>validValues</var>.</p>
     </ol>
    </div>
-   <p class="note" role="note"><span class="marker">Note:</span> "no-preference" is deliberately not an allowed value for any preference.
-This is to mitigate the risk of sites misusing the API to the detriment of user experience.
-Authors should instead clear the preference override. See <a href="https://github.com/WICG/web-preferences-api/issues/30">#30</a> for more details.</p>
    <h4 class="heading settled" data-level="3.6.4" id="onchange-attribute"><span class="secno">3.6.4. </span><span class="content"><code class="idl"><a data-link-type="idl" href="#dom-preferenceobject-onchange" id="ref-for-dom-preferenceobject-onchange①">onchange</a></code> event handler attribute</span><a class="self-link" href="#onchange-attribute"></a></h4>
    <p>The <dfn class="dfn-paneled idl-code" data-dfn-for="PreferenceObject" data-dfn-type="attribute" data-export id="dom-preferenceobject-onchange"><code>onchange</code></dfn> attribute is an <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#event-handler-idl-attributes" id="ref-for-event-handler-idl-attributes">event handler IDL attribute</a> for
 the <code class="idl"><a data-link-type="idl" href="#dom-preferenceobject-onchange" id="ref-for-dom-preferenceobject-onchange②">onchange</a></code> <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#event-handlers" id="ref-for-event-handlers">event handler</a>, whose <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#event-handler-event-type" id="ref-for-event-handler-event-type">event handler event type</a> is <dfn class="event" data-dfn-for="PreferenceObject" data-dfn-type="dfn" data-noexport id="preferenceobject-change">change<a class="self-link" href="#preferenceobject-change"></a></dfn>.</p>
@@ -1134,7 +1139,7 @@ the <code class="idl"><a data-link-type="idl" href="#dom-preferenceobject-onchan
 <pre class="language-js highlight"><c- a>const</c-> colorSchemeSupported <c- o>=</c-> <c- t>'colorScheme'</c-> <c- ow>in</c-> navigator<c- p>.</c->preferences<c- p>;</c->
 </pre>
     <h3 class="heading settled" data-level="4.1" id="usage-request-a-preference-override"><span class="secno">4.1. </span><span class="content">Requesting a preference override</span><a class="self-link" href="#usage-request-a-preference-override"></a></h3>
-    <p>To request a preference override, the <code class="idl"><a data-link-type="idl" href="https://wicg.github.io/web-preferences-api/#dom-preferenceobject-requestoverride%E2%91%A0" id="ref-for-dom-preferenceobject-requestoverride%E2%91%A0">requestOverride</a></code> method can be called.</p>
+    <p>To request a preference override, the <code class="idl"><a data-link-type="idl">requestOverride</a></code> method can be called.</p>
 <pre class="language-js highlight">navigator<c- p>.</c->preferences<c- p>.</c->colorScheme<c- p>.</c->requestOverride<c- p>(</c-><c- t>'dark'</c-><c- p>)</c->
     <c- p>.</c->then<c- p>(()</c-> <c- p>=></c-> <c- p>{</c->
          <c- c1>// The preference override was successful.</c->
@@ -1166,8 +1171,8 @@ Each preference property’s override property will return the string value indi
     <h3 class="heading settled" data-level="5.2" id="fingerprinting"><span class="secno">5.2. </span><span class="content">Avoiding fingerprinting</span><a class="self-link" href="#fingerprinting"></a></h3>
     <p>This API exposes no new fingerprinting surfaces beyond that which already exist in the platform.</p>
     <h3 class="heading settled" data-level="5.3" id="permissions"><span class="secno">5.3. </span><span class="content">Permissions &amp; User Activation</span><a class="self-link" href="#permissions"></a></h3>
-    <p>As the <code class="idl"><a data-link-type="idl" href="https://wicg.github.io/web-preferences-api/#dom-preferenceobject-requestoverride%E2%91%A0" id="ref-for-dom-preferenceobject-requestoverride%E2%91%A0①">requestOverride</a></code> method is a promise it gives user agents more control over the process of overriding a preference.</p>
-    <p>The <code class="idl"><a data-link-type="idl" href="https://wicg.github.io/web-preferences-api/#dom-preferenceobject-requestoverride%E2%91%A0" id="ref-for-dom-preferenceobject-requestoverride%E2%91%A0②">requestOverride</a></code> method is gated behind a UA defined algorithm for determining if the action can proceed.</p>
+    <p>As the <code class="idl"><a data-link-type="idl">requestOverride</a></code> method is a promise it gives user agents more control over the process of overriding a preference.</p>
+    <p>The <code class="idl"><a data-link-type="idl">requestOverride</a></code> method is gated behind a UA defined algorithm for determining if the action can proceed.</p>
     <p>This could include a user prompt, or it could be a simple check to see if the user has interacted with the page.</p>
     <h3 class="heading settled" data-level="5.4" id="sub-resources"><span class="secno">5.4. </span><span class="content">Sub-resources</span><a class="self-link" href="#sub-resources"></a></h3>
     <p class="note" role="note"><span class="marker">Note:</span> See <a href="https://github.com/lukewarlow/web-preferences-api/issues/8">#8</a> for discussion regarding this.</p>
@@ -1287,11 +1292,6 @@ Each preference property’s override property will return the string value indi
      <li><span class="dfn-paneled" id="6d19ac93">user agent</span>
     </ul>
    <li>
-    <a data-link-type="biblio">[WEB-PREFERENCES-API]</a> defines the following terms:
-    <ul>
-     <li><span class="dfn-paneled" id="3c04448b">requestOverride()</span>
-    </ul>
-   <li>
     <a data-link-type="biblio">[WEBIDL]</a> defines the following terms:
     <ul>
      <li><span class="dfn-paneled" id="dca2de17">DOMException</span>
@@ -1335,8 +1335,6 @@ Each preference property’s override property will return the string value indi
    <dd><a href="https://wicg.github.io/savedata/"><cite>Save Data API</cite></a>. Editor's Draft. URL: <a href="https://wicg.github.io/savedata/">https://wicg.github.io/savedata/</a>
    <dt id="biblio-user-preference-media-features-headers">[USER-PREFERENCE-MEDIA-FEATURES-HEADERS]
    <dd><a href="https://wicg.github.io/user-preference-media-features-headers/"><cite>User Preference Media Features Client Hints Headers</cite></a>. Draft Community Group Report. URL: <a href="https://wicg.github.io/user-preference-media-features-headers/">https://wicg.github.io/user-preference-media-features-headers/</a>
-   <dt id="biblio-web-preferences-api">[WEB-PREFERENCES-API]
-   <dd><a href="https://wicg.github.io/web-preferences-api/"><cite>Web Preferences API</cite></a>. Unofficial Proposal Draft. URL: <a href="https://wicg.github.io/web-preferences-api/">https://wicg.github.io/web-preferences-api/</a>
    <dt id="biblio-webidl">[WEBIDL]
    <dd>Edgar Chen; Timothy Gu. <a href="https://webidl.spec.whatwg.org/"><cite>Web IDL Standard</cite></a>. Living Standard. URL: <a href="https://webidl.spec.whatwg.org/">https://webidl.spec.whatwg.org/</a>
   </dl>
@@ -1707,7 +1705,6 @@ window.dfnpanelData['e270bd2a'] = {"dfnID": "e270bd2a", "url": "https://html.spe
 window.dfnpanelData['c3b2d08c'] = {"dfnID": "c3b2d08c", "url": "https://html.spec.whatwg.org/multipage/webappapis.html#task-source", "dfnText": "task source", "refSections": [{"refs": [{"id": "ref-for-task-source"}], "title": "3.6.7. Garbage Collection"}], "external": true};
 window.dfnpanelData['0698d556'] = {"dfnID": "0698d556", "url": "https://infra.spec.whatwg.org/#string", "dfnText": "string", "refSections": [{"refs": [{"id": "ref-for-string"}], "title": "3.6.5. requestOverride() method"}], "external": true};
 window.dfnpanelData['6d19ac93'] = {"dfnID": "6d19ac93", "url": "https://infra.spec.whatwg.org/#user-agent", "dfnText": "user agent", "refSections": [{"refs": [{"id": "ref-for-user-agent"}], "title": "3.6.4. onchange event handler attribute"}], "external": true};
-window.dfnpanelData['3c04448b'] = {"dfnID": "3c04448b", "url": "https://wicg.github.io/web-preferences-api/#dom-preferenceobject-requestoverride%E2%91%A0", "dfnText": "requestOverride()", "refSections": [{"refs": [{"id": "ref-for-dom-preferenceobject-requestoverride%E2%91%A0"}], "title": "4.1. Requesting a preference override"}, {"refs": [{"id": "ref-for-dom-preferenceobject-requestoverride%E2%91%A0\u2460"}, {"id": "ref-for-dom-preferenceobject-requestoverride%E2%91%A0\u2461"}], "title": "5.3. Permissions & User Activation"}], "external": true};
 window.dfnpanelData['dca2de17'] = {"dfnID": "dca2de17", "url": "https://webidl.spec.whatwg.org/#idl-DOMException", "dfnText": "DOMException", "refSections": [{"refs": [{"id": "ref-for-idl-DOMException"}, {"id": "ref-for-idl-DOMException\u2460"}], "title": "3.6.5. requestOverride() method"}], "external": true};
 window.dfnpanelData['8855a9aa'] = {"dfnID": "8855a9aa", "url": "https://webidl.spec.whatwg.org/#idl-DOMString", "dfnText": "DOMString", "refSections": [{"refs": [{"id": "ref-for-idl-DOMString"}, {"id": "ref-for-idl-DOMString\u2460"}, {"id": "ref-for-idl-DOMString\u2461"}, {"id": "ref-for-idl-DOMString\u2462"}], "title": "3.6. PreferenceObject interface"}], "external": true};
 window.dfnpanelData['889e932f'] = {"dfnID": "889e932f", "url": "https://webidl.spec.whatwg.org/#Exposed", "dfnText": "Exposed", "refSections": [{"refs": [{"id": "ref-for-Exposed"}], "title": "2. Extensions to the Navigator interface"}, {"refs": [{"id": "ref-for-Exposed\u2460"}], "title": "3. PreferenceManager interface"}, {"refs": [{"id": "ref-for-Exposed\u2461"}], "title": "3.6. PreferenceObject interface"}], "external": true};
@@ -1737,8 +1734,9 @@ window.dfnpanelData['get-valid-values-for-reducedmotion'] = {"dfnID": "get-valid
 window.dfnpanelData['get-valid-values-for-reducedtransparency'] = {"dfnID": "get-valid-values-for-reducedtransparency", "url": "#get-valid-values-for-reducedtransparency", "dfnText": "get valid values for reducedTransparency", "refSections": [{"refs": [{"id": "ref-for-get-valid-values-for-reducedtransparency"}], "title": "3.6.3. validValues attribute"}, {"refs": [{"id": "ref-for-get-valid-values-for-reducedtransparency\u2460"}], "title": "3.6.5. requestOverride() method"}], "external": false};
 window.dfnpanelData['get-valid-values-for-reduceddata'] = {"dfnID": "get-valid-values-for-reduceddata", "url": "#get-valid-values-for-reduceddata", "dfnText": "get valid values for reducedData", "refSections": [{"refs": [{"id": "ref-for-get-valid-values-for-reduceddata"}], "title": "3.6.3. validValues attribute"}, {"refs": [{"id": "ref-for-get-valid-values-for-reduceddata\u2460"}], "title": "3.6.5. requestOverride() method"}], "external": false};
 window.dfnpanelData['preferenceobject'] = {"dfnID": "preferenceobject", "url": "#preferenceobject", "dfnText": "PreferenceObject", "refSections": [{"refs": [{"id": "ref-for-preferenceobject"}, {"id": "ref-for-preferenceobject\u2460"}, {"id": "ref-for-preferenceobject\u2461"}, {"id": "ref-for-preferenceobject\u2462"}, {"id": "ref-for-preferenceobject\u2463"}], "title": "3. PreferenceManager interface"}, {"refs": [{"id": "ref-for-preferenceobject\u2464"}], "title": "3.1. colorScheme attribute"}, {"refs": [{"id": "ref-for-preferenceobject\u2465"}], "title": "3.2. contrast attribute"}, {"refs": [{"id": "ref-for-preferenceobject\u2466"}], "title": "3.3. reducedMotion attribute"}, {"refs": [{"id": "ref-for-preferenceobject\u2467"}], "title": "3.4. reducedTransparency attribute"}, {"refs": [{"id": "ref-for-preferenceobject\u2468"}], "title": "3.5. reducedData attribute"}, {"refs": [{"id": "ref-for-preferenceobject\u2460\u24ea"}], "title": "3.6. PreferenceObject interface"}, {"refs": [{"id": "ref-for-preferenceobject\u2460\u2460"}, {"id": "ref-for-preferenceobject\u2460\u2461"}, {"id": "ref-for-preferenceobject\u2460\u2462"}], "title": "3.6.4. onchange event handler attribute"}, {"refs": [{"id": "ref-for-preferenceobject\u2460\u2463"}, {"id": "ref-for-preferenceobject\u2460\u2464"}], "title": "3.6.7. Garbage Collection"}, {"refs": [{"id": "ref-for-preferenceobject\u2460\u2465"}], "title": "4.4. Getting valid values for a preference"}], "external": false};
+window.dfnpanelData['dom-preferenceobject-requestoverride-value-value'] = {"dfnID": "dom-preferenceobject-requestoverride-value-value", "url": "#dom-preferenceobject-requestoverride-value-value", "dfnText": "value", "refSections": [{"refs": [{"id": "ref-for-dom-preferenceobject-requestoverride-value-value"}], "title": "3.6.2. value attribute"}], "external": false};
 window.dfnpanelData['dom-preferenceobject-override'] = {"dfnID": "dom-preferenceobject-override", "url": "#dom-preferenceobject-override", "dfnText": "override", "refSections": [{"refs": [{"id": "ref-for-dom-preferenceobject-override"}], "title": "3.6. PreferenceObject interface"}, {"refs": [{"id": "ref-for-dom-preferenceobject-override\u2460"}], "title": "3.6.1. override attribute"}, {"refs": [{"id": "ref-for-dom-preferenceobject-override\u2461"}], "title": "4.3. Getting a preference override"}], "external": false};
-window.dfnpanelData['dom-preferenceobject-value'] = {"dfnID": "dom-preferenceobject-value", "url": "#dom-preferenceobject-value", "dfnText": "value", "refSections": [{"refs": [{"id": "ref-for-dom-preferenceobject-value"}], "title": "3.6. PreferenceObject interface"}, {"refs": [{"id": "ref-for-dom-preferenceobject-value\u2460"}], "title": "3.6.2. value attribute"}], "external": false};
+window.dfnpanelData['dom-preferenceobject-value'] = {"dfnID": "dom-preferenceobject-value", "url": "#dom-preferenceobject-value", "dfnText": "value", "refSections": [{"refs": [{"id": "ref-for-dom-preferenceobject-value"}], "title": "3.6. PreferenceObject interface"}], "external": false};
 window.dfnpanelData['dom-preferenceobject-validvalues'] = {"dfnID": "dom-preferenceobject-validvalues", "url": "#dom-preferenceobject-validvalues", "dfnText": "validValues", "refSections": [{"refs": [{"id": "ref-for-dom-preferenceobject-validvalues"}], "title": "3.6. PreferenceObject interface"}, {"refs": [{"id": "ref-for-dom-preferenceobject-validvalues\u2460"}], "title": "3.6.3. validValues attribute"}], "external": false};
 window.dfnpanelData['dom-preferenceobject-onchange'] = {"dfnID": "dom-preferenceobject-onchange", "url": "#dom-preferenceobject-onchange", "dfnText": "onchange", "refSections": [{"refs": [{"id": "ref-for-dom-preferenceobject-onchange"}], "title": "3.6. PreferenceObject interface"}, {"refs": [{"id": "ref-for-dom-preferenceobject-onchange\u2460"}, {"id": "ref-for-dom-preferenceobject-onchange\u2461"}], "title": "3.6.4. onchange event handler attribute"}], "external": false};
 window.dfnpanelData['dom-preferenceobject-requestoverride'] = {"dfnID": "dom-preferenceobject-requestoverride", "url": "#dom-preferenceobject-requestoverride", "dfnText": "requestOverride(value)", "refSections": [{"refs": [{"id": "ref-for-dom-preferenceobject-requestoverride"}], "title": "3.6. PreferenceObject interface"}, {"refs": [{"id": "ref-for-dom-preferenceobject-requestoverride\u2460"}], "title": "3.6.5. requestOverride() method"}], "external": false};
