@@ -251,7 +251,7 @@ update steps</dfn>:
 1. If [=this=]'s [=relevant global object=] is a {{Window}} object, then:
     1. Let |document| be |preference|'s [=relevant global object=]'s [=associated Document=].
     1. If |document| is null or |document| is not [=Document/fully active=], terminate this algorithm.
-1. Queue a task on the [=preferences task source=] to <a>fire an event</a> named <code>change</code> at |preference|.
+1. <a>fire an event</a> named <code>change</code> at |preference|.
 
 ### {{requestOverride()}} method ### {#request-override-method}
 
@@ -267,7 +267,7 @@ update steps</dfn>:
     1. If |value| is `null` or an empty [=string=]:
         1. Run {{clearOverride}}.
         1. [=Resolve=] and return |result|.
-    1. Let |preference| be the preference object's name.
+    1. Let |currentValue| be the preference object's |value|.
     1. Let |validValues| be null.
     1. If |preference| is "{{colorScheme}}", set |validValues| to the result of [=get valid values for colorScheme=].
     1. If |preference| is "{{contrast}}", set |validValues| to the result of [=get valid values for contrast=].
@@ -277,16 +277,21 @@ update steps</dfn>:
     1. If |value| is not in |validValues|:
         1. [=Reject=] |result| with a "{{TypeError}}" {{DOMException}}.
         1. Return |result|.
-    1. Let |override| be null.
-    1. If an override for |preference| exists, set |override| to the value of that override.
-    1. If |value| is different from |override|:
+    1. Let |previousOverride| be null.
+    1. If an override for |preference| exists, set |previousOverride| to the value of that override.
+    1. If |value| is different from |previousOverride|:
         1. Set the preference override for |preference| to |value|.
+    1. If |previousOverride| is null, then:
+        1. If |value| is the same as |currentValue|, then:
+            1. <a>Fire an event</a> named <code>change</code> at [=this=].
     1. [=Resolve=] and return |result|.
 </div>
 
 Issue: This algorithm needs more detail on what exactly setting the preference override does.
 
 Issue: Is TypeError correct here?
+
+Note: The `change` event is fired when the computed value changes, but when a new override is set it is also fired if the value hasn't changed.
 
 ### {{clearOverride}} method ### {#clear-override-method}
 
@@ -298,13 +303,16 @@ Issue: Is TypeError correct here?
     1. If an override for |preference| exists, set |override| to the value of that override.
     1. If |override| is null, then return.
     1. Clear the override for |preference|.
+    1. Let |newValue| be the preference object's |value|.
+    1. If |newValue| is equal to |override|, then:
+    1. <a>Fire an event</a> named <code>change</code> at [=this=].
 </div>
+
+Note: The `change` event is fired when the computed value changes, but when an override is cleared it is also fired if the value hasn't changed.
 
 ### Garbage Collection
 
 A {{PreferenceObject}} object MUST NOT be garbage collected if it has an [=event listener=] whose type is `change`.
-
-The <dfn>preferences task source</dfn> is a [=task source=] that is used to queue [=tasks=] that are related to the {{PreferenceObject}} interface.
 
 # Usage Examples # {#usage-examples}
 
