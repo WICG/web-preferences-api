@@ -6,7 +6,7 @@
   <link href="https://www.w3.org/StyleSheets/TR/2021/W3C-UD" rel="stylesheet">
   <meta content="Bikeshed version 82ce88815, updated Thu Sep 7 16:33:55 2023 -0700" name="generator">
   <link href="https://wicg.github.io/web-preferences-api/" rel="canonical">
-  <meta content="272f96d0c5d8867feb2f25ba75641d20c8cda621" name="document-revision">
+  <meta content="decb42e152fdbe14a8d583e9cc3fda34fef289da" name="document-revision">
 <style>/* Boilerplate: style-autolinks */
 .css.css, .property.property, .descriptor.descriptor {
     color: var(--a-normal-text);
@@ -668,7 +668,7 @@ var.selected6 { background-color: #FFBCF2; box-shadow: 0 0 0 2px #FFBCF2; }
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2021/logos/W3C" width="72"> </a> </p>
    <h1 class="p-name no-ref" id="title">Web Preferences API</h1>
-   <p id="w3c-state"><a href="https://www.w3.org/standards/types#UD">Unofficial Proposal Draft</a>, <time class="dt-updated" datetime="2024-02-08">8 February 2024</time></p>
+   <p id="w3c-state"><a href="https://www.w3.org/standards/types#UD">Unofficial Proposal Draft</a>, <time class="dt-updated" datetime="2024-02-13">13 February 2024</time></p>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -1049,7 +1049,7 @@ the <code class="idl"><a data-link-type="idl" href="#dom-preferenceobject-onchan
         <p>If <var>document</var> is null or <var>document</var> is not <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/document-sequences.html#fully-active" id="ref-for-fully-active">fully active</a>, terminate this algorithm.</p>
       </ol>
      <li data-md>
-      <p>Queue a task on the <a data-link-type="dfn" href="#preferences-task-source" id="ref-for-preferences-task-source">preferences task source</a> to <a data-link-type="dfn" href="https://dom.spec.whatwg.org/#concept-event-fire" id="ref-for-concept-event-fire">fire an event</a> named <code>change</code> at <var>preference</var>.</p>
+      <p><a data-link-type="dfn" href="https://dom.spec.whatwg.org/#concept-event-fire" id="ref-for-concept-event-fire">fire an event</a> named <code>change</code> at <var>preference</var>.</p>
     </ol>
     <h4 class="heading settled" data-level="3.6.5" id="request-override-method"><span class="secno">3.6.5. </span><span class="content"><code class="idl"><a data-link-type="idl" href="#dom-preferenceobject-requestoverride" id="ref-for-dom-preferenceobject-requestoverride①">requestOverride()</a></code> method</span><a class="self-link" href="#request-override-method"></a></h4>
     <div class="algorithm" data-algorithm="request preference override">
@@ -1076,7 +1076,7 @@ the <code class="idl"><a data-link-type="idl" href="#dom-preferenceobject-onchan
          <p><a data-link-type="dfn" href="https://webidl.spec.whatwg.org/#resolve" id="ref-for-resolve">Resolve</a> and return <var>result</var>.</p>
        </ol>
       <li data-md>
-       <p>Let <var>preference</var> be the preference object’s name.</p>
+       <p>Let <var>currentValue</var> be the preference object’s <var>value</var>.</p>
       <li data-md>
        <p>Let <var>validValues</var> be null.</p>
       <li data-md>
@@ -1098,14 +1098,24 @@ the <code class="idl"><a data-link-type="idl" href="#dom-preferenceobject-onchan
          <p>Return <var>result</var>.</p>
        </ol>
       <li data-md>
-       <p>Let <var>override</var> be null.</p>
+       <p>Let <var>previousOverride</var> be null.</p>
       <li data-md>
-       <p>If an override for <var>preference</var> exists, set <var>override</var> to the value of that override.</p>
+       <p>If an override for <var>preference</var> exists, set <var>previousOverride</var> to the value of that override.</p>
       <li data-md>
-       <p>If <var>value</var> is different from <var>override</var>:</p>
+       <p>If <var>value</var> is different from <var>previousOverride</var>:</p>
        <ol>
         <li data-md>
          <p>Set the preference override for <var>preference</var> to <var>value</var>.</p>
+       </ol>
+      <li data-md>
+       <p>If <var>previousOverride</var> is null, then:</p>
+       <ol>
+        <li data-md>
+         <p>If <var>value</var> is the same as <var>currentValue</var>, then:</p>
+         <ol>
+          <li data-md>
+           <p><a data-link-type="dfn" href="https://dom.spec.whatwg.org/#concept-event-fire" id="ref-for-concept-event-fire①">Fire an event</a> named <code>change</code> at <a data-link-type="dfn" href="https://webidl.spec.whatwg.org/#this" id="ref-for-this①">this</a>.</p>
+         </ol>
        </ol>
       <li data-md>
        <p><a data-link-type="dfn" href="https://webidl.spec.whatwg.org/#resolve" id="ref-for-resolve①">Resolve</a> and return <var>result</var>.</p>
@@ -1113,6 +1123,7 @@ the <code class="idl"><a data-link-type="idl" href="#dom-preferenceobject-onchan
     </div>
     <p class="issue" id="issue-1e7d2733"><a class="self-link" href="#issue-1e7d2733"></a> This algorithm needs more detail on what exactly setting the preference override does.</p>
     <p class="issue" id="issue-42b17e45"><a class="self-link" href="#issue-42b17e45"></a> Is TypeError correct here?</p>
+    <p class="note" role="note"><span class="marker">Note:</span> The <code>change</code> event is fired when the computed value changes, but when a new override is set it is also fired if the value hasn’t changed.</p>
     <h4 class="heading settled" data-level="3.6.6" id="clear-override-method"><span class="secno">3.6.6. </span><span class="content"><code class="idl"><a data-link-type="idl" href="#dom-preferenceobject-clearoverride" id="ref-for-dom-preferenceobject-clearoverride②">clearOverride</a></code> method</span><a class="self-link" href="#clear-override-method"></a></h4>
     <div class="algorithm" data-algorithm="clear preference override">
       The <dfn class="dfn-paneled idl-code" data-dfn-for="PreferenceObject" data-dfn-type="method" data-export id="dom-preferenceobject-clearoverride"><code>clearOverride()</code></dfn> method, when invoked, must run these steps: 
@@ -1127,11 +1138,17 @@ the <code class="idl"><a data-link-type="idl" href="#dom-preferenceobject-onchan
        <p>If <var>override</var> is null, then return.</p>
       <li data-md>
        <p>Clear the override for <var>preference</var>.</p>
+      <li data-md>
+       <p>Let <var>newValue</var> be the preference object’s <var>value</var>.</p>
+      <li data-md>
+       <p>If <var>newValue</var> is equal to <var>override</var>, then:</p>
+      <li data-md>
+       <p><a data-link-type="dfn" href="https://dom.spec.whatwg.org/#concept-event-fire" id="ref-for-concept-event-fire②">Fire an event</a> named <code>change</code> at <a data-link-type="dfn" href="https://webidl.spec.whatwg.org/#this" id="ref-for-this②">this</a>.</p>
      </ol>
     </div>
+    <p class="note" role="note"><span class="marker">Note:</span> The <code>change</code> event is fired when the computed value changes, but when an override is cleared it is also fired if the value hasn’t changed.</p>
     <h4 class="heading settled" data-level="3.6.7" id="garbage-collection"><span class="secno">3.6.7. </span><span class="content">Garbage Collection</span><a class="self-link" href="#garbage-collection"></a></h4>
     <p>A <code class="idl"><a data-link-type="idl" href="#preferenceobject" id="ref-for-preferenceobject①④">PreferenceObject</a></code> object MUST NOT be garbage collected if it has an <a data-link-type="dfn" href="https://dom.spec.whatwg.org/#concept-event-listener" id="ref-for-concept-event-listener">event listener</a> whose type is <code>change</code>.</p>
-    <p>The <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport id="preferences-task-source">preferences task source</dfn> is a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#task-source" id="ref-for-task-source">task source</a> that is used to queue <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-task" id="ref-for-concept-task">tasks</a> that are related to the <code class="idl"><a data-link-type="idl" href="#preferenceobject" id="ref-for-preferenceobject①⑤">PreferenceObject</a></code> interface.</p>
     <h2 class="heading settled" data-level="4" id="usage-examples"><span class="secno">4. </span><span class="content">Usage Examples</span><a class="self-link" href="#usage-examples"></a></h2>
     <p><em>This section is non-normative.</em></p>
     <p>Each preference the browser supports will be exposed as a property on the <code>navigator.preferences</code> object.</p>
@@ -1158,7 +1175,7 @@ Each preference property’s override property will return the string value indi
 <pre class="language-js highlight"><c- a>const</c-> colorScheme <c- o>=</c-> navigator<c- p>.</c->preferences<c- p>.</c->colorScheme<c- p>.</c->override<c- p>;</c-> <c- c1>// "light" | "dark" | null</c->
 </pre>
     <h3 class="heading settled" data-level="4.4" id="get-validValues"><span class="secno">4.4. </span><span class="content">Getting valid values for a preference</span><a class="self-link" href="#get-validValues"></a></h3>
-    <p>Each <code class="idl"><a data-link-type="idl" href="#preferenceobject" id="ref-for-preferenceobject①⑥">PreferenceObject</a></code> contains a validValues attribute that can be used to determine the valid values for a preference.</p>
+    <p>Each <code class="idl"><a data-link-type="idl" href="#preferenceobject" id="ref-for-preferenceobject①⑤">PreferenceObject</a></code> contains a validValues attribute that can be used to determine the valid values for a preference.</p>
     <p>This is useful for sites that want to dynamically generate UI for overriding preferences.</p>
     <p>It also allows sites to determine if a preference value is supported before attempting to set it.</p>
 <pre class="language-js highlight"><c- a>const</c-> validValues <c- o>=</c-> navigator<c- p>.</c->preferences<c- p>.</c->colorScheme<c- p>.</c->validValues<c- p>;</c-> <c- c1>// ["light", "dark"]</c->
@@ -1241,7 +1258,6 @@ Each preference property’s override property will return the string value indi
    <li><a href="#preferenceobject">PreferenceObject</a><span>, in § 3.6</span>
    <li><a href="#preferenceobject-preferenceobject-update-steps">PreferenceObject update steps</a><span>, in § 3.6.4</span>
    <li><a href="#dom-navigator-preferences">preferences</a><span>, in § 2</span>
-   <li><a href="#preferences-task-source">preferences task source</a><span>, in § 3.6.7</span>
    <li><a href="#dom-preferencemanager-reduceddata">reducedData</a><span>, in § 3</span>
    <li><a href="#dom-preferencemanager-reducedmotion">reducedMotion</a><span>, in § 3</span>
    <li><a href="#dom-preferencemanager-reducedtransparency">reducedTransparency</a><span>, in § 3</span>
@@ -1282,8 +1298,6 @@ Each preference property’s override property will return the string value indi
      <li><span class="dfn-paneled" id="086e3aff">origin</span>
      <li><span class="dfn-paneled" id="e99bd18e">relevant global object</span>
      <li><span class="dfn-paneled" id="7393da89">same origin</span>
-     <li><span class="dfn-paneled" id="e270bd2a">task</span>
-     <li><span class="dfn-paneled" id="c3b2d08c">task source</span>
     </ul>
    <li>
     <a data-link-type="biblio">[INFRA]</a> defines the following terms:
@@ -1689,7 +1703,7 @@ window.dfnpanelData['64747b41'] = {"dfnID": "64747b41", "url": "https://drafts.c
 window.dfnpanelData['d5b6d58f'] = {"dfnID": "d5b6d58f", "url": "https://drafts.csswg.org/css-color-adjust-1/#used-color-scheme", "dfnText": "used color scheme", "refSections": [{"refs": [{"id": "ref-for-used-color-scheme"}], "title": "3.1. colorScheme attribute"}], "external": true};
 window.dfnpanelData['2bc0cdf4'] = {"dfnID": "2bc0cdf4", "url": "https://dom.spec.whatwg.org/#eventtarget", "dfnText": "EventTarget", "refSections": [{"refs": [{"id": "ref-for-eventtarget"}], "title": "3.6. PreferenceObject interface"}], "external": true};
 window.dfnpanelData['06950d36'] = {"dfnID": "06950d36", "url": "https://dom.spec.whatwg.org/#concept-event-listener", "dfnText": "event listener", "refSections": [{"refs": [{"id": "ref-for-concept-event-listener"}], "title": "3.6.7. Garbage Collection"}], "external": true};
-window.dfnpanelData['5fd23811'] = {"dfnID": "5fd23811", "url": "https://dom.spec.whatwg.org/#concept-event-fire", "dfnText": "fire an event", "refSections": [{"refs": [{"id": "ref-for-concept-event-fire"}], "title": "3.6.4. onchange event handler attribute"}], "external": true};
+window.dfnpanelData['5fd23811'] = {"dfnID": "5fd23811", "url": "https://dom.spec.whatwg.org/#concept-event-fire", "dfnText": "fire an event", "refSections": [{"refs": [{"id": "ref-for-concept-event-fire"}], "title": "3.6.4. onchange event handler attribute"}, {"refs": [{"id": "ref-for-concept-event-fire\u2460"}], "title": "3.6.5. requestOverride() method"}, {"refs": [{"id": "ref-for-concept-event-fire\u2461"}], "title": "3.6.6. clearOverride method"}], "external": true};
 window.dfnpanelData['f0951476'] = {"dfnID": "f0951476", "url": "https://html.spec.whatwg.org/multipage/webappapis.html#eventhandler", "dfnText": "EventHandler", "refSections": [{"refs": [{"id": "ref-for-eventhandler"}], "title": "3.6. PreferenceObject interface"}], "external": true};
 window.dfnpanelData['be0c27b2'] = {"dfnID": "be0c27b2", "url": "https://html.spec.whatwg.org/multipage/system-state.html#navigator", "dfnText": "Navigator", "refSections": [{"refs": [{"id": "ref-for-navigator"}, {"id": "ref-for-navigator\u2460"}], "title": "2. Extensions to the Navigator interface"}], "external": true};
 window.dfnpanelData['5d7209e9'] = {"dfnID": "5d7209e9", "url": "https://html.spec.whatwg.org/multipage/nav-history-apis.html#window", "dfnText": "Window", "refSections": [{"refs": [{"id": "ref-for-window"}], "title": "3.6.4. onchange event handler attribute"}], "external": true};
@@ -1701,8 +1715,6 @@ window.dfnpanelData['0e3ba9f8'] = {"dfnID": "0e3ba9f8", "url": "https://html.spe
 window.dfnpanelData['086e3aff'] = {"dfnID": "086e3aff", "url": "https://html.spec.whatwg.org/multipage/browsers.html#concept-origin", "dfnText": "origin", "refSections": [{"refs": [{"id": "ref-for-concept-origin"}], "title": "1. Introduction"}, {"refs": [{"id": "ref-for-concept-origin\u2460"}], "title": "3.1. colorScheme attribute"}, {"refs": [{"id": "ref-for-concept-origin\u2461"}], "title": "3.2. contrast attribute"}, {"refs": [{"id": "ref-for-concept-origin\u2462"}], "title": "3.3. reducedMotion attribute"}, {"refs": [{"id": "ref-for-concept-origin\u2463"}], "title": "3.4. reducedTransparency attribute"}, {"refs": [{"id": "ref-for-concept-origin\u2464"}], "title": "3.5. reducedData attribute"}], "external": true};
 window.dfnpanelData['e99bd18e'] = {"dfnID": "e99bd18e", "url": "https://html.spec.whatwg.org/multipage/webappapis.html#concept-relevant-global", "dfnText": "relevant global object", "refSections": [{"refs": [{"id": "ref-for-concept-relevant-global"}, {"id": "ref-for-concept-relevant-global\u2460"}], "title": "3.6.4. onchange event handler attribute"}], "external": true};
 window.dfnpanelData['7393da89'] = {"dfnID": "7393da89", "url": "https://html.spec.whatwg.org/multipage/browsers.html#same-origin", "dfnText": "same origin", "refSections": [{"refs": [{"id": "ref-for-same-origin"}], "title": "5.4. Sub-resources"}], "external": true};
-window.dfnpanelData['e270bd2a'] = {"dfnID": "e270bd2a", "url": "https://html.spec.whatwg.org/multipage/webappapis.html#concept-task", "dfnText": "task", "refSections": [{"refs": [{"id": "ref-for-concept-task"}], "title": "3.6.7. Garbage Collection"}], "external": true};
-window.dfnpanelData['c3b2d08c'] = {"dfnID": "c3b2d08c", "url": "https://html.spec.whatwg.org/multipage/webappapis.html#task-source", "dfnText": "task source", "refSections": [{"refs": [{"id": "ref-for-task-source"}], "title": "3.6.7. Garbage Collection"}], "external": true};
 window.dfnpanelData['0698d556'] = {"dfnID": "0698d556", "url": "https://infra.spec.whatwg.org/#string", "dfnText": "string", "refSections": [{"refs": [{"id": "ref-for-string"}], "title": "3.6.5. requestOverride() method"}], "external": true};
 window.dfnpanelData['6d19ac93'] = {"dfnID": "6d19ac93", "url": "https://infra.spec.whatwg.org/#user-agent", "dfnText": "user agent", "refSections": [{"refs": [{"id": "ref-for-user-agent"}], "title": "3.6.4. onchange event handler attribute"}], "external": true};
 window.dfnpanelData['dca2de17'] = {"dfnID": "dca2de17", "url": "https://webidl.spec.whatwg.org/#idl-DOMException", "dfnText": "DOMException", "refSections": [{"refs": [{"id": "ref-for-idl-DOMException"}, {"id": "ref-for-idl-DOMException\u2460"}], "title": "3.6.5. requestOverride() method"}], "external": true};
@@ -1719,7 +1731,7 @@ window.dfnpanelData['d0b4a948'] = {"dfnID": "d0b4a948", "url": "https://webidl.s
 window.dfnpanelData['b262501e'] = {"dfnID": "b262501e", "url": "https://webidl.spec.whatwg.org/#reject", "dfnText": "reject", "refSections": [{"refs": [{"id": "ref-for-reject"}], "title": "3.6.5. requestOverride() method"}], "external": true};
 window.dfnpanelData['3b90bdcd'] = {"dfnID": "3b90bdcd", "url": "https://webidl.spec.whatwg.org/#resolve", "dfnText": "resolve", "refSections": [{"refs": [{"id": "ref-for-resolve"}, {"id": "ref-for-resolve\u2460"}], "title": "3.6.5. requestOverride() method"}], "external": true};
 window.dfnpanelData['9cce47fd'] = {"dfnID": "9cce47fd", "url": "https://webidl.spec.whatwg.org/#idl-sequence", "dfnText": "sequence", "refSections": [{"refs": [{"id": "ref-for-idl-sequence"}], "title": "3.1. colorScheme attribute"}, {"refs": [{"id": "ref-for-idl-sequence\u2460"}], "title": "3.2. contrast attribute"}, {"refs": [{"id": "ref-for-idl-sequence\u2461"}], "title": "3.3. reducedMotion attribute"}, {"refs": [{"id": "ref-for-idl-sequence\u2462"}], "title": "3.4. reducedTransparency attribute"}, {"refs": [{"id": "ref-for-idl-sequence\u2463"}], "title": "3.5. reducedData attribute"}, {"refs": [{"id": "ref-for-idl-sequence\u2464"}], "title": "3.6.3. validValues attribute"}], "external": true};
-window.dfnpanelData['4013a022'] = {"dfnID": "4013a022", "url": "https://webidl.spec.whatwg.org/#this", "dfnText": "this", "refSections": [{"refs": [{"id": "ref-for-this"}], "title": "3.6.4. onchange event handler attribute"}], "external": true};
+window.dfnpanelData['4013a022'] = {"dfnID": "4013a022", "url": "https://webidl.spec.whatwg.org/#this", "dfnText": "this", "refSections": [{"refs": [{"id": "ref-for-this"}], "title": "3.6.4. onchange event handler attribute"}, {"refs": [{"id": "ref-for-this\u2460"}], "title": "3.6.5. requestOverride() method"}, {"refs": [{"id": "ref-for-this\u2461"}], "title": "3.6.6. clearOverride method"}], "external": true};
 window.dfnpanelData['5f90bbfb'] = {"dfnID": "5f90bbfb", "url": "https://webidl.spec.whatwg.org/#idl-undefined", "dfnText": "undefined", "refSections": [{"refs": [{"id": "ref-for-idl-undefined"}, {"id": "ref-for-idl-undefined\u2460"}], "title": "3.6. PreferenceObject interface"}], "external": true};
 window.dfnpanelData['dom-navigator-preferences'] = {"dfnID": "dom-navigator-preferences", "url": "#dom-navigator-preferences", "dfnText": "preferences", "refSections": [{"refs": [{"id": "ref-for-dom-navigator-preferences"}, {"id": "ref-for-dom-navigator-preferences\u2460"}], "title": "2.1. preferences attribute"}], "external": false};
 window.dfnpanelData['preferencemanager'] = {"dfnID": "preferencemanager", "url": "#preferencemanager", "dfnText": "PreferenceManager", "refSections": [{"refs": [{"id": "ref-for-preferencemanager"}], "title": "2. Extensions to the Navigator interface"}, {"refs": [{"id": "ref-for-preferencemanager\u2460"}], "title": "2.1. preferences attribute"}, {"refs": [{"id": "ref-for-preferencemanager\u2461"}], "title": "3. PreferenceManager interface"}], "external": false};
@@ -1733,7 +1745,7 @@ window.dfnpanelData['get-valid-values-for-contrast'] = {"dfnID": "get-valid-valu
 window.dfnpanelData['get-valid-values-for-reducedmotion'] = {"dfnID": "get-valid-values-for-reducedmotion", "url": "#get-valid-values-for-reducedmotion", "dfnText": "get valid values for reducedMotion", "refSections": [{"refs": [{"id": "ref-for-get-valid-values-for-reducedmotion"}], "title": "3.6.3. validValues attribute"}, {"refs": [{"id": "ref-for-get-valid-values-for-reducedmotion\u2460"}], "title": "3.6.5. requestOverride() method"}], "external": false};
 window.dfnpanelData['get-valid-values-for-reducedtransparency'] = {"dfnID": "get-valid-values-for-reducedtransparency", "url": "#get-valid-values-for-reducedtransparency", "dfnText": "get valid values for reducedTransparency", "refSections": [{"refs": [{"id": "ref-for-get-valid-values-for-reducedtransparency"}], "title": "3.6.3. validValues attribute"}, {"refs": [{"id": "ref-for-get-valid-values-for-reducedtransparency\u2460"}], "title": "3.6.5. requestOverride() method"}], "external": false};
 window.dfnpanelData['get-valid-values-for-reduceddata'] = {"dfnID": "get-valid-values-for-reduceddata", "url": "#get-valid-values-for-reduceddata", "dfnText": "get valid values for reducedData", "refSections": [{"refs": [{"id": "ref-for-get-valid-values-for-reduceddata"}], "title": "3.6.3. validValues attribute"}, {"refs": [{"id": "ref-for-get-valid-values-for-reduceddata\u2460"}], "title": "3.6.5. requestOverride() method"}], "external": false};
-window.dfnpanelData['preferenceobject'] = {"dfnID": "preferenceobject", "url": "#preferenceobject", "dfnText": "PreferenceObject", "refSections": [{"refs": [{"id": "ref-for-preferenceobject"}, {"id": "ref-for-preferenceobject\u2460"}, {"id": "ref-for-preferenceobject\u2461"}, {"id": "ref-for-preferenceobject\u2462"}, {"id": "ref-for-preferenceobject\u2463"}], "title": "3. PreferenceManager interface"}, {"refs": [{"id": "ref-for-preferenceobject\u2464"}], "title": "3.1. colorScheme attribute"}, {"refs": [{"id": "ref-for-preferenceobject\u2465"}], "title": "3.2. contrast attribute"}, {"refs": [{"id": "ref-for-preferenceobject\u2466"}], "title": "3.3. reducedMotion attribute"}, {"refs": [{"id": "ref-for-preferenceobject\u2467"}], "title": "3.4. reducedTransparency attribute"}, {"refs": [{"id": "ref-for-preferenceobject\u2468"}], "title": "3.5. reducedData attribute"}, {"refs": [{"id": "ref-for-preferenceobject\u2460\u24ea"}], "title": "3.6. PreferenceObject interface"}, {"refs": [{"id": "ref-for-preferenceobject\u2460\u2460"}, {"id": "ref-for-preferenceobject\u2460\u2461"}, {"id": "ref-for-preferenceobject\u2460\u2462"}], "title": "3.6.4. onchange event handler attribute"}, {"refs": [{"id": "ref-for-preferenceobject\u2460\u2463"}, {"id": "ref-for-preferenceobject\u2460\u2464"}], "title": "3.6.7. Garbage Collection"}, {"refs": [{"id": "ref-for-preferenceobject\u2460\u2465"}], "title": "4.4. Getting valid values for a preference"}], "external": false};
+window.dfnpanelData['preferenceobject'] = {"dfnID": "preferenceobject", "url": "#preferenceobject", "dfnText": "PreferenceObject", "refSections": [{"refs": [{"id": "ref-for-preferenceobject"}, {"id": "ref-for-preferenceobject\u2460"}, {"id": "ref-for-preferenceobject\u2461"}, {"id": "ref-for-preferenceobject\u2462"}, {"id": "ref-for-preferenceobject\u2463"}], "title": "3. PreferenceManager interface"}, {"refs": [{"id": "ref-for-preferenceobject\u2464"}], "title": "3.1. colorScheme attribute"}, {"refs": [{"id": "ref-for-preferenceobject\u2465"}], "title": "3.2. contrast attribute"}, {"refs": [{"id": "ref-for-preferenceobject\u2466"}], "title": "3.3. reducedMotion attribute"}, {"refs": [{"id": "ref-for-preferenceobject\u2467"}], "title": "3.4. reducedTransparency attribute"}, {"refs": [{"id": "ref-for-preferenceobject\u2468"}], "title": "3.5. reducedData attribute"}, {"refs": [{"id": "ref-for-preferenceobject\u2460\u24ea"}], "title": "3.6. PreferenceObject interface"}, {"refs": [{"id": "ref-for-preferenceobject\u2460\u2460"}, {"id": "ref-for-preferenceobject\u2460\u2461"}, {"id": "ref-for-preferenceobject\u2460\u2462"}], "title": "3.6.4. onchange event handler attribute"}, {"refs": [{"id": "ref-for-preferenceobject\u2460\u2463"}], "title": "3.6.7. Garbage Collection"}, {"refs": [{"id": "ref-for-preferenceobject\u2460\u2464"}], "title": "4.4. Getting valid values for a preference"}], "external": false};
 window.dfnpanelData['dom-preferenceobject-requestoverride-value-value'] = {"dfnID": "dom-preferenceobject-requestoverride-value-value", "url": "#dom-preferenceobject-requestoverride-value-value", "dfnText": "value", "refSections": [{"refs": [{"id": "ref-for-dom-preferenceobject-requestoverride-value-value"}], "title": "3.6.2. value attribute"}], "external": false};
 window.dfnpanelData['dom-preferenceobject-override'] = {"dfnID": "dom-preferenceobject-override", "url": "#dom-preferenceobject-override", "dfnText": "override", "refSections": [{"refs": [{"id": "ref-for-dom-preferenceobject-override"}], "title": "3.6. PreferenceObject interface"}, {"refs": [{"id": "ref-for-dom-preferenceobject-override\u2460"}], "title": "3.6.1. override attribute"}, {"refs": [{"id": "ref-for-dom-preferenceobject-override\u2461"}], "title": "4.3. Getting a preference override"}], "external": false};
 window.dfnpanelData['dom-preferenceobject-value'] = {"dfnID": "dom-preferenceobject-value", "url": "#dom-preferenceobject-value", "dfnText": "value", "refSections": [{"refs": [{"id": "ref-for-dom-preferenceobject-value"}], "title": "3.6. PreferenceObject interface"}], "external": false};
@@ -1741,7 +1753,6 @@ window.dfnpanelData['dom-preferenceobject-validvalues'] = {"dfnID": "dom-prefere
 window.dfnpanelData['dom-preferenceobject-onchange'] = {"dfnID": "dom-preferenceobject-onchange", "url": "#dom-preferenceobject-onchange", "dfnText": "onchange", "refSections": [{"refs": [{"id": "ref-for-dom-preferenceobject-onchange"}], "title": "3.6. PreferenceObject interface"}, {"refs": [{"id": "ref-for-dom-preferenceobject-onchange\u2460"}, {"id": "ref-for-dom-preferenceobject-onchange\u2461"}], "title": "3.6.4. onchange event handler attribute"}], "external": false};
 window.dfnpanelData['dom-preferenceobject-requestoverride'] = {"dfnID": "dom-preferenceobject-requestoverride", "url": "#dom-preferenceobject-requestoverride", "dfnText": "requestOverride(value)", "refSections": [{"refs": [{"id": "ref-for-dom-preferenceobject-requestoverride"}], "title": "3.6. PreferenceObject interface"}, {"refs": [{"id": "ref-for-dom-preferenceobject-requestoverride\u2460"}], "title": "3.6.5. requestOverride() method"}], "external": false};
 window.dfnpanelData['dom-preferenceobject-clearoverride'] = {"dfnID": "dom-preferenceobject-clearoverride", "url": "#dom-preferenceobject-clearoverride", "dfnText": "clearOverride()", "refSections": [{"refs": [{"id": "ref-for-dom-preferenceobject-clearoverride"}], "title": "3.6. PreferenceObject interface"}, {"refs": [{"id": "ref-for-dom-preferenceobject-clearoverride\u2460"}], "title": "3.6.5. requestOverride() method"}, {"refs": [{"id": "ref-for-dom-preferenceobject-clearoverride\u2461"}], "title": "3.6.6. clearOverride method"}, {"refs": [{"id": "ref-for-dom-preferenceobject-clearoverride\u2462"}], "title": "4.2. Clearing a preference override"}], "external": false};
-window.dfnpanelData['preferences-task-source'] = {"dfnID": "preferences-task-source", "url": "#preferences-task-source", "dfnText": "preferences task source", "refSections": [{"refs": [{"id": "ref-for-preferences-task-source"}], "title": "3.6.4. onchange event handler attribute"}], "external": false};
 </script>
 <script>/* Boilerplate: script-dom-helper */
 function query(sel) { return document.querySelector(sel); }
