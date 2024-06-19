@@ -13,12 +13,14 @@ See [the draft spec](https://wicg.github.io/web-preferences-api/) for more detai
 Currently, website authors have a choice when wishing to honour a user's preference for a given setting:
 
 They can choose to "use the platform" where the user must indicate their preference via their OS or, if lucky, they can override in the browser. This comes with a number of issues:
+
 - Relies on the user's OS or browser offering the ability to change the setting
 - Relies on the user knowing how to change the setting in their OS or browser
 - No ability to override the setting for a specific site
 - No ability to sync preferences for a site across devices
 
 Alternatively, sites can and do offer site-level settings, but this currently comes with a number of issues:
+
 - No integration with CSS preference media queries
 - No integration with conditional resource loading (e.g. using `<source media="(prefers-contrast: more)">`)
 - No integration with JS APIs for retrieval of these preferences (e.g. `matchMedia`)
@@ -28,7 +30,7 @@ Alternatively, sites can and do offer site-level settings, but this currently co
 
 The **Web Preferences API** aims to solve this by providing a way for sites to indicate a user preference for a given pre-defined setting.
 
-It is intended for this override to apply permanently and be scoped per origin. 
+It is intended for this override to apply permanently and be scoped per origin.
 The override should be passed down to sub-resource where possible, see privacy section for details. This explainer refers to "site" but it should be read to mean origin.
 
 ### Goals
@@ -42,6 +44,30 @@ The override should be passed down to sub-resource where possible, see privacy s
 - Provide a way for sites to determine the source of a user preference, beyond User Agent VS site (e.g. a site won't be able to determine if a setting comes from the OS or browser)
 - Force browsers to provide a UI for overriding OS level user preferences (although this would be nice)
 - Force browsers to provide a UI for overriding user preferences per site (although this would be nice)
+
+## Demonstration
+
+You can try it out by running a recent version of Chrome Canary with the following flags enabled: `--enable-experimental-web-platform-features`
+
+## Simple Example
+
+A common use case for this API would be allowing a user to override their color scheme preference for a given site. Usually via some kind of toggle switch. Here is an example of how this could be implemented:
+
+```js
+button.onClick(() => {
+  // Toggle the color scheme preference
+  const newVal =
+    navigator.preferences.colorScheme.value === "dark" ? "light" : "dark";
+  navigator.preferences.colorScheme
+    .requestOverride(newVal)
+    .then(() => {
+      // The preference override was successful.
+    })
+    .catch((error) => {
+      // The preference override request was rejected.
+    });
+});
+```
 
 ## Use Cases
 
@@ -85,22 +111,22 @@ interface Navigator {
 }
 
 interface PreferenceManager {
-    readonly colorScheme: PreferenceObject;
-    readonly contrast: PreferenceObject;
-    readonly reducedMotion: PreferenceObject;
-    readonly reducedTransparency: PreferenceObject;
-    readonly reducedData: PreferenceObject;
-    // Future preferences can be added here, the exact properties will be down to the browser support.
+  readonly colorScheme: PreferenceObject;
+  readonly contrast: PreferenceObject;
+  readonly reducedMotion: PreferenceObject;
+  readonly reducedTransparency: PreferenceObject;
+  readonly reducedData: PreferenceObject;
+  // Future preferences can be added here, the exact properties will be down to the browser support.
 }
 
 interface PreferenceObject {
-    // null means the preference is not overridden
-    readonly override: string | null;
-    readonly value: string;
-	readonly validValues: string[];
+  // null means the preference is not overridden
+  readonly override: string | null;
+  readonly value: string;
+  readonly validValues: string[];
 
-	requestOverride(value: string | null): Promise<void>;
-	clearOverride(): void;
+  requestOverride(value: string | null): Promise<void>;
+  clearOverride(): void;
 }
 
 interface PreferenceSupportData {
@@ -159,10 +185,9 @@ This also doesn't fix the (relatively minor) issue of preference syncing across 
 ## Open Questions
 
 - Where should the PreferenceManager interface be exposed?
-    - It is currently exposed on the `navigator` object, is this best?
-    - It is currently only exposed to Window, should it also be exposed to Service and/or Web Workers?
+  - It is currently exposed on the `navigator` object, is this best?
+  - It is currently only exposed to Window, should it also be exposed to Service and/or Web Workers?
 
 ## Acknowledgements
 
 Special thanks to [Ryan Christian](https://github.com/rschristian) for his help in reviewing the original explainer and providing feedback.
-
