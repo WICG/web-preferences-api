@@ -85,7 +85,7 @@ interface Navigator {
 }
 
 interface PreferenceManager {
-	readonly colorScheme: PreferenceObject;
+    readonly colorScheme: PreferenceObject;
     readonly contrast: PreferenceObject;
     readonly reducedMotion: PreferenceObject;
     readonly reducedTransparency: PreferenceObject;
