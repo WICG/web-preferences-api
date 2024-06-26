@@ -1,6 +1,10 @@
 # Web Preferences API
 
-Authors: [Luke Warlow](https://github.com/lukewarlow)
+Authors: 
+[Luke Warlow](https://github.com/lukewarlow)
+
+Contributors:
+[Jason Williams](https://github.com/jasonwilliams) (Bloomberg)
 
 ## Status of this Document
 
