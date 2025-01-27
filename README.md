@@ -8,6 +8,14 @@ Contributors:
 
 ## Status of this Document
 
+Status: Retired moved to https://drafts.csswg.org/mediaqueries-5/#auto-pref%E2%91%A0
+
+Continue discussion in CSSWG issue repo.
+
+Below is the original explainer it may be outdated.
+
+-------------------
+
 This document is intended as a starting point to engage standards bodies in developing a solution to the problem listed below.
 
 See [the draft spec](https://wicg.github.io/web-preferences-api/) for more details.
